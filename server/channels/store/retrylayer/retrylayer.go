@@ -15199,7 +15199,7 @@ func (s *RetryLayerUserStore) GetProfileByGroupChannelIdsForUser(userID string, 
 
 }
 
-func (s *RetryLayerUserStore) GetProfileByIds(rctx request.CTX, userIds []string, options *store.UserGetByIdsOpts, allowFromCache bool) ([]*model.User, error) {
+func (s *RetryLayerUserStore) GetProfileByIds(rctx request.CTX, userIds []string, options *store.UserGetByIDsOpts, allowFromCache bool) ([]*model.User, error) {
 
 	tries := 0
 	for {

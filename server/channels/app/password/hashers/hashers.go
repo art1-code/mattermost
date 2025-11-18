@@ -119,8 +119,8 @@ func GetHasherFromPHCString(phcString string) (PasswordHasher, phcparser.PHC, er
 	}
 
 	// If not, check the function ID and create a new one depending on it
-	switch phc.Id {
-	case PBKDF2FunctionId:
+	switch phc.ID {
+	case PBKDF2FunctionID:
 		pbkdf2, err := NewPBKDF2FromPHC(phc)
 		if err != nil {
 			return PBKDF2{}, phcparser.PHC{}, fmt.Errorf("the provided PHC string is PBKDF2, but is not valid: %w", err)

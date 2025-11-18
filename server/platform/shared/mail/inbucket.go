@@ -169,14 +169,14 @@ func RetryInbucket(attempts int, callback func() error) (err error) {
 }
 
 func getInbucketHost() (host string) {
-	inbucket_host := os.Getenv("CI_INBUCKET_HOST")
-	if inbucket_host == "" {
-		inbucket_host = "localhost"
+	inbucketHost := os.Getenv("CI_INBUCKET_HOST")
+	if inbucketHost == "" {
+		inbucketHost = "localhost"
 	}
 
-	inbucket_port := os.Getenv("CI_INBUCKET_PORT")
-	if inbucket_port == "" {
-		inbucket_port = "9001"
+	inbucketPort := os.Getenv("CI_INBUCKET_PORT")
+	if inbucketPort == "" {
+		inbucketPort = "9001"
 	}
-	return fmt.Sprintf("http://%s:%s", inbucket_host, inbucket_port)
+	return fmt.Sprintf("http://%s:%s", inbucketHost, inbucketPort)
 }

@@ -952,7 +952,7 @@ func (_m *UserStore) GetProfileByGroupChannelIdsForUser(userID string, channelId
 }
 
 // GetProfileByIds provides a mock function with given fields: rctx, userIds, options, allowFromCache
-func (_m *UserStore) GetProfileByIds(rctx request.CTX, userIds []string, options *store.UserGetByIdsOpts, allowFromCache bool) ([]*model.User, error) {
+func (_m *UserStore) GetProfileByIds(rctx request.CTX, userIds []string, options *store.UserGetByIDsOpts, allowFromCache bool) ([]*model.User, error) {
 	ret := _m.Called(rctx, userIds, options, allowFromCache)
 
 	if len(ret) == 0 {
@@ -961,10 +961,10 @@ func (_m *UserStore) GetProfileByIds(rctx request.CTX, userIds []string, options
 
 	var r0 []*model.User
 	var r1 error
-	if rf, ok := ret.Get(0).(func(request.CTX, []string, *store.UserGetByIdsOpts, bool) ([]*model.User, error)); ok {
+	if rf, ok := ret.Get(0).(func(request.CTX, []string, *store.UserGetByIDsOpts, bool) ([]*model.User, error)); ok {
 		return rf(rctx, userIds, options, allowFromCache)
 	}
-	if rf, ok := ret.Get(0).(func(request.CTX, []string, *store.UserGetByIdsOpts, bool) []*model.User); ok {
+	if rf, ok := ret.Get(0).(func(request.CTX, []string, *store.UserGetByIDsOpts, bool) []*model.User); ok {
 		r0 = rf(rctx, userIds, options, allowFromCache)
 	} else {
 		if ret.Get(0) != nil {
@@ -972,7 +972,7 @@ func (_m *UserStore) GetProfileByIds(rctx request.CTX, userIds []string, options
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(request.CTX, []string, *store.UserGetByIdsOpts, bool) error); ok {
+	if rf, ok := ret.Get(1).(func(request.CTX, []string, *store.UserGetByIDsOpts, bool) error); ok {
 		r1 = rf(rctx, userIds, options, allowFromCache)
 	} else {
 		r1 = ret.Error(1)

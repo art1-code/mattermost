@@ -1784,7 +1784,7 @@ func testUserStoreGetProfilesByIds(t *testing.T, rctx request.CTX, ss store.Stor
 	})
 
 	t.Run("should only return users with UpdateAt greater than the since time", func(t *testing.T) {
-		users, err := ss.User().GetProfileByIds(rctx, []string{u1.Id, u2.Id, u3.Id, u4.Id}, &store.UserGetByIdsOpts{
+		users, err := ss.User().GetProfileByIds(rctx, []string{u1.Id, u2.Id, u3.Id, u4.Id}, &store.UserGetByIDsOpts{
 			Since: u2.CreateAt,
 		}, true)
 		require.NoError(t, err)

@@ -15,7 +15,7 @@ import (
 // PHC represents a PHC string, with all its parts already parsed:
 type PHC struct {
 	// Id is the identifier of the hashing function.
-	Id string
+	ID string
 
 	// Version is an optional string containing the specific version of the
 	// hashing function used.
@@ -227,7 +227,7 @@ func (p *Parser) parseToken(expected Token) (string, error) {
 }
 
 // parseFunctionId parses a function ID
-func (p *Parser) parseFunctionId() (string, error) {
+func (p *Parser) parseFunctionID() (string, error) {
 	literal, err := p.parseToken(DOLLARSIGN)
 	if err != nil {
 		return literal, fmt.Errorf("found %q, expected '$'", literal)
@@ -277,11 +277,11 @@ func (p *Parser) Parse() (PHC, error) {
 	out.Params = make(map[string]string)
 
 	// Start parsing: first, we expect '$functionId'
-	id, err := p.parseFunctionId()
+	id, err := p.parseFunctionID()
 	if err != nil {
 		return PHC{}, fmt.Errorf("failed to parse function ID: %w", err)
 	}
-	out.Id = id
+	out.ID = id
 
 	// Now we expect either EOF, or to continue parsing with a '$'
 	switch token, literal := p.scanSeparator(); token {

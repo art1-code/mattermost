@@ -19,7 +19,7 @@ import (
 
 const (
 	// PBKDF2FunctionId is the name of the PBKDF2 hasher.
-	PBKDF2FunctionId string = "pbkdf2"
+	PBKDF2FunctionID string = "pbkdf2"
 )
 
 const (
@@ -94,7 +94,7 @@ func NewPBKDF2(workFactor int, keyLength int) (PBKDF2, error) {
 
 	// First, the function ID
 	phcHeader.WriteRune('$')
-	phcHeader.WriteString(PBKDF2FunctionId)
+	phcHeader.WriteString(PBKDF2FunctionID)
 
 	// Then, the parameters
 	phcHeader.WriteString("$f=")
@@ -224,7 +224,7 @@ func (p PBKDF2) CompareHashAndPassword(hash phcparser.PHC, password string) erro
 //   - The parameters used to generate it were the same as the ones used to
 //     create this hasher.
 func (p PBKDF2) IsPHCValid(phc phcparser.PHC) bool {
-	return phc.Id == PBKDF2FunctionId &&
+	return phc.ID == PBKDF2FunctionID &&
 		len(phc.Params) == 3 &&
 		phc.Params["f"] == defaultPRFName &&
 		phc.Params["w"] == strconv.Itoa(p.workFactor) &&

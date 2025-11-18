@@ -1118,9 +1118,9 @@ func (us SqlUserStore) GetNewUsersForTeam(teamId string, offset, limit int, view
 	return users, nil
 }
 
-func (us SqlUserStore) GetProfileByIds(rctx request.CTX, userIds []string, options *store.UserGetByIdsOpts, allowFromCache bool) ([]*model.User, error) {
+func (us SqlUserStore) GetProfileByIds(rctx request.CTX, userIds []string, options *store.UserGetByIDsOpts, allowFromCache bool) ([]*model.User, error) {
 	if options == nil {
-		options = &store.UserGetByIdsOpts{}
+		options = &store.UserGetByIDsOpts{}
 	}
 
 	users := []*model.User{}

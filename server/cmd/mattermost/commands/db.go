@@ -331,7 +331,7 @@ func ConfigToFileBackendSettings(s *model.FileSettings, enableComplianceFeature 
 	}
 	return filestore.FileBackendSettings{
 		DriverName:                         *s.DriverName,
-		AmazonS3AccessKeyId:                *s.AmazonS3AccessKeyId,
+		AmazonS3AccessKeyID:                *s.AmazonS3AccessKeyId,
 		AmazonS3SecretAccessKey:            *s.AmazonS3SecretAccessKey,
 		AmazonS3Bucket:                     *s.AmazonS3Bucket,
 		AmazonS3PathPrefix:                 *s.AmazonS3PathPrefix,

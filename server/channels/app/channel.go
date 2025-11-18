@@ -325,7 +325,7 @@ func (a *App) GetOrCreateDirectChannel(rctx request.CTX, userID, otherUserID str
 
 	if *a.Config().TeamSettings.RestrictDirectMessage == model.DirectMessageTeam &&
 		!a.SessionHasPermissionTo(*rctx.Session(), model.PermissionManageSystem) {
-		users, err := a.GetUsersByIds(rctx, []string{userID, otherUserID}, &store.UserGetByIdsOpts{})
+		users, err := a.GetUsersByIds(rctx, []string{userID, otherUserID}, &store.UserGetByIDsOpts{})
 		if err != nil {
 			return nil, err
 		}
@@ -3079,7 +3079,7 @@ func (a *App) SearchAllChannels(rctx request.CTX, term string, opts model.Channe
 		NotAssociatedToGroup:               opts.NotAssociatedToGroup,
 		IncludeDeleted:                     opts.IncludeDeleted,
 		Deleted:                            opts.Deleted,
-		TeamIds:                            opts.TeamIds,
+		TeamIDs:                            opts.TeamIds,
 		GroupConstrained:                   opts.GroupConstrained,
 		ExcludeGroupConstrained:            opts.ExcludeGroupConstrained,
 		PolicyID:                           opts.PolicyID,
@@ -3093,7 +3093,7 @@ func (a *App) SearchAllChannels(rctx request.CTX, term string, opts model.Channe
 		PerPage:                            opts.PerPage,
 		AccessControlPolicyEnforced:        opts.AccessControlPolicyEnforced,
 		ExcludeAccessControlPolicyEnforced: opts.ExcludeAccessControlPolicyEnforced,
-		ParentAccessControlPolicyId:        opts.ParentAccessControlPolicyId,
+		ParentAccessControlPolicyID:        opts.ParentAccessControlPolicyId,
 	}
 
 	term = strings.TrimSpace(term)

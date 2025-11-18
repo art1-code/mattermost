@@ -25,7 +25,7 @@ type SearchEngineInterface interface {
 	IsSearchEnabled() bool
 	IsAutocompletionEnabled() bool
 	IsIndexingSync() bool
-	IndexPost(post *model.Post, teamId string) *model.AppError
+	IndexPost(post *model.Post, teamID string) *model.AppError
 	SearchPosts(channels model.ChannelList, searchParams []*model.SearchParams, page, perPage int) ([]string, model.PostSearchMatches, *model.AppError)
 	DeletePost(post *model.Post) *model.AppError
 	DeleteChannelPosts(rctx request.CTX, channelID string) *model.AppError
@@ -34,13 +34,13 @@ type SearchEngineInterface interface {
 	// for private channels.
 	IndexChannel(rctx request.CTX, channel *model.Channel, userIDs, teamMemberIDs []string) *model.AppError
 	SyncBulkIndexChannels(rctx request.CTX, channels []*model.Channel, getUserIDsForChannel func(channel *model.Channel) ([]string, error), teamMemberIDs []string) *model.AppError
-	SearchChannels(teamId, userID, term string, isGuest, includeDeleted bool) ([]string, *model.AppError)
+	SearchChannels(teamID, userID, term string, isGuest, includeDeleted bool) ([]string, *model.AppError)
 	DeleteChannel(channel *model.Channel) *model.AppError
-	IndexUser(rctx request.CTX, user *model.User, teamsIds, channelsIds []string) *model.AppError
-	SearchUsersInChannel(teamId, channelId string, restrictedToChannels []string, term string, options *model.UserSearchOptions) ([]string, []string, *model.AppError)
-	SearchUsersInTeam(teamId string, restrictedToChannels []string, term string, options *model.UserSearchOptions) ([]string, *model.AppError)
+	IndexUser(rctx request.CTX, user *model.User, teamsIDs, channelsIds []string) *model.AppError
+	SearchUsersInChannel(teamID, channelId string, restrictedToChannels []string, term string, options *model.UserSearchOptions) ([]string, []string, *model.AppError)
+	SearchUsersInTeam(teamID string, restrictedToChannels []string, term string, options *model.UserSearchOptions) ([]string, *model.AppError)
 	DeleteUser(user *model.User) *model.AppError
-	IndexFile(file *model.FileInfo, channelId string) *model.AppError
+	IndexFile(file *model.FileInfo, channelID string) *model.AppError
 	SearchFiles(channels model.ChannelList, searchParams []*model.SearchParams, page, perPage int) ([]string, *model.AppError)
 	DeleteFile(fileID string) *model.AppError
 	DeletePostFiles(rctx request.CTX, postID string) *model.AppError

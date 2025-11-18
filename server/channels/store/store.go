@@ -452,7 +452,7 @@ type UserStore interface {
 	GetProfilesByUsernames(usernames []string, viewRestrictions *model.ViewUsersRestrictions) ([]*model.User, error)
 	GetAllProfiles(options *model.UserGetOptions) ([]*model.User, error)
 	GetProfiles(options *model.UserGetOptions) ([]*model.User, error)
-	GetProfileByIds(rctx request.CTX, userIds []string, options *UserGetByIdsOpts, allowFromCache bool) ([]*model.User, error)
+	GetProfileByIds(rctx request.CTX, userIds []string, options *UserGetByIDsOpts, allowFromCache bool) ([]*model.User, error)
 	GetProfileByGroupChannelIdsForUser(userID string, channelIds []string) (map[string][]*model.User, error)
 	InvalidateProfileCacheForUser(userID string)
 	GetByEmail(email string) (*model.User, error)
@@ -1074,15 +1074,15 @@ type PostAcknowledgementStore interface {
 type PostPersistentNotificationStore interface {
 	Get(params model.GetPersistentNotificationsPostsParams) ([]*model.PostPersistentNotifications, error)
 	GetSingle(postID string) (*model.PostPersistentNotifications, error)
-	UpdateLastActivity(postIds []string) error
-	Delete(postIds []string) error
+	UpdateLastActivity(postIDs []string) error
+	Delete(postIDs []string) error
 	DeleteExpired(maxSentCount int16) error
-	DeleteByChannel(channelIds []string) error
-	DeleteByTeam(teamIds []string) error
+	DeleteByChannel(channelIDs []string) error
+	DeleteByTeam(teamIDs []string) error
 }
 type ChannelBookmarkStore interface {
 	ErrorIfBookmarkFileInfoAlreadyAttached(fileID string, channelID string) error
-	Get(Id string, includeDeleted bool) (b *model.ChannelBookmarkWithFileInfo, err error)
+	Get(ID string, includeDeleted bool) (b *model.ChannelBookmarkWithFileInfo, err error)
 	Save(bookmark *model.ChannelBookmark, increaseSortOrder bool) (b *model.ChannelBookmarkWithFileInfo, err error)
 	Update(bookmark *model.ChannelBookmark) error
 	UpdateSortOrder(bookmarkID, channelID string, newIndex int64) ([]*model.ChannelBookmarkWithFileInfo, error)
@@ -1093,13 +1093,13 @@ type ChannelBookmarkStore interface {
 type ScheduledPostStore interface {
 	GetMaxMessageSize() int
 	CreateScheduledPost(scheduledPost *model.ScheduledPost) (*model.ScheduledPost, error)
-	GetScheduledPostsForUser(userId, teamId string) ([]*model.ScheduledPost, error)
-	GetPendingScheduledPosts(beforeTime, afterTime int64, lastScheduledPostId string, perPage uint64) ([]*model.ScheduledPost, error)
+	GetScheduledPostsForUser(userID, teamID string) ([]*model.ScheduledPost, error)
+	GetPendingScheduledPosts(beforeTime, afterTime int64, lastScheduledPostID string, perPage uint64) ([]*model.ScheduledPost, error)
 	PermanentlyDeleteScheduledPosts(scheduledPostIDs []string) error
 	UpdatedScheduledPost(scheduledPost *model.ScheduledPost) error
-	Get(scheduledPostId string) (*model.ScheduledPost, error)
+	Get(scheduledPostID string) (*model.ScheduledPost, error)
 	UpdateOldScheduledPosts(beforeTime int64) error
-	PermanentDeleteByUser(userId string) error
+	PermanentDeleteByUser(userID string) error
 }
 
 type PropertyGroupStore interface {
@@ -1168,7 +1168,7 @@ type ChannelSearchOpts struct {
 	IncludeDeleted                     bool
 	Deleted                            bool
 	ExcludeChannelNames                []string
-	TeamIds                            []string
+	TeamIDs                            []string
 	GroupConstrained                   bool
 	ExcludeGroupConstrained            bool
 	PolicyID                           string
@@ -1186,14 +1186,14 @@ type ChannelSearchOpts struct {
 	LastUpdateAt                       int
 	AccessControlPolicyEnforced        bool
 	ExcludeAccessControlPolicyEnforced bool
-	ParentAccessControlPolicyId        string
+	ParentAccessControlPolicyID        string
 }
 
 func (c *ChannelSearchOpts) IsPaginated() bool {
 	return c.Page != nil && c.PerPage != nil
 }
 
-type UserGetByIdsOpts struct {
+type UserGetByIDsOpts struct {
 	// IsAdmin tracks whether or not the request is being made by an administrator. Does nothing when provided by a client.
 	IsAdmin bool
 

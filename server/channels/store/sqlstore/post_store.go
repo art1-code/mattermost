@@ -1186,7 +1186,7 @@ func (s *SqlPostStore) prepareThreadedResponse(rctx request.CTX, posts []*postWi
 	// usersMap is the global profile map of all participants from all threads.
 	usersMap := make(map[string]*model.User, len(userIds))
 	if extended {
-		users, err := s.User().GetProfileByIds(rctx, userIds, &store.UserGetByIdsOpts{}, true)
+		users, err := s.User().GetProfileByIds(rctx, userIds, &store.UserGetByIDsOpts{}, true)
 		if err != nil {
 			return nil, err
 		}

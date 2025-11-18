@@ -105,7 +105,7 @@ func runBackendTest(t *testing.T, encrypt bool) {
 	suite.Run(t, &FileBackendTestSuite{
 		settings: FileBackendSettings{
 			DriverName:                         driverS3,
-			AmazonS3AccessKeyId:                "minioaccesskey",
+			AmazonS3AccessKeyID:                "minioaccesskey",
 			AmazonS3SecretAccessKey:            "miniosecretkey",
 			AmazonS3Bucket:                     "mattermost-test",
 			AmazonS3Region:                     "",
@@ -662,7 +662,7 @@ func BenchmarkFileStore(b *testing.B) {
 
 	s3Settings := FileBackendSettings{
 		DriverName:                         driverS3,
-		AmazonS3AccessKeyId:                "minioaccesskey",
+		AmazonS3AccessKeyID:                "minioaccesskey",
 		AmazonS3SecretAccessKey:            "miniosecretkey",
 		AmazonS3Bucket:                     "mattermost-test",
 		AmazonS3Region:                     "",
@@ -682,7 +682,7 @@ func BenchmarkFileStore(b *testing.B) {
 		s3Settings.AmazonS3Region = val
 	}
 	if val := os.Getenv("MM_FILESETTINGS_AMAZONS3ACCESSKEYID"); val != "" {
-		s3Settings.AmazonS3AccessKeyId = val
+		s3Settings.AmazonS3AccessKeyID = val
 	}
 	if val := os.Getenv("MM_FILESETTINGS_AMAZONS3SECRETACCESSKEY"); val != "" {
 		s3Settings.AmazonS3SecretAccessKey = val
@@ -809,7 +809,7 @@ func BenchmarkS3WriteFile(b *testing.B) {
 
 	defaultSettings := FileBackendSettings{
 		DriverName:                         driverS3,
-		AmazonS3AccessKeyId:                "minioaccesskey",
+		AmazonS3AccessKeyID:                "minioaccesskey",
 		AmazonS3SecretAccessKey:            "miniosecretkey",
 		AmazonS3Bucket:                     "mattermost-test",
 		AmazonS3Region:                     "",
@@ -829,7 +829,7 @@ func BenchmarkS3WriteFile(b *testing.B) {
 		defaultSettings.AmazonS3Region = val
 	}
 	if val := os.Getenv("MM_FILESETTINGS_AMAZONS3ACCESSKEYID"); val != "" {
-		defaultSettings.AmazonS3AccessKeyId = val
+		defaultSettings.AmazonS3AccessKeyID = val
 	}
 	if val := os.Getenv("MM_FILESETTINGS_AMAZONS3SECRETACCESSKEY"); val != "" {
 		defaultSettings.AmazonS3SecretAccessKey = val
@@ -908,7 +908,7 @@ func TestNewExportFileBackendSettingsFromConfig(t *testing.T) {
 		expected := FileBackendSettings{
 			DriverName:                         driverLocal,
 			Directory:                          "directory",
-			AmazonS3AccessKeyId:                "",
+			AmazonS3AccessKeyID:                "",
 			AmazonS3SecretAccessKey:            "",
 			AmazonS3Bucket:                     "",
 			AmazonS3PathPrefix:                 "",
@@ -938,7 +938,7 @@ func TestNewExportFileBackendSettingsFromConfig(t *testing.T) {
 		expected := FileBackendSettings{
 			DriverName:                         driverS3,
 			Directory:                          "",
-			AmazonS3AccessKeyId:                "minioaccesskey",
+			AmazonS3AccessKeyID:                "minioaccesskey",
 			AmazonS3SecretAccessKey:            "miniosecretkey",
 			AmazonS3Bucket:                     "mattermost-test",
 			AmazonS3PathPrefix:                 "prefix",
@@ -982,7 +982,7 @@ func TestNewExportFileBackendSettingsFromConfig(t *testing.T) {
 		expected := FileBackendSettings{
 			DriverName:                         driverS3,
 			Directory:                          "",
-			AmazonS3AccessKeyId:                "minioaccesskey",
+			AmazonS3AccessKeyID:                "minioaccesskey",
 			AmazonS3SecretAccessKey:            "miniosecretkey",
 			AmazonS3Bucket:                     "mattermost-test",
 			AmazonS3PathPrefix:                 "prefix",

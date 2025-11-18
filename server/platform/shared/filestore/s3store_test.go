@@ -67,7 +67,7 @@ func TestMakeBucket(t *testing.T) {
 
 	cfg := FileBackendSettings{
 		DriverName:                         model.ImageDriverS3,
-		AmazonS3AccessKeyId:                model.MinioAccessKey,
+		AmazonS3AccessKeyID:                model.MinioAccessKey,
 		AmazonS3SecretAccessKey:            model.MinioSecretKey,
 		AmazonS3Bucket:                     bucketName,
 		AmazonS3Endpoint:                   s3Endpoint,
@@ -108,7 +108,7 @@ func TestTimeout(t *testing.T) {
 
 	cfg := FileBackendSettings{
 		DriverName:                         model.ImageDriverS3,
-		AmazonS3AccessKeyId:                model.MinioAccessKey,
+		AmazonS3AccessKeyID:                model.MinioAccessKey,
 		AmazonS3SecretAccessKey:            model.MinioSecretKey,
 		AmazonS3Bucket:                     bucketName,
 		AmazonS3Endpoint:                   s3Endpoint,
@@ -190,7 +190,7 @@ func TestInsecureMakeBucket(t *testing.T) {
 
 			cfg := FileBackendSettings{
 				DriverName:                         model.ImageDriverS3,
-				AmazonS3AccessKeyId:                model.MinioAccessKey,
+				AmazonS3AccessKeyID:                model.MinioAccessKey,
 				AmazonS3SecretAccessKey:            model.MinioSecretKey,
 				AmazonS3Bucket:                     bucketName,
 				AmazonS3Endpoint:                   proxySelfSignedHTTPS.URL[8:],
@@ -339,7 +339,7 @@ func TestListDirectory(t *testing.T) {
 
 	cfg := FileBackendSettings{
 		DriverName:                         driverS3,
-		AmazonS3AccessKeyId:                "minioaccesskey",
+		AmazonS3AccessKeyID:                "minioaccesskey",
 		AmazonS3SecretAccessKey:            "miniosecretkey",
 		AmazonS3Bucket:                     "mattermost-test-1",
 		AmazonS3Region:                     "",
@@ -403,7 +403,7 @@ func TestWriteFileVideoMimeTypes(t *testing.T) {
 
 	cfg := FileBackendSettings{
 		DriverName:                         model.ImageDriverS3,
-		AmazonS3AccessKeyId:                model.MinioAccessKey,
+		AmazonS3AccessKeyID:                model.MinioAccessKey,
 		AmazonS3SecretAccessKey:            model.MinioSecretKey,
 		AmazonS3Bucket:                     bucketName,
 		AmazonS3Endpoint:                   s3Endpoint,

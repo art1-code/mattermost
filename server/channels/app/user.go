@@ -748,7 +748,7 @@ func (a *App) GetChannelGroupUsers(channelID string) ([]*model.User, *model.AppE
 	return users, nil
 }
 
-func (a *App) GetUsersByIds(rctx request.CTX, userIDs []string, options *store.UserGetByIdsOpts) ([]*model.User, *model.AppError) {
+func (a *App) GetUsersByIds(rctx request.CTX, userIDs []string, options *store.UserGetByIDsOpts) ([]*model.User, *model.AppError) {
 	users, err := a.ch.srv.userService.GetUsersByIds(rctx, userIDs, options)
 	if err != nil {
 		return nil, model.NewAppError("GetUsersByIds", "app.user.get_profiles.app_error", nil, "", http.StatusInternalServerError).Wrap(err)

@@ -23,7 +23,7 @@ func TestGetHasherFromPHCString(t *testing.T) {
 			input:          "$pbkdf2$f=SHA256,w=600000,l=32$5Zq8TvET7nMrXof49Rp4Sw$d0Mx8467kv+3ylbGrkyu4jTd8O8SP51k4s1RuWb9S/o",
 			expectedHasher: latestHasher,
 			expectedPHC: phcparser.PHC{
-				Id:      "pbkdf2",
+				ID:      "pbkdf2",
 				Version: "",
 				Params: map[string]string{
 					"f": "SHA256",
@@ -44,7 +44,7 @@ func TestGetHasherFromPHCString(t *testing.T) {
 				phcHeader:  "$pbkdf2$f=SHA256,w=10000,l=10$",
 			},
 			expectedPHC: phcparser.PHC{
-				Id:      "pbkdf2",
+				ID:      "pbkdf2",
 				Version: "",
 				Params: map[string]string{
 					"f": "SHA256",

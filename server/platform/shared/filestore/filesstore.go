@@ -50,7 +50,7 @@ type FileBackendWithLinkGenerator interface {
 type FileBackendSettings struct {
 	DriverName                         string
 	Directory                          string
-	AmazonS3AccessKeyId                string
+	AmazonS3AccessKeyID                string
 	AmazonS3SecretAccessKey            string
 	AmazonS3Bucket                     string
 	AmazonS3PathPrefix                 string
@@ -76,7 +76,7 @@ func NewFileBackendSettingsFromConfig(fileSettings *model.FileSettings, enableCo
 	}
 	return FileBackendSettings{
 		DriverName:                         *fileSettings.DriverName,
-		AmazonS3AccessKeyId:                *fileSettings.AmazonS3AccessKeyId,
+		AmazonS3AccessKeyID:                *fileSettings.AmazonS3AccessKeyId,
 		AmazonS3SecretAccessKey:            *fileSettings.AmazonS3SecretAccessKey,
 		AmazonS3Bucket:                     *fileSettings.AmazonS3Bucket,
 		AmazonS3PathPrefix:                 *fileSettings.AmazonS3PathPrefix,
@@ -102,7 +102,7 @@ func NewExportFileBackendSettingsFromConfig(fileSettings *model.FileSettings, en
 	}
 	return FileBackendSettings{
 		DriverName:                         *fileSettings.ExportDriverName,
-		AmazonS3AccessKeyId:                *fileSettings.ExportAmazonS3AccessKeyId,
+		AmazonS3AccessKeyID:                *fileSettings.ExportAmazonS3AccessKeyId,
 		AmazonS3SecretAccessKey:            *fileSettings.ExportAmazonS3SecretAccessKey,
 		AmazonS3Bucket:                     *fileSettings.ExportAmazonS3Bucket,
 		AmazonS3PathPrefix:                 *fileSettings.ExportAmazonS3PathPrefix,

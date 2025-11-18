@@ -11978,7 +11978,7 @@ func (s *TimerLayerUserStore) GetProfileByGroupChannelIdsForUser(userID string, 
 	return result, err
 }
 
-func (s *TimerLayerUserStore) GetProfileByIds(rctx request.CTX, userIds []string, options *store.UserGetByIdsOpts, allowFromCache bool) ([]*model.User, error) {
+func (s *TimerLayerUserStore) GetProfileByIds(rctx request.CTX, userIds []string, options *store.UserGetByIDsOpts, allowFromCache bool) ([]*model.User, error) {
 	start := time.Now()
 
 	result, err := s.UserStore.GetProfileByIds(rctx, userIds, options, allowFromCache)

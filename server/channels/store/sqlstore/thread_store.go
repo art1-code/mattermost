@@ -376,7 +376,7 @@ func (s *SqlThreadStore) GetThreadsForUser(rctx request.CTX, userId, teamId stri
 	// Resolve the user objects for all participants, with extended metadata if requested.
 	allParticipants := make(map[string]*model.User, len(participantUserIds))
 	if opts.Extended {
-		users, err := s.User().GetProfileByIds(rctx, participantUserIds, &store.UserGetByIdsOpts{}, true)
+		users, err := s.User().GetProfileByIds(rctx, participantUserIds, &store.UserGetByIDsOpts{}, true)
 		if err != nil {
 			return nil, errors.Wrapf(err, "failed to get %d thread profiles for user id=%s", len(participantUserIds), userId)
 		}
@@ -598,7 +598,7 @@ func (s *SqlThreadStore) GetThreadForUser(rctx request.CTX, threadMembership *mo
 	users := []*model.User{}
 	if extended {
 		var err error
-		users, err = s.User().GetProfileByIds(rctx, thread.Participants, &store.UserGetByIdsOpts{}, true)
+		users, err = s.User().GetProfileByIds(rctx, thread.Participants, &store.UserGetByIDsOpts{}, true)
 		if err != nil {
 			return nil, errors.Wrapf(err, "failed to get thread for user id=%s", threadMembership.UserId)
 		}

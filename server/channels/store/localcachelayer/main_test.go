@@ -159,8 +159,8 @@ func getMockStore(t *testing.T) *mocks.Store {
 		AuthService: "authService",
 	}}
 	mockUserStore := mocks.UserStore{}
-	mockUserStore.On("GetProfileByIds", mock.Anything, []string{"123"}, &store.UserGetByIdsOpts{}, true).Return(fakeUser, nil)
-	mockUserStore.On("GetProfileByIds", mock.Anything, []string{"123"}, &store.UserGetByIdsOpts{}, false).Return(fakeUser, nil)
+	mockUserStore.On("GetProfileByIds", mock.Anything, []string{"123"}, &store.UserGetByIDsOpts{}, true).Return(fakeUser, nil)
+	mockUserStore.On("GetProfileByIds", mock.Anything, []string{"123"}, &store.UserGetByIDsOpts{}, false).Return(fakeUser, nil)
 
 	fakeProfilesInChannelMap := map[string]*model.User{
 		"456": {Id: "456"},

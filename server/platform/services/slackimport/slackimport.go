@@ -697,8 +697,8 @@ func (si *SlackImporter) oldImportPost(rctx request.CTX, post *model.Post) strin
 			if firstPostId == "" {
 				firstPostId = post.Id
 			}
-			for _, fileId := range post.FileIds {
-				if err := si.store.FileInfo().AttachToPost(rctx, fileId, post.Id, post.ChannelId, post.UserId); err != nil {
+			for _, fileID := range post.FileIds {
+				if err := si.store.FileInfo().AttachToPost(rctx, fileID, post.Id, post.ChannelId, post.UserId); err != nil {
 					rctx.Logger().Error(
 						"Error attaching files to post.",
 						mlog.String("post_id", post.Id),
@@ -807,7 +807,7 @@ func (si *SlackImporter) oldImportChannel(rctx request.CTX, channel *model.Chann
 	return sc
 }
 
-func (si *SlackImporter) oldImportFile(rctx request.CTX, timestamp time.Time, file io.Reader, teamId string, channelId string, userId string, fileName string) (*model.FileInfo, error) {
+func (si *SlackImporter) oldImportFile(rctx request.CTX, timestamp time.Time, file io.Reader, teamID string, channelId string, userId string, fileName string) (*model.FileInfo, error) {
 	buf := bytes.NewBuffer(nil)
 	_, err := io.Copy(buf, file)
 	if err != nil {
@@ -816,7 +816,7 @@ func (si *SlackImporter) oldImportFile(rctx request.CTX, timestamp time.Time, fi
 
 	data := buf.Bytes()
 
-	fileInfo, appErr := si.actions.DoUploadFile(timestamp, teamId, channelId, userId, fileName, data)
+	fileInfo, appErr := si.actions.DoUploadFile(timestamp, teamID, channelId, userId, fileName, data)
 	if appErr != nil {
 		return nil, appErr
 	}

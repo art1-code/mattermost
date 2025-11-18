@@ -99,7 +99,7 @@ func newS3FileBackend(settings FileBackendSettings, isCloud bool) (*S3FileBacken
 	timeout := time.Duration(settings.AmazonS3RequestTimeoutMilliseconds) * time.Millisecond
 	backend := &S3FileBackend{
 		endpoint:       settings.AmazonS3Endpoint,
-		accessKey:      settings.AmazonS3AccessKeyId,
+		accessKey:      settings.AmazonS3AccessKeyID,
 		secretKey:      settings.AmazonS3SecretAccessKey,
 		secure:         settings.AmazonS3SSL,
 		signV2:         settings.AmazonS3SignV2,

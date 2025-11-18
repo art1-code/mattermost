@@ -21,7 +21,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=4294967295,p=2",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m": "120",
@@ -36,7 +36,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=2040,t=5000,p=255",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m": "2040",
@@ -49,9 +49,9 @@ func TestParse(t *testing.T) {
 			false,
 		},
 		{
-			"$argon2i$m=120,t=5000,p=2,keyid=Hj5+dsK0",
+			"$argon2i$m=120,t=5000,p=2,keyiD=Hj5+dsK0",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m":     "120",
@@ -67,7 +67,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2,keyid=Hj5+dsK0ZQ",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m":     "120",
@@ -83,7 +83,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2,keyid=Hj5+dsK0ZQA",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m":     "120",
@@ -99,7 +99,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2,data=sRlHhRmKUGzdOmXn01XmXygd5Kc",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m":    "120",
@@ -115,7 +115,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2,keyid=Hj5+dsK0,data=sRlHhRmKUGzdOmXn01XmXygd5Kc",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m":     "120",
@@ -133,7 +133,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2$4fXXG0spB92WPB1NitT8/OH0VKI",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m": "120",
@@ -148,7 +148,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2$BwUgJHHQaynE+a4nZrYRzOllGSjjxuxNXxyNRUtI6Dlw/zlbt6PzOL8Onfqs6TcG",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m": "120",
@@ -163,7 +163,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2,keyid=Hj5+dsK0$4fXXG0spB92WPB1NitT8/OH0VKI",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m":     "120",
@@ -179,7 +179,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2,data=sRlHhRmKUGzdOmXn01XmXygd5Kc$4fXXG0spB92WPB1NitT8/OH0VKI",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m":    "120",
@@ -195,7 +195,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2,keyid=Hj5+dsK0,data=sRlHhRmKUGzdOmXn01XmXygd5Kc$4fXXG0spB92WPB1NitT8/OH0VKI",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m":     "120",
@@ -213,7 +213,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2,keyid=Hj5+dsK0$4fXXG0spB92WPB1NitT8/OH0VKI$iPBVuORECm5biUsjq33hn9/7BKqy9aPWKhFfK2haEsM",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m":     "120",
@@ -229,7 +229,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2,data=sRlHhRmKUGzdOmXn01XmXygd5Kc$4fXXG0spB92WPB1NitT8/OH0VKI$iPBVuORECm5biUsjq33hn9/7BKqy9aPWKhFfK2haEsM",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m":    "120",
@@ -245,7 +245,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2,keyid=Hj5+dsK0,data=sRlHhRmKUGzdOmXn01XmXygd5Kc$4fXXG0spB92WPB1NitT8/OH0VKI$iPBVuORECm5biUsjq33hn9/7BKqy9aPWKhFfK2haEsM",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m":     "120",
@@ -262,7 +262,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2,keyid=Hj5+dsK0,data=sRlHhRmKUGzdOmXn01XmXygd5Kc$iHSDPHzUhPzK7rCcJgOFfg$EkCWX6pSTqWruiR0",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m":     "120",
@@ -279,7 +279,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i",
 			PHC{
-				Id:     "argon2i",
+				ID:     "argon2i",
 				Params: map[string]string{},
 			},
 			false,
@@ -287,7 +287,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120",
 			PHC{
-				Id: "argon2i",
+				ID: "argon2i",
 				Params: map[string]string{
 					"m": "120",
 				},
@@ -297,7 +297,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$v=120",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "120",
 				Params:  map[string]string{},
 			},
@@ -306,7 +306,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2",
 			PHC{
-				Id: "argon2i",
+				ID: "argon2i",
 				Params: map[string]string{
 					"m": "120",
 					"t": "5000",
@@ -318,7 +318,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$v=5$m=120,t=5000,p=2",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "5",
 				Params: map[string]string{
 					"m": "120",
@@ -331,7 +331,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$/LtFjH5rVL8",
 			PHC{
-				Id:     "argon2i",
+				ID:     "argon2i",
 				Params: map[string]string{},
 				Salt:   "/LtFjH5rVL8",
 				Hash:   "",
@@ -341,7 +341,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$/LtFjH5rVL8$iPBVuORECm5biUsjq33hn9/7BKqy9aPWKhFfK2haEsM",
 			PHC{
-				Id:     "argon2i",
+				ID:     "argon2i",
 				Params: map[string]string{},
 				Salt:   "/LtFjH5rVL8",
 				Hash:   "iPBVuORECm5biUsjq33hn9/7BKqy9aPWKhFfK2haEsM",
@@ -351,7 +351,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$v=v2$/LtFjH5rVL8",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "v2",
 				Params:  map[string]string{},
 				Salt:    "/LtFjH5rVL8",
@@ -362,7 +362,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$v=v2$/LtFjH5rVL8$iPBVuORECm5biUsjq33hn9/7BKqy9aPWKhFfK2haEsM",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "v2",
 				Params:  map[string]string{},
 				Salt:    "/LtFjH5rVL8",
@@ -373,7 +373,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2$/LtFjH5rVL8",
 			PHC{
-				Id: "argon2i",
+				ID: "argon2i",
 				Params: map[string]string{
 					"m": "120",
 					"t": "5000",
@@ -387,7 +387,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2$4fXXG0spB92WPB1NitT8/OH0VKI$iPBVuORECm5biUsjq33hn9/7BKqy9aPWKhFfK2haEsM",
 			PHC{
-				Id: "argon2i",
+				ID: "argon2i",
 				Params: map[string]string{
 					"m": "120",
 					"t": "5000",
@@ -401,7 +401,7 @@ func TestParse(t *testing.T) {
 		{
 			"$argon2i$m=120,t=5000,p=2,keyid=Hj5+dsK0,data=sRlHhRmKUGzdOmXn01XmXygd5Kc$iHSDPHzUhPzK7rCcJgOFfg$J4moa2MM0/6uf3HbY2Tf5Fux8JIBTwIhmhxGRbsY14qhTltQt+Vw3b7tcJNEbk8ium8AQfZeD4tabCnNqfkD1g",
 			PHC{
-				Id:      "argon2i",
+				ID:      "argon2i",
 				Version: "",
 				Params: map[string]string{
 					"m":     "120",
@@ -418,7 +418,7 @@ func TestParse(t *testing.T) {
 		{
 			"$pbkdf2",
 			PHC{
-				Id:      "pbkdf2",
+				ID:      "pbkdf2",
 				Version: "",
 				Params:  map[string]string{},
 				Salt:    "",
@@ -429,7 +429,7 @@ func TestParse(t *testing.T) {
 		{
 			"$pbkdf2$cGFsZXN0aW5lIHdpbGwgYmUgZnJlZQ",
 			PHC{
-				Id:      "pbkdf2",
+				ID:      "pbkdf2",
 				Version: "",
 				Params:  map[string]string{},
 				Salt:    "cGFsZXN0aW5lIHdpbGwgYmUgZnJlZQ",
@@ -440,7 +440,7 @@ func TestParse(t *testing.T) {
 		{
 			"$pbkdf2$cGFsZXN0aW5lIHdpbGwgYmUgZnJlZQ$EFpj2Mnn+EbXTxZD5kv5t5Y69wzPJnDEZI3BtqlRCH0",
 			PHC{
-				Id:      "pbkdf2",
+				ID:      "pbkdf2",
 				Version: "",
 				Params:  map[string]string{},
 				Salt:    "cGFsZXN0aW5lIHdpbGwgYmUgZnJlZQ",
@@ -451,7 +451,7 @@ func TestParse(t *testing.T) {
 		{
 			"$pbkdf2$f=SHA256,w=600000,l=32$cGFsZXN0aW5lIHdpbGwgYmUgZnJlZQ$EFpj2Mnn+EbXTxZD5kv5t5Y69wzPJnDEZI3BtqlRCH0",
 			PHC{
-				Id:      "pbkdf2",
+				ID:      "pbkdf2",
 				Version: "",
 				Params: map[string]string{
 					"w": "600000",
@@ -466,7 +466,7 @@ func TestParse(t *testing.T) {
 		{
 			"$pbkdf2$v=5$w=600000,f=SHA256,l=32$iHSDPHzUhPzK7rCcJgOFfg$J4moa2MM0/6uf3HbY2Tf5Fux8JIBTwIhmhxGRbsY14qhTltQt+Vw3b7tcJNEbk8ium8AQfZeD4tabCnNqfkD1g",
 			PHC{
-				Id:      "pbkdf2",
+				ID:      "pbkdf2",
 				Version: "5",
 				Params: map[string]string{
 					"w": "600000",
@@ -525,7 +525,7 @@ func TestParse(t *testing.T) {
 		{
 			"$pbkdf2$cGFsZXN0aW5lIHdpbGwgYmUgZnJlZQ" + strings.Repeat("a", MaxRunes),
 			PHC{
-				Id:      "pbkdf2",
+				ID:      "pbkdf2",
 				Version: "",
 				Params:  map[string]string{},
 				Salt:    "cGFsZXN0aW5lIHdpbGwgYmUgZnJlZQ" + strings.Repeat("a", MaxRunes-len("$pbkdf2$cGFsZXN0aW5lIHdpbGwgYmUgZnJlZQ")),
@@ -561,7 +561,7 @@ func TestParse(t *testing.T) {
 			// we don't check for specific strings as of today
 			"$2a$10$z0OlN1MpiLVlLTyE1xtEjOJ6/xV95RAwwIUaYKQBAqoeyvPgLEnUa",
 			PHC{
-				Id:      "2a",
+				ID:      "2a",
 				Version: "",
 				Params:  map[string]string{},
 				Salt:    "10",

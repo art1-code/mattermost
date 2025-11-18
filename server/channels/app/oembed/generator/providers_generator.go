@@ -48,7 +48,7 @@ type oEmbedEndpoint struct {
 }
 
 func main() {
-	inputJson, err := os.ReadFile("./generator/providers.json")
+	inputJSON, err := os.ReadFile("./generator/providers.json")
 	if err != nil {
 		panic(errors.Wrap(err, "Unable to read providers.json. Did you forget to put it next to providers_generator.go?"))
 	}
@@ -60,7 +60,7 @@ func main() {
 	defer outputFile.Close()
 
 	var input []*oEmbedProvider
-	err = json.Unmarshal(inputJson, &input)
+	err = json.Unmarshal(inputJSON, &input)
 	if err != nil {
 		panic(errors.Wrap(err, "Unable to read providers.json"))
 	}

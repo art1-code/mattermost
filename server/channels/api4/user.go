@@ -1048,7 +1048,7 @@ func getUsersByIds(c *Context, w http.ResponseWriter, r *http.Request) {
 
 	sinceString := r.URL.Query().Get("since")
 
-	options := &store.UserGetByIdsOpts{
+	options := &store.UserGetByIDsOpts{
 		IsAdmin: c.IsSystemAdmin(),
 	}
 

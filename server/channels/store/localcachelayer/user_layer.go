@@ -161,13 +161,13 @@ func (s *LocalCacheUserStore) GetAllProfilesInChannel(ctx context.Context, chann
 	return userMap, nil
 }
 
-func (s *LocalCacheUserStore) GetProfileByIds(rctx request.CTX, userIds []string, options *store.UserGetByIdsOpts, allowFromCache bool) ([]*model.User, error) {
+func (s *LocalCacheUserStore) GetProfileByIds(rctx request.CTX, userIds []string, options *store.UserGetByIDsOpts, allowFromCache bool) ([]*model.User, error) {
 	if !allowFromCache {
 		return s.UserStore.GetProfileByIds(rctx, userIds, options, false)
 	}
 
 	if options == nil {
-		options = &store.UserGetByIdsOpts{}
+		options = &store.UserGetByIDsOpts{}
 	}
 
 	users := []*model.User{}

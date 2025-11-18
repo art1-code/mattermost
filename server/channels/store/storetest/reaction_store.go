@@ -495,11 +495,11 @@ func testReactionDeleteAllWithEmojiName(t *testing.T, rctx request.CTX, ss store
 	})
 	require.NoError(t, err3)
 
-	userId := model.NewId()
+	userID := model.NewId()
 
 	reactions := []*model.Reaction{
 		{
-			UserId:    userId,
+			UserId:    userID,
 			PostId:    post.Id,
 			EmojiName: emojiToDelete,
 		},
@@ -509,17 +509,17 @@ func testReactionDeleteAllWithEmojiName(t *testing.T, rctx request.CTX, ss store
 			EmojiName: emojiToDelete,
 		},
 		{
-			UserId:    userId,
+			UserId:    userID,
 			PostId:    post.Id,
 			EmojiName: "sad",
 		},
 		{
-			UserId:    userId,
+			UserId:    userID,
 			PostId:    post2.Id,
 			EmojiName: "angry",
 		},
 		{
-			UserId:    userId,
+			UserId:    userID,
 			PostId:    post3.Id,
 			EmojiName: emojiToDelete,
 		},
@@ -571,7 +571,7 @@ func testReactionDeleteAllWithEmojiName(t *testing.T, rctx request.CTX, ss store
 }
 
 func testPermanentDeleteByUser(t *testing.T, rctx request.CTX, ss store.Store) {
-	userId := model.NewId()
+	userID := model.NewId()
 	post, err1 := ss.Post().Save(rctx, &model.Post{
 		ChannelId: model.NewId(),
 		UserId:    model.NewId(),
@@ -590,7 +590,7 @@ func testPermanentDeleteByUser(t *testing.T, rctx request.CTX, ss store.Store) {
 
 	reactions := []*model.Reaction{
 		{
-			UserId:    userId,
+			UserId:    userID,
 			PostId:    post.Id,
 			EmojiName: "happy",
 		},
@@ -605,12 +605,12 @@ func testPermanentDeleteByUser(t *testing.T, rctx request.CTX, ss store.Store) {
 			EmojiName: "sad",
 		},
 		{
-			UserId:    userId,
+			UserId:    userID,
 			PostId:    post2.Id,
 			EmojiName: "angry",
 		},
 		{
-			UserId:    userId,
+			UserId:    userID,
 			PostId:    post3.Id,
 			EmojiName: "joy",
 		},
@@ -621,7 +621,7 @@ func testPermanentDeleteByUser(t *testing.T, rctx request.CTX, ss store.Store) {
 		require.NoError(t, err)
 	}
 
-	err := ss.Reaction().PermanentDeleteByUser(userId)
+	err := ss.Reaction().PermanentDeleteByUser(userID)
 	require.NoError(t, err)
 
 	// check that the reactions were deleted
@@ -743,32 +743,32 @@ func testReactionStorePermanentDeleteBatch(t *testing.T, rctx request.CTX, ss st
 }
 
 func testReactionBulkGetForPosts(t *testing.T, rctx request.CTX, ss store.Store) {
-	userId := model.NewId()
+	userID := model.NewId()
 	post, _ := ss.Post().Save(rctx, &model.Post{
 		ChannelId: model.NewId(),
-		UserId:    userId,
+		UserId:    userID,
 	})
-	postId := post.Id
+	postID := post.Id
 	post, _ = ss.Post().Save(rctx, &model.Post{
 		ChannelId: model.NewId(),
-		UserId:    userId,
+		UserId:    userID,
 	})
 	post2Id := post.Id
 	post, _ = ss.Post().Save(rctx, &model.Post{
 		ChannelId: model.NewId(),
-		UserId:    userId,
+		UserId:    userID,
 	})
 	post3Id := post.Id
 	post, _ = ss.Post().Save(rctx, &model.Post{
 		ChannelId: model.NewId(),
-		UserId:    userId,
+		UserId:    userID,
 	})
 	post4Id := post.Id
 
 	reactions := []*model.Reaction{
 		{
-			UserId:    userId,
-			PostId:    postId,
+			UserId:    userID,
+			PostId:    postID,
 			EmojiName: "smile",
 		},
 		{
@@ -777,22 +777,22 @@ func testReactionBulkGetForPosts(t *testing.T, rctx request.CTX, ss store.Store)
 			EmojiName: "smile",
 		},
 		{
-			UserId:    userId,
+			UserId:    userID,
 			PostId:    post3Id,
 			EmojiName: "sad",
 		},
 		{
-			UserId:    userId,
-			PostId:    postId,
+			UserId:    userID,
+			PostId:    postID,
 			EmojiName: "angry",
 		},
 		{
-			UserId:    userId,
+			UserId:    userID,
 			PostId:    post2Id,
 			EmojiName: "angry",
 		},
 		{
-			UserId:    userId,
+			UserId:    userID,
 			PostId:    post4Id,
 			EmojiName: "angry",
 		},
@@ -803,7 +803,7 @@ func testReactionBulkGetForPosts(t *testing.T, rctx request.CTX, ss store.Store)
 		require.NoError(t, err)
 	}
 
-	postIds := []string{postId, post2Id, post3Id}
+	postIds := []string{postID, post2Id, post3Id}
 	returned, err := ss.Reaction().BulkGetForPosts(postIds)
 	require.NoError(t, err)
 	require.Len(t, returned, 5, "should've returned 5 reactions")

@@ -27,7 +27,7 @@ func TestPBKDF2Hash(t *testing.T) {
 
 	phc, err := phcparser.New(strings.NewReader(str)).Parse()
 	require.NoError(t, err)
-	require.Equal(t, "pbkdf2", phc.Id)
+	require.Equal(t, "pbkdf2", phc.ID)
 	require.Equal(t, "", phc.Version)
 	require.Equal(t, map[string]string{
 		"f": "SHA256",
