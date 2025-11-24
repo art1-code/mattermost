@@ -109,7 +109,7 @@ func getAccessControlPolicy(c *Context, w http.ResponseWriter, r *http.Request) 
 	policyID := c.Params.PolicyId
 
 	// Extract optional channelId from query parameters for context
-	channelID := r.URL.Query().Get("channelId")
+	channelID := r.URL.Query().Get("channelID")
 
 	// Check if user has system admin permission OR channel-specific permission
 	hasManageSystemPermission := c.App.SessionHasPermissionTo(*c.AppContext.Session(), model.PermissionManageSystem)
@@ -172,7 +172,7 @@ func checkExpression(c *Context, w http.ResponseWriter, r *http.Request) {
 	// for now, we only support the expression check
 	checkExpressionRequest := struct {
 		Expression string `json:"expression"`
-		ChannelId  string `json:"channelId,omitempty"`
+		ChannelID  string `json:"channelID,omitempty"`
 	}{}
 	if jsonErr := json.NewDecoder(r.Body).Decode(&checkExpressionRequest); jsonErr != nil {
 		c.SetInvalidParamWithErr("user", jsonErr)
@@ -180,9 +180,9 @@ func checkExpression(c *Context, w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get channelId from request body (required for channel-specific permission check)
-	channelId := checkExpressionRequest.ChannelId
-	if channelId != "" && !model.IsValidId(channelId) {
-		c.SetInvalidParam("channelId")
+	channelID := checkExpressionRequest.ChannelID
+	if channelID != "" && !model.IsValidId(channelID) {
+		c.SetInvalidParam("channelID")
 		return
 	}
 
@@ -190,13 +190,13 @@ func checkExpression(c *Context, w http.ResponseWriter, r *http.Request) {
 	hasSystemPermission := c.App.SessionHasPermissionTo(*c.AppContext.Session(), model.PermissionManageSystem)
 	if !hasSystemPermission {
 		// For channel admins, channelId is required
-		if channelId == "" {
+		if channelID == "" {
 			c.SetPermissionError(model.PermissionManageSystem)
 			return
 		}
 
 		// SECURE: Check specific channel permission
-		hasChannelPermission := c.App.HasPermissionToChannel(c.AppContext, c.AppContext.Session().UserId, channelId, model.PermissionManageChannelAccessRules)
+		hasChannelPermission := c.App.HasPermissionToChannel(c.AppContext, c.AppContext.Session().UserId, channelID, model.PermissionManageChannelAccessRules)
 		if !hasChannelPermission {
 			c.SetPermissionError(model.PermissionManageChannelAccessRules)
 			return
@@ -227,10 +227,9 @@ func testExpression(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Get channelId from request body (required for channel-specific permission check)
-	channelId := checkExpressionRequest.ChannelId
-	if channelId != "" && !model.IsValidId(channelId) {
-		c.SetInvalidParam("channelId")
+	// Get channelID from request body (required for channel-specific permission check)
+c	if channelID != "" && !model.IsValidId(channelID) {
+		c.SetInvalidParam("channelID")
 		return
 	}
 
@@ -238,13 +237,13 @@ func testExpression(c *Context, w http.ResponseWriter, r *http.Request) {
 	hasSystemPermission := c.App.SessionHasPermissionTo(*c.AppContext.Session(), model.PermissionManageSystem)
 	if !hasSystemPermission {
 		// For channel admins, channelId is required
-		if channelId == "" {
+		if channelID == "" {
 			c.SetPermissionError(model.PermissionManageSystem)
 			return
 		}
 
 		// SECURE: Check specific channel permission
-		hasChannelPermission := c.App.HasPermissionToChannel(c.AppContext, c.AppContext.Session().UserId, channelId, model.PermissionManageChannelAccessRules)
+		hasChannelPermission := c.App.HasPermissionToChannel(c.AppContext, c.AppContext.Session().UserId, channelID, model.PermissionManageChannelAccessRules)
 		if !hasChannelPermission {
 			c.SetPermissionError(model.PermissionManageChannelAccessRules)
 			return
@@ -295,7 +294,7 @@ func testExpression(c *Context, w http.ResponseWriter, r *http.Request) {
 func validateExpressionAgainstRequester(c *Context, w http.ResponseWriter, r *http.Request) {
 	var request struct {
 		Expression string `json:"expression"`
-		ChannelId  string `json:"channelId,omitempty"`
+		ChannelID  string `json:"channelID,omitempty"`
 	}
 
 	if jsonErr := json.NewDecoder(r.Body).Decode(&request); jsonErr != nil {
@@ -304,23 +303,23 @@ func validateExpressionAgainstRequester(c *Context, w http.ResponseWriter, r *ht
 	}
 
 	// Get channelId from request body (required for channel-specific permission check)
-	channelId := request.ChannelId
-	if channelId != "" && !model.IsValidId(channelId) {
-		c.SetInvalidParam("channelId")
+	channelID := request.ChannelID
+	if channelID != "" && !model.IsValidId(channelID) {
+		c.SetInvalidParam("channelID")
 		return
 	}
 
 	// Check permissions: system admin OR channel-specific permission
 	hasSystemPermission := c.App.SessionHasPermissionTo(*c.AppContext.Session(), model.PermissionManageSystem)
 	if !hasSystemPermission {
-		// For channel admins, channelId is required
-		if channelId == "" {
+		// For channel admins, channelID is required
+		if channelID == "" {
 			c.SetPermissionError(model.PermissionManageSystem)
 			return
 		}
 
 		// SECURE: Check specific channel permission
-		hasChannelPermission := c.App.HasPermissionToChannel(c.AppContext, c.AppContext.Session().UserId, channelId, model.PermissionManageChannelAccessRules)
+		hasChannelPermission := c.App.HasPermissionToChannel(c.AppContext, c.AppContext.Session().UserId, channelID, model.PermissionManageChannelAccessRules)
 		if !hasChannelPermission {
 			c.SetPermissionError(model.PermissionManageChannelAccessRules)
 			return
@@ -447,7 +446,7 @@ func assignAccessPolicy(c *Context, w http.ResponseWriter, r *http.Request) {
 	policyID := c.Params.PolicyId
 
 	var assignments struct {
-		ChannelIds []string `json:"channel_ids"`
+		ChannelIDs []string `json:"channel_ids"`
 	}
 
 	err := json.NewDecoder(r.Body).Decode(&assignments)
@@ -459,10 +458,10 @@ func assignAccessPolicy(c *Context, w http.ResponseWriter, r *http.Request) {
 	auditRec := c.MakeAuditRecord(model.AuditEventAssignAccessPolicy, model.AuditStatusFail)
 	defer c.LogAuditRec(auditRec)
 	model.AddEventParameterToAuditRec(auditRec, "id", policyID)
-	model.AddEventParameterToAuditRec(auditRec, "channel_ids", assignments.ChannelIds)
+	model.AddEventParameterToAuditRec(auditRec, "channel_ids", assignments.ChannelIDs)
 
-	if len(assignments.ChannelIds) != 0 {
-		_, appErr := c.App.AssignAccessControlPolicyToChannels(c.AppContext, policyID, assignments.ChannelIds)
+	if len(assignments.ChannelIDs) != 0 {
+		_, appErr := c.App.AssignAccessControlPolicyToChannels(c.AppContext, policyID, assignments.ChannelIDs)
 		if appErr != nil {
 			c.Err = appErr
 			return
@@ -485,13 +484,13 @@ func unassignAccessPolicy(c *Context, w http.ResponseWriter, r *http.Request) {
 	policyID := c.Params.PolicyId
 
 	var assignments struct {
-		ChannelIds []string `json:"channel_ids"`
+		ChannelIDs []string `json:"channel_ids"`
 	}
 
 	auditRec := c.MakeAuditRecord(model.AuditEventUnassignAccessPolicy, model.AuditStatusFail)
 	defer c.LogAuditRec(auditRec)
 	model.AddEventParameterToAuditRec(auditRec, "id", policyID)
-	model.AddEventParameterToAuditRec(auditRec, "channel_ids", assignments.ChannelIds)
+	model.AddEventParameterToAuditRec(auditRec, "channel_ids", assignments.ChannelIDs)
 
 	err := json.NewDecoder(r.Body).Decode(&assignments)
 	if err != nil {
@@ -499,8 +498,8 @@ func unassignAccessPolicy(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if len(assignments.ChannelIds) != 0 {
-		appErr := c.App.UnassignPoliciesFromChannels(c.AppContext, policyID, assignments.ChannelIds)
+	if len(assignments.ChannelIDs) != 0 {
+		appErr := c.App.UnassignPoliciesFromChannels(c.AppContext, policyID, assignments.ChannelIDs)
 		if appErr != nil {
 			c.Err = appErr
 			return
@@ -608,9 +607,9 @@ func searchChannelsForAccessControlPolicy(c *Context, w http.ResponseWriter, r *
 
 func getFieldsAutocomplete(c *Context, w http.ResponseWriter, r *http.Request) {
 	// Get channelId from query parameters (required for channel-specific permission check)
-	channelId := r.URL.Query().Get("channelId")
-	if channelId != "" && !model.IsValidId(channelId) {
-		c.SetInvalidParam("channelId")
+	channelID := r.URL.Query().Get("channelID")
+	if channelID != "" && !model.IsValidId(channelID) {
+		c.SetInvalidParam("channelID")
 		return
 	}
 
@@ -618,13 +617,13 @@ func getFieldsAutocomplete(c *Context, w http.ResponseWriter, r *http.Request) {
 	hasSystemPermission := c.App.SessionHasPermissionTo(*c.AppContext.Session(), model.PermissionManageSystem)
 	if !hasSystemPermission {
 		// For channel admins, channelId is required
-		if channelId == "" {
+		if channelID == "" {
 			c.SetPermissionError(model.PermissionManageSystem)
 			return
 		}
 
 		// SECURE: Check specific channel permission
-		hasChannelPermission := c.App.HasPermissionToChannel(c.AppContext, c.AppContext.Session().UserId, channelId, model.PermissionManageChannelAccessRules)
+		hasChannelPermission := c.App.HasPermissionToChannel(c.AppContext, c.AppContext.Session().UserId, channelID, model.PermissionManageChannelAccessRules)
 		if !hasChannelPermission {
 			c.SetPermissionError(model.PermissionManageChannelAccessRules)
 			return
@@ -674,7 +673,7 @@ func getFieldsAutocomplete(c *Context, w http.ResponseWriter, r *http.Request) {
 func convertToVisualAST(c *Context, w http.ResponseWriter, r *http.Request) {
 	var cel struct {
 		Expression string `json:"expression"`
-		ChannelId  string `json:"channelId,omitempty"`
+		ChannelID  string `json:"channelID,omitempty"`
 	}
 	if jsonErr := json.NewDecoder(r.Body).Decode(&cel); jsonErr != nil {
 		c.SetInvalidParamWithErr("user", jsonErr)
@@ -682,9 +681,9 @@ func convertToVisualAST(c *Context, w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get channelId from request body (required for channel-specific permission check)
-	channelId := cel.ChannelId
-	if channelId != "" && !model.IsValidId(channelId) {
-		c.SetInvalidParam("channelId")
+	channelID := cel.ChannelID
+	if channelID != "" && !model.IsValidId(channelID) {
+		c.SetInvalidParam("channelID")
 		return
 	}
 
@@ -692,13 +691,13 @@ func convertToVisualAST(c *Context, w http.ResponseWriter, r *http.Request) {
 	hasSystemPermission := c.App.SessionHasPermissionTo(*c.AppContext.Session(), model.PermissionManageSystem)
 	if !hasSystemPermission {
 		// For channel admins, channelId is required
-		if channelId == "" {
+		if channelID == "" {
 			c.SetPermissionError(model.PermissionManageSystem)
 			return
 		}
 
 		// SECURE: Check specific channel permission
-		hasChannelPermission := c.App.HasPermissionToChannel(c.AppContext, c.AppContext.Session().UserId, channelId, model.PermissionManageChannelAccessRules)
+		hasChannelPermission := c.App.HasPermissionToChannel(c.AppContext, c.AppContext.Session().UserId, channelID, model.PermissionManageChannelAccessRules)
 		if !hasChannelPermission {
 			c.SetPermissionError(model.PermissionManageChannelAccessRules)
 			return

@@ -33,11 +33,11 @@ linters:
         text: SetupEnterprise
       - linters:
           - revive
-        text: var-naming|error-naming|exported|increment-decrement|error-strings|if-return|unused-parameter|blank-imports|empty-block
+        text: error-naming|exported|increment-decrement|error-strings|if-return|unused-parameter|blank-imports|empty-block
       - linters:
           - revive
         path: enterprise
-        text: var-naming|error-naming|exported|increment-decrement|error-strings|if-return|unused-parameter|blank-imports|empty-block
+        text: error-naming|exported|increment-decrement|error-strings|if-return|unused-parameter|blank-imports|empty-block
       - linters:
           - misspell
         path: platform/shared/markdown/html_entities.go
