@@ -14,14 +14,14 @@ type Draft struct {
 	UpdateAt  int64  `json:"update_at"`
 	DeleteAt  int64  `json:"delete_at"` // Deprecated, we now just hard delete the rows
 	UserId    string `json:"user_id"`
-	ChannelId string `json:"channel_id"`
+	ChannelID string `json:"channel_id"`
 	RootId    string `json:"root_id"`
 
 	Message string `json:"message"`
 
 	propsMu  sync.RWMutex    `db:"-"`       // Unexported mutex used to guard Draft.Props.
 	Props    StringInterface `json:"props"` // Deprecated: use GetProps()
-	FileIds  StringArray     `json:"file_ids,omitempty"`
+	FileIDs  StringArray     `json:"file_ids,omitempty"`
 	Metadata *PostMetadata   `json:"metadata,omitempty"`
 	Priority StringInterface `json:"priority,omitempty"`
 }
@@ -29,7 +29,7 @@ type Draft struct {
 func (o *Draft) IsValid(maxDraftSize int) *AppError {
 	if utf8.RuneCountInString(o.Message) > maxDraftSize {
 		return NewAppError("Drafts.IsValid", "model.draft.is_valid.message_length.app_error",
-			map[string]any{"Length": utf8.RuneCountInString(o.Message), "MaxLength": maxDraftSize}, "channelid="+o.ChannelId, http.StatusBadRequest)
+			map[string]any{"Length": utf8.RuneCountInString(o.Message), "MaxLength": maxDraftSize}, "channelid="+o.ChannelID, http.StatusBadRequest)
 	}
 
 	return o.BaseIsValid()
@@ -37,18 +37,18 @@ func (o *Draft) IsValid(maxDraftSize int) *AppError {
 
 func (o *Draft) BaseIsValid() *AppError {
 	if o.CreateAt == 0 {
-		return NewAppError("Drafts.IsValid", "model.draft.is_valid.create_at.app_error", nil, "channelid="+o.ChannelId, http.StatusBadRequest)
+		return NewAppError("Drafts.IsValid", "model.draft.is_valid.create_at.app_error", nil, "channelid="+o.ChannelID, http.StatusBadRequest)
 	}
 
 	if o.UpdateAt == 0 {
-		return NewAppError("Drafts.IsValid", "model.draft.is_valid.update_at.app_error", nil, "channelid="+o.ChannelId, http.StatusBadRequest)
+		return NewAppError("Drafts.IsValid", "model.draft.is_valid.update_at.app_error", nil, "channelid="+o.ChannelID, http.StatusBadRequest)
 	}
 
 	if !IsValidId(o.UserId) {
 		return NewAppError("Drafts.IsValid", "model.draft.is_valid.user_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
-	if !IsValidId(o.ChannelId) {
+	if !IsValidId(o.ChannelID) {
 		return NewAppError("Drafts.IsValid", "model.draft.is_valid.channel_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
@@ -56,16 +56,16 @@ func (o *Draft) BaseIsValid() *AppError {
 		return NewAppError("Drafts.IsValid", "model.draft.is_valid.root_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
-	if utf8.RuneCountInString(ArrayToJSON(o.FileIds)) > PostFileidsMaxRunes {
-		return NewAppError("Drafts.IsValid", "model.draft.is_valid.file_ids.app_error", nil, "channelid="+o.ChannelId, http.StatusBadRequest)
+	if utf8.RuneCountInString(ArrayToJSON(o.FileIDs)) > PostFileidsMaxRunes {
+		return NewAppError("Drafts.IsValid", "model.draft.is_valid.file_ids.app_error", nil, "channelid="+o.ChannelID, http.StatusBadRequest)
 	}
 
 	if utf8.RuneCountInString(StringInterfaceToJSON(o.GetProps())) > PostPropsMaxRunes {
-		return NewAppError("Drafts.IsValid", "model.draft.is_valid.props.app_error", nil, "channelid="+o.ChannelId, http.StatusBadRequest)
+		return NewAppError("Drafts.IsValid", "model.draft.is_valid.props.app_error", nil, "channelid="+o.ChannelID, http.StatusBadRequest)
 	}
 
 	if utf8.RuneCountInString(StringInterfaceToJSON(o.Priority)) > PostPropsMaxRunes {
-		return NewAppError("Drafts.IsValid", "model.draft.is_valid.priority.app_error", nil, "channelid="+o.ChannelId, http.StatusBadRequest)
+		return NewAppError("Drafts.IsValid", "model.draft.is_valid.priority.app_error", nil, "channelid="+o.ChannelID, http.StatusBadRequest)
 	}
 
 	return nil
@@ -100,10 +100,10 @@ func (o *Draft) PreCommit() {
 		o.SetProps(make(map[string]any))
 	}
 
-	if o.FileIds == nil {
-		o.FileIds = []string{}
+	if o.FileIDs == nil {
+		o.FileIDs = []string{}
 	}
 
 	// There's a rare bug where the client sends up duplicate FileIds so protect against that
-	o.FileIds = RemoveDuplicateStrings(o.FileIds)
+	o.FileIDs = RemoveDuplicateStrings(o.FileIDs)
 }

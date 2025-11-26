@@ -106,7 +106,7 @@ func (p *AccessControlPolicy) accessPolicyVersionV0_1() *AppError {
 		return NewAppError("AccessControlPolicy.IsValid", "model.access_policy.is_valid.type.app_error", nil, "", 400)
 	}
 
-	if !IsValidId(p.ID) {
+	if !IsValidID(p.ID) {
 		return NewAppError("AccessControlPolicy.IsValid", "model.access_policy.is_valid.id.app_error", nil, "", 400)
 	}
 
@@ -153,7 +153,7 @@ func (p *AccessControlPolicy) accessPolicyVersionV0_2() *AppError {
 		return NewAppError("AccessControlPolicy.IsValid", "model.access_policy.is_valid.type.app_error", nil, "", 400)
 	}
 
-	if !IsValidId(p.ID) {
+	if !IsValidID(p.ID) {
 		return NewAppError("AccessControlPolicy.IsValid", "model.access_policy.is_valid.id.app_error", nil, "", 400)
 	}
 
@@ -227,7 +227,7 @@ func (c *AccessControlPolicyCursor) IsValid() error {
 		return nil
 	}
 
-	if !IsValidId(c.ID) {
+	if !IsValidID(c.ID) {
 		return errors.New("cursor id is invalid")
 	}
 

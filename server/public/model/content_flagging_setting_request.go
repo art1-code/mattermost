@@ -18,7 +18,7 @@ func (rs *ReviewSettingsRequest) IsValid() *AppError {
 	additionalReviewersEnabled := *rs.SystemAdminsAsReviewers || *rs.TeamAdminsAsReviewers
 
 	// If common reviewers are enabled, there must be at least one specified reviewer, or additional viewers be specified
-	if *rs.CommonReviewers && len(rs.CommonReviewerIds) == 0 && !additionalReviewersEnabled {
+	if *rs.CommonReviewers && len(rs.CommonReviewerIDs) == 0 && !additionalReviewersEnabled {
 		return NewAppError("Config.IsValid", "model.config.is_valid.content_flagging.common_reviewers_not_set.app_error", nil, "", http.StatusBadRequest)
 	}
 
@@ -27,7 +27,7 @@ func (rs *ReviewSettingsRequest) IsValid() *AppError {
 	// enabling team feature and not specified reviews is fine as well (since Additional Reviewers are set)
 	if !additionalReviewersEnabled {
 		for _, setting := range rs.TeamReviewersSetting {
-			if *setting.Enabled && len(setting.ReviewerIds) == 0 {
+			if *setting.Enabled && len(setting.ReviewerIDs) == 0 {
 				return NewAppError("Config.IsValid", "model.config.is_valid.content_flagging.team_reviewers_not_set.app_error", nil, "", http.StatusBadRequest)
 			}
 		}

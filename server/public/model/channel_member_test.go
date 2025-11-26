@@ -16,10 +16,10 @@ func TestChannelMemberIsValid(t *testing.T) {
 
 	require.NotNil(t, o.IsValid(), "should be invalid")
 
-	o.ChannelId = NewId()
+	o.ChannelID = NewID()
 	require.NotNil(t, o.IsValid(), "should be invalid")
 
-	o.UserId = NewId()
+	o.UserID = NewID()
 	require.NotNil(t, o.IsValid(), "should be invalid because of missing notify props")
 
 	o.NotifyProps = GetDefaultChannelNotifyProps()
@@ -60,14 +60,14 @@ func TestIsChannelMemberNotifyPropsValid(t *testing.T) {
 }
 
 func TestChannelMemberSanitizeForCurrentUser(t *testing.T) {
-	currentUserId := NewId()
-	otherUserId := NewId()
-	channelId := NewId()
+	currentUserID := NewID()
+	otherUserID := NewID()
+	channelID := NewID()
 
 	t.Run("should not sanitize current user's own membership", func(t *testing.T) {
 		member := &ChannelMember{
-			ChannelId:    channelId,
-			UserId:       currentUserId,
+			ChannelID:    channelID,
+			UserID:       currentUserID,
 			LastViewedAt: 1234567890000,
 			LastUpdateAt: 1234567890000,
 			NotifyProps:  GetDefaultChannelNotifyProps(),
@@ -76,7 +76,7 @@ func TestChannelMemberSanitizeForCurrentUser(t *testing.T) {
 		originalLastViewedAt := member.LastViewedAt
 		originalLastUpdateAt := member.LastUpdateAt
 
-		member.SanitizeForCurrentUser(currentUserId)
+		member.SanitizeForCurrentUser(currentUserID)
 
 		assert.Equal(t, originalLastViewedAt, member.LastViewedAt, "LastViewedAt should not be sanitized for current user")
 		assert.Equal(t, originalLastUpdateAt, member.LastUpdateAt, "LastUpdateAt should not be sanitized for current user")
@@ -84,14 +84,14 @@ func TestChannelMemberSanitizeForCurrentUser(t *testing.T) {
 
 	t.Run("should sanitize other users' membership data", func(t *testing.T) {
 		member := &ChannelMember{
-			ChannelId:    channelId,
-			UserId:       otherUserId,
+			ChannelID:    channelID,
+			UserID:       otherUserID,
 			LastViewedAt: 1234567890000,
 			LastUpdateAt: 1234567890000,
 			NotifyProps:  GetDefaultChannelNotifyProps(),
 		}
 
-		member.SanitizeForCurrentUser(currentUserId)
+		member.SanitizeForCurrentUser(currentUserID)
 
 		assert.Equal(t, int64(-1), member.LastViewedAt, "LastViewedAt should be sanitized for other users")
 		assert.Equal(t, int64(-1), member.LastUpdateAt, "LastUpdateAt should be sanitized for other users")
@@ -99,8 +99,8 @@ func TestChannelMemberSanitizeForCurrentUser(t *testing.T) {
 
 	t.Run("should preserve other fields when sanitizing", func(t *testing.T) {
 		member := &ChannelMember{
-			ChannelId:     channelId,
-			UserId:        otherUserId,
+			ChannelID:     channelID,
+			UserID:        otherUserID,
 			Roles:         "channel_user",
 			LastViewedAt:  1234567890000,
 			LastUpdateAt:  1234567890000,
@@ -118,7 +118,7 @@ func TestChannelMemberSanitizeForCurrentUser(t *testing.T) {
 		originalSchemeUser := member.SchemeUser
 		originalSchemeAdmin := member.SchemeAdmin
 
-		member.SanitizeForCurrentUser(currentUserId)
+		member.SanitizeForCurrentUser(currentUserID)
 
 		assert.Equal(t, int64(-1), member.LastViewedAt, "LastViewedAt should be sanitized")
 		assert.Equal(t, int64(-1), member.LastUpdateAt, "LastUpdateAt should be sanitized")

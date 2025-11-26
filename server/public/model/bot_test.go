@@ -13,27 +13,27 @@ import (
 
 func TestBotTrace(t *testing.T) {
 	bot := &Bot{
-		UserId:         NewId(),
+		UserID:         NewID(),
 		Username:       "username",
 		DisplayName:    "display name",
 		Description:    "description",
-		OwnerId:        NewId(),
+		OwnerID:        NewID(),
 		LastIconUpdate: 1,
 		CreateAt:       2,
 		UpdateAt:       3,
 		DeleteAt:       4,
 	}
 
-	require.Equal(t, map[string]any{"user_id": bot.UserId}, bot.Trace())
+	require.Equal(t, map[string]any{"user_id": bot.UserID}, bot.Trace())
 }
 
 func TestBotClone(t *testing.T) {
 	bot := &Bot{
-		UserId:         NewId(),
+		UserID:         NewID(),
 		Username:       "username",
 		DisplayName:    "display name",
 		Description:    "description",
-		OwnerId:        NewId(),
+		OwnerID:        NewID(),
 		LastIconUpdate: 1,
 		CreateAt:       2,
 		UpdateAt:       3,
@@ -60,11 +60,11 @@ func TestBotIsValid(t *testing.T) {
 		{
 			"bot with missing user id",
 			&Bot{
-				UserId:         "",
+				UserID:         "",
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        NewId(),
+				OwnerID:        NewID(),
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -75,11 +75,11 @@ func TestBotIsValid(t *testing.T) {
 		{
 			"bot with invalid user id",
 			&Bot{
-				UserId:         "invalid",
+				UserID:         "invalid",
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        NewId(),
+				OwnerID:        NewID(),
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -90,11 +90,11 @@ func TestBotIsValid(t *testing.T) {
 		{
 			"bot with missing username",
 			&Bot{
-				UserId:         NewId(),
+				UserID:         NewID(),
 				Username:       "",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        NewId(),
+				OwnerID:        NewID(),
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -105,11 +105,11 @@ func TestBotIsValid(t *testing.T) {
 		{
 			"bot with invalid username",
 			&Bot{
-				UserId:         NewId(),
+				UserID:         NewID(),
 				Username:       "a@",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        NewId(),
+				OwnerID:        NewID(),
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -120,11 +120,11 @@ func TestBotIsValid(t *testing.T) {
 		{
 			"bot with long description",
 			&Bot{
-				UserId:         "",
+				UserID:         "",
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    strings.Repeat("x", 1025),
-				OwnerId:        NewId(),
+				OwnerID:        NewID(),
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -135,11 +135,11 @@ func TestBotIsValid(t *testing.T) {
 		{
 			"bot with missing creator id",
 			&Bot{
-				UserId:         NewId(),
+				UserID:         NewID(),
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        "",
+				OwnerID:        "",
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -150,11 +150,11 @@ func TestBotIsValid(t *testing.T) {
 		{
 			"bot without create at timestamp",
 			&Bot{
-				UserId:         NewId(),
+				UserID:         NewID(),
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        NewId(),
+				OwnerID:        NewID(),
 				LastIconUpdate: 1,
 				CreateAt:       0,
 				UpdateAt:       3,
@@ -165,11 +165,11 @@ func TestBotIsValid(t *testing.T) {
 		{
 			"bot without update at timestamp",
 			&Bot{
-				UserId:         NewId(),
+				UserID:         NewID(),
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        NewId(),
+				OwnerID:        NewID(),
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       0,
@@ -180,11 +180,11 @@ func TestBotIsValid(t *testing.T) {
 		{
 			"bot",
 			&Bot{
-				UserId:         NewId(),
+				UserID:         NewID(),
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        NewId(),
+				OwnerID:        NewID(),
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -195,11 +195,11 @@ func TestBotIsValid(t *testing.T) {
 		{
 			"bot without description",
 			&Bot{
-				UserId:         NewId(),
+				UserID:         NewID(),
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "",
-				OwnerId:        NewId(),
+				OwnerID:        NewID(),
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -210,11 +210,11 @@ func TestBotIsValid(t *testing.T) {
 		{
 			"deleted bot",
 			&Bot{
-				UserId:         NewId(),
+				UserID:         NewID(),
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "a description",
-				OwnerId:        NewId(),
+				OwnerID:        NewID(),
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -237,21 +237,21 @@ func TestBotIsValid(t *testing.T) {
 
 func TestBotPreSave(t *testing.T) {
 	bot := &Bot{
-		UserId:         NewId(),
+		UserID:         NewID(),
 		Username:       "username",
 		DisplayName:    "display name",
 		Description:    "description",
-		OwnerId:        NewId(),
+		OwnerID:        NewID(),
 		LastIconUpdate: 0,
 		DeleteAt:       0,
 	}
 
 	originalBot := &Bot{
-		UserId:         bot.UserId,
+		UserID:         bot.UserID,
 		Username:       bot.Username,
 		DisplayName:    bot.DisplayName,
 		Description:    bot.Description,
-		OwnerId:        bot.OwnerId,
+		OwnerID:        bot.OwnerID,
 		LastIconUpdate: bot.LastIconUpdate,
 		DeleteAt:       bot.DeleteAt,
 	}
@@ -267,22 +267,22 @@ func TestBotPreSave(t *testing.T) {
 
 func TestBotPreUpdate(t *testing.T) {
 	bot := &Bot{
-		UserId:         NewId(),
+		UserID:         NewID(),
 		Username:       "username",
 		DisplayName:    "display name",
 		Description:    "description",
-		OwnerId:        NewId(),
+		OwnerID:        NewID(),
 		LastIconUpdate: 1,
 		CreateAt:       2,
 		DeleteAt:       0,
 	}
 
 	originalBot := &Bot{
-		UserId:         bot.UserId,
+		UserID:         bot.UserID,
 		Username:       bot.Username,
 		DisplayName:    bot.DisplayName,
 		Description:    bot.Description,
-		OwnerId:        bot.OwnerId,
+		OwnerID:        bot.OwnerID,
 		LastIconUpdate: bot.LastIconUpdate,
 		DeleteAt:       bot.DeleteAt,
 	}
@@ -298,11 +298,11 @@ func TestBotPreUpdate(t *testing.T) {
 func TestBotEtag(t *testing.T) {
 	t.Run("same etags", func(t *testing.T) {
 		bot1 := &Bot{
-			UserId:         NewId(),
+			UserID:         NewID(),
 			Username:       "username",
 			DisplayName:    "display name",
 			Description:    "description",
-			OwnerId:        NewId(),
+			OwnerID:        NewID(),
 			LastIconUpdate: 1,
 			CreateAt:       2,
 			UpdateAt:       3,
@@ -315,22 +315,22 @@ func TestBotEtag(t *testing.T) {
 	t.Run("different etags", func(t *testing.T) {
 		t.Run("different user id", func(t *testing.T) {
 			bot1 := &Bot{
-				UserId:         NewId(),
+				UserID:         NewID(),
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        NewId(),
+				OwnerID:        NewID(),
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
 				DeleteAt:       4,
 			}
 			bot2 := &Bot{
-				UserId:         NewId(),
+				UserID:         NewID(),
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        bot1.OwnerId,
+				OwnerID:        bot1.OwnerID,
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -341,22 +341,22 @@ func TestBotEtag(t *testing.T) {
 		})
 		t.Run("different update at", func(t *testing.T) {
 			bot1 := &Bot{
-				UserId:         NewId(),
+				UserID:         NewID(),
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        NewId(),
+				OwnerID:        NewID(),
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
 				DeleteAt:       4,
 			}
 			bot2 := &Bot{
-				UserId:         bot1.UserId,
+				UserID:         bot1.UserID,
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        bot1.OwnerId,
+				OwnerID:        bot1.OwnerID,
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       10,
@@ -369,8 +369,8 @@ func TestBotEtag(t *testing.T) {
 }
 
 func TestBotPatch(t *testing.T) {
-	userId1 := NewId()
-	creatorId1 := NewId()
+	userID1 := NewID()
+	creatorID1 := NewID()
 
 	testCases := []struct {
 		Description string
@@ -381,11 +381,11 @@ func TestBotPatch(t *testing.T) {
 		{
 			"no update",
 			&Bot{
-				UserId:         userId1,
+				UserID:         userID1,
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        creatorId1,
+				OwnerID:        creatorID1,
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -393,11 +393,11 @@ func TestBotPatch(t *testing.T) {
 			},
 			&BotPatch{},
 			&Bot{
-				UserId:         userId1,
+				UserID:         userID1,
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        creatorId1,
+				OwnerID:        creatorID1,
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -407,11 +407,11 @@ func TestBotPatch(t *testing.T) {
 		{
 			"partial update",
 			&Bot{
-				UserId:         userId1,
+				UserID:         userID1,
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        creatorId1,
+				OwnerID:        creatorID1,
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -423,11 +423,11 @@ func TestBotPatch(t *testing.T) {
 				Description: NewPointer("new description"),
 			},
 			&Bot{
-				UserId:         userId1,
+				UserID:         userID1,
 				Username:       "new_username",
 				DisplayName:    "display name",
 				Description:    "new description",
-				OwnerId:        creatorId1,
+				OwnerID:        creatorID1,
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -437,11 +437,11 @@ func TestBotPatch(t *testing.T) {
 		{
 			"full update",
 			&Bot{
-				UserId:         userId1,
+				UserID:         userID1,
 				Username:       "username",
 				DisplayName:    "display name",
 				Description:    "description",
-				OwnerId:        creatorId1,
+				OwnerID:        creatorID1,
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -453,11 +453,11 @@ func TestBotPatch(t *testing.T) {
 				Description: NewPointer("new description"),
 			},
 			&Bot{
-				UserId:         userId1,
+				UserID:         userID1,
 				Username:       "new_username",
 				DisplayName:    "new display name",
 				Description:    "new description",
-				OwnerId:        creatorId1,
+				OwnerID:        creatorID1,
 				LastIconUpdate: 1,
 				CreateAt:       2,
 				UpdateAt:       3,
@@ -476,7 +476,7 @@ func TestBotPatch(t *testing.T) {
 
 func TestBotWouldPatch(t *testing.T) {
 	b := &Bot{
-		UserId: NewId(),
+		UserID: NewID(),
 	}
 
 	t.Run("nil patch", func(t *testing.T) {
@@ -510,11 +510,11 @@ func TestBotWouldPatch(t *testing.T) {
 
 func TestUserFromBot(t *testing.T) {
 	bot1 := &Bot{
-		UserId:         NewId(),
+		UserID:         NewID(),
 		Username:       "username",
 		DisplayName:    "display name",
 		Description:    "description",
-		OwnerId:        NewId(),
+		OwnerID:        NewID(),
 		LastIconUpdate: 1,
 		CreateAt:       2,
 		UpdateAt:       3,
@@ -522,11 +522,11 @@ func TestUserFromBot(t *testing.T) {
 	}
 
 	bot2 := &Bot{
-		UserId:         NewId(),
+		UserID:         NewID(),
 		Username:       "username2",
 		DisplayName:    "display name 2",
 		Description:    "description 2",
-		OwnerId:        NewId(),
+		OwnerID:        NewID(),
 		LastIconUpdate: 5,
 		CreateAt:       6,
 		UpdateAt:       7,
@@ -534,14 +534,14 @@ func TestUserFromBot(t *testing.T) {
 	}
 
 	assert.Equal(t, &User{
-		Id:        bot1.UserId,
+		ID:        bot1.UserID,
 		Username:  "username",
 		Email:     "username@localhost",
 		FirstName: "display name",
 		Roles:     "system_user",
 	}, UserFromBot(bot1))
 	assert.Equal(t, &User{
-		Id:        bot2.UserId,
+		ID:        bot2.UserID,
 		Username:  "username2",
 		Email:     "username2@localhost",
 		FirstName: "display name 2",
@@ -551,7 +551,7 @@ func TestUserFromBot(t *testing.T) {
 
 func TestBotFromUser(t *testing.T) {
 	user := &User{
-		Id:       NewId(),
+		ID:       NewID(),
 		Username: "username",
 		CreateAt: 1,
 		UpdateAt: 2,
@@ -559,8 +559,8 @@ func TestBotFromUser(t *testing.T) {
 	}
 
 	assert.Equal(t, &Bot{
-		OwnerId:     user.Id,
-		UserId:      user.Id,
+		OwnerID:     user.ID,
+		UserID:      user.ID,
 		Username:    "username",
 		DisplayName: "username",
 	}, BotFromUser(user))
@@ -568,11 +568,11 @@ func TestBotFromUser(t *testing.T) {
 
 func TestBotListEtag(t *testing.T) {
 	bot1 := &Bot{
-		UserId:         NewId(),
+		UserID:         NewID(),
 		Username:       "username",
 		DisplayName:    "display name",
 		Description:    "description",
-		OwnerId:        NewId(),
+		OwnerID:        NewID(),
 		LastIconUpdate: 1,
 		CreateAt:       2,
 		UpdateAt:       3,
@@ -580,11 +580,11 @@ func TestBotListEtag(t *testing.T) {
 	}
 
 	bot1Updated := &Bot{
-		UserId:         NewId(),
+		UserID:         NewID(),
 		Username:       "username",
 		DisplayName:    "display name",
 		Description:    "description",
-		OwnerId:        NewId(),
+		OwnerID:        NewID(),
 		LastIconUpdate: 1,
 		CreateAt:       2,
 		UpdateAt:       10,
@@ -592,11 +592,11 @@ func TestBotListEtag(t *testing.T) {
 	}
 
 	bot2 := &Bot{
-		UserId:         NewId(),
+		UserID:         NewID(),
 		Username:       "username",
 		DisplayName:    "display name",
 		Description:    "description",
-		OwnerId:        NewId(),
+		OwnerID:        NewID(),
 		LastIconUpdate: 5,
 		CreateAt:       6,
 		UpdateAt:       7,
@@ -672,7 +672,7 @@ func TestIsBotChannel(t *testing.T) {
 		{
 			Name: "a direct channel with another user",
 			Channel: &Channel{
-				Name: GetDMNameFromIds("user1", "user2"),
+				Name: GetDMNameFromIDs("user1", "user2"),
 				Type: ChannelTypeDirect,
 			},
 			Expected: false,
@@ -680,7 +680,7 @@ func TestIsBotChannel(t *testing.T) {
 		{
 			Name: "a direct channel with the name containing the bot's ID first",
 			Channel: &Channel{
-				Name: GetDMNameFromIds("botUserID", "user2"),
+				Name: GetDMNameFromIDs("botUserID", "user2"),
 				Type: ChannelTypeDirect,
 			},
 			Expected: true,
@@ -688,7 +688,7 @@ func TestIsBotChannel(t *testing.T) {
 		{
 			Name: "a direct channel with the name containing the bot's ID second",
 			Channel: &Channel{
-				Name: GetDMNameFromIds("user1", "botUserID"),
+				Name: GetDMNameFromIDs("user1", "botUserID"),
 				Type: ChannelTypeDirect,
 			},
 			Expected: true,

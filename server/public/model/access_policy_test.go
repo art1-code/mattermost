@@ -23,7 +23,7 @@ func TestAccessPolicyVersionV0_1(t *testing.T) {
 
 		err := policy.accessPolicyVersionV0_1()
 		require.NotNil(t, err, "Should return error for invalid type")
-		require.Equal(t, "model.access_policy.is_valid.type.app_error", err.Id)
+		require.Equal(t, "model.access_policy.is_valid.type.app_error", err.ID)
 	})
 
 	t.Run("invalid ID", func(t *testing.T) {
@@ -38,12 +38,12 @@ func TestAccessPolicyVersionV0_1(t *testing.T) {
 
 		err := policy.accessPolicyVersionV0_1()
 		require.NotNil(t, err, "Should return error for invalid ID")
-		require.Equal(t, "model.access_policy.is_valid.id.app_error", err.Id)
+		require.Equal(t, "model.access_policy.is_valid.id.app_error", err.ID)
 	})
 
 	t.Run("parent policy with empty name", func(t *testing.T) {
 		policy := &AccessControlPolicy{
-			ID:       NewId(),
+			ID:       NewID(),
 			Type:     AccessControlPolicyTypeParent,
 			Name:     "",
 			Revision: 1,
@@ -53,7 +53,7 @@ func TestAccessPolicyVersionV0_1(t *testing.T) {
 
 		err := policy.accessPolicyVersionV0_1()
 		require.NotNil(t, err, "Should return error for empty name in parent policy")
-		require.Equal(t, "model.access_policy.is_valid.name.app_error", err.Id)
+		require.Equal(t, "model.access_policy.is_valid.name.app_error", err.ID)
 	})
 
 	t.Run("parent policy with too long name", func(t *testing.T) {
@@ -63,7 +63,7 @@ func TestAccessPolicyVersionV0_1(t *testing.T) {
 		}
 
 		policy := &AccessControlPolicy{
-			ID:       NewId(),
+			ID:       NewID(),
 			Type:     AccessControlPolicyTypeParent,
 			Name:     longName.String(),
 			Revision: 1,
@@ -73,12 +73,12 @@ func TestAccessPolicyVersionV0_1(t *testing.T) {
 
 		err := policy.accessPolicyVersionV0_1()
 		require.NotNil(t, err, "Should return error for too long name in parent policy")
-		require.Equal(t, "model.access_policy.is_valid.name.app_error", err.Id)
+		require.Equal(t, "model.access_policy.is_valid.name.app_error", err.ID)
 	})
 
 	t.Run("negative revision", func(t *testing.T) {
 		policy := &AccessControlPolicy{
-			ID:       NewId(),
+			ID:       NewID(),
 			Type:     AccessControlPolicyTypeParent,
 			Name:     "Test Policy",
 			Revision: -1,
@@ -88,12 +88,12 @@ func TestAccessPolicyVersionV0_1(t *testing.T) {
 
 		err := policy.accessPolicyVersionV0_1()
 		require.NotNil(t, err, "Should return error for negative revision")
-		require.Equal(t, "model.access_policy.is_valid.revision.app_error", err.Id)
+		require.Equal(t, "model.access_policy.is_valid.revision.app_error", err.ID)
 	})
 
 	t.Run("invalid version", func(t *testing.T) {
 		policy := &AccessControlPolicy{
-			ID:       NewId(),
+			ID:       NewID(),
 			Type:     AccessControlPolicyTypeParent,
 			Name:     "Test Policy",
 			Revision: 1,
@@ -103,12 +103,12 @@ func TestAccessPolicyVersionV0_1(t *testing.T) {
 
 		err := policy.accessPolicyVersionV0_1()
 		require.NotNil(t, err, "Should return error for invalid version")
-		require.Equal(t, "model.access_policy.is_valid.version.app_error", err.Id)
+		require.Equal(t, "model.access_policy.is_valid.version.app_error", err.ID)
 	})
 
 	t.Run("parent policy with no rules", func(t *testing.T) {
 		policy := &AccessControlPolicy{
-			ID:       NewId(),
+			ID:       NewID(),
 			Type:     AccessControlPolicyTypeParent,
 			Name:     "Test Policy",
 			Revision: 1,
@@ -118,12 +118,12 @@ func TestAccessPolicyVersionV0_1(t *testing.T) {
 
 		err := policy.accessPolicyVersionV0_1()
 		require.NotNil(t, err, "Should return error for parent policy with no rules")
-		require.Equal(t, "model.access_policy.is_valid.rules.app_error", err.Id)
+		require.Equal(t, "model.access_policy.is_valid.rules.app_error", err.ID)
 	})
 
 	t.Run("parent policy with imports", func(t *testing.T) {
 		policy := &AccessControlPolicy{
-			ID:       NewId(),
+			ID:       NewID(),
 			Type:     AccessControlPolicyTypeParent,
 			Name:     "Test Policy",
 			Revision: 1,
@@ -134,12 +134,12 @@ func TestAccessPolicyVersionV0_1(t *testing.T) {
 
 		err := policy.accessPolicyVersionV0_1()
 		require.NotNil(t, err, "Should return error for parent policy with imports")
-		require.Equal(t, "model.access_policy.is_valid.imports.app_error", err.Id)
+		require.Equal(t, "model.access_policy.is_valid.imports.app_error", err.ID)
 	})
 
 	t.Run("channel policy with no rules", func(t *testing.T) {
 		policy := &AccessControlPolicy{
-			ID:       NewId(),
+			ID:       NewID(),
 			Type:     AccessControlPolicyTypeChannel,
 			Name:     "Test Policy",
 			Revision: 1,
@@ -150,12 +150,12 @@ func TestAccessPolicyVersionV0_1(t *testing.T) {
 
 		err := policy.accessPolicyVersionV0_1()
 		require.NotNil(t, err, "Should return error for channel policy with no rules")
-		require.Equal(t, "model.access_policy.is_valid.rules.app_error", err.Id)
+		require.Equal(t, "model.access_policy.is_valid.rules.app_error", err.ID)
 	})
 
 	t.Run("channel policy with no imports", func(t *testing.T) {
 		policy := &AccessControlPolicy{
-			ID:       NewId(),
+			ID:       NewID(),
 			Type:     AccessControlPolicyTypeChannel,
 			Name:     "Test Policy",
 			Revision: 1,
@@ -170,7 +170,7 @@ func TestAccessPolicyVersionV0_1(t *testing.T) {
 
 	t.Run("channel policy with multiple imports", func(t *testing.T) {
 		policy := &AccessControlPolicy{
-			ID:       NewId(),
+			ID:       NewID(),
 			Type:     AccessControlPolicyTypeChannel,
 			Name:     "Test Policy",
 			Revision: 1,
@@ -181,12 +181,12 @@ func TestAccessPolicyVersionV0_1(t *testing.T) {
 
 		err := policy.accessPolicyVersionV0_1()
 		require.NotNil(t, err, "Should return error for channel policy with multiple imports")
-		require.Equal(t, "model.access_policy.is_valid.imports.app_error", err.Id)
+		require.Equal(t, "model.access_policy.is_valid.imports.app_error", err.ID)
 	})
 
 	t.Run("valid parent policy", func(t *testing.T) {
 		policy := &AccessControlPolicy{
-			ID:       NewId(),
+			ID:       NewID(),
 			Type:     AccessControlPolicyTypeParent,
 			Name:     "Test Policy",
 			Revision: 1,
@@ -200,7 +200,7 @@ func TestAccessPolicyVersionV0_1(t *testing.T) {
 
 	t.Run("valid channel policy", func(t *testing.T) {
 		policy := &AccessControlPolicy{
-			ID:       NewId(),
+			ID:       NewID(),
 			Type:     AccessControlPolicyTypeChannel,
 			Name:     "Test Policy",
 			Revision: 1,

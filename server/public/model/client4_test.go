@@ -88,7 +88,7 @@ func TestClient4CreatePost(t *testing.T) {
 }
 
 func TestClient4SetToken(t *testing.T) {
-	expected := model.NewId()
+	expected := model.NewID()
 
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		authHeader := r.Header.Get(model.HeaderAuth)
@@ -176,7 +176,7 @@ func TestClient4LookupInteractiveDialog(t *testing.T) {
 			var submission model.SubmitDialogRequest
 			err := json.NewDecoder(r.Body).Decode(&submission)
 			assert.NoError(t, err)
-			assert.Equal(t, "test_callback", submission.CallbackId)
+			assert.Equal(t, "test_callback", submission.CallbackID)
 			assert.Equal(t, "https://example.com/lookup", submission.URL)
 			assert.Equal(t, "test_state", submission.State)
 
@@ -190,12 +190,12 @@ func TestClient4LookupInteractiveDialog(t *testing.T) {
 
 		client := model.NewAPIv4Client(server.URL)
 		submission := &model.SubmitDialogRequest{
-			CallbackId: "test_callback",
+			CallbackID: "test_callback",
 			URL:        "https://example.com/lookup",
 			State:      "test_state",
-			UserId:     "test_user_id",
-			ChannelId:  "test_channel_id",
-			TeamId:     "test_team_id",
+			UserID:     "test_user_id",
+			ChannelID:  "test_channel_id",
+			TeamID:     "test_team_id",
 			Submission: map[string]any{
 				"selected_field": "dynamic_field",
 				"query":          "search_term",
@@ -224,7 +224,7 @@ func TestClient4LookupInteractiveDialog(t *testing.T) {
 
 		client := model.NewAPIv4Client(server.URL)
 		submission := &model.SubmitDialogRequest{
-			CallbackId: "test_callback",
+			CallbackID: "test_callback",
 			URL:        "https://example.com/lookup",
 		}
 
@@ -240,7 +240,7 @@ func TestClient4LookupInteractiveDialog(t *testing.T) {
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusBadRequest)
 			errorResponse := model.AppError{
-				Id:      "api.dialog.lookup.bad_request",
+				ID:      "api.dialog.lookup.bad_request",
 				Message: "Invalid request parameters",
 			}
 			err := json.NewEncoder(w).Encode(errorResponse)
@@ -250,7 +250,7 @@ func TestClient4LookupInteractiveDialog(t *testing.T) {
 
 		client := model.NewAPIv4Client(server.URL)
 		submission := &model.SubmitDialogRequest{
-			CallbackId: "invalid_callback",
+			CallbackID: "invalid_callback",
 			URL:        "invalid_url",
 		}
 
@@ -262,14 +262,14 @@ func TestClient4LookupInteractiveDialog(t *testing.T) {
 		// Verify error is an AppError
 		appError, ok := err.(*model.AppError)
 		assert.True(t, ok)
-		assert.Equal(t, "api.dialog.lookup.bad_request", appError.Id)
+		assert.Equal(t, "api.dialog.lookup.bad_request", appError.ID)
 	})
 
 	t.Run("should handle network connectivity issues", func(t *testing.T) {
 		// Use an invalid URL to simulate network failure
 		client := model.NewAPIv4Client("http://invalid-server-url:9999")
 		submission := &model.SubmitDialogRequest{
-			CallbackId: "test_callback",
+			CallbackID: "test_callback",
 			URL:        "https://example.com/lookup",
 		}
 
@@ -289,7 +289,7 @@ func TestClient4LookupInteractiveDialog(t *testing.T) {
 
 		client := model.NewAPIv4Client(server.URL)
 		submission := &model.SubmitDialogRequest{
-			CallbackId: "test_callback",
+			CallbackID: "test_callback",
 			URL:        "https://example.com/lookup",
 		}
 
@@ -317,7 +317,7 @@ func TestClient4LookupInteractiveDialog(t *testing.T) {
 
 		client := model.NewAPIv4Client(server.URL)
 		submission := &model.SubmitDialogRequest{
-			CallbackId: "test_callback",
+			CallbackID: "test_callback",
 			URL:        "https://example.com/lookup",
 		}
 
@@ -328,7 +328,7 @@ func TestClient4LookupInteractiveDialog(t *testing.T) {
 	})
 
 	t.Run("should properly set authorization header when token is provided", func(t *testing.T) {
-		expectedToken := model.NewId()
+		expectedToken := model.NewID()
 
 		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			authHeader := r.Header.Get(model.HeaderAuth)
@@ -346,7 +346,7 @@ func TestClient4LookupInteractiveDialog(t *testing.T) {
 		client.SetToken(expectedToken)
 
 		submission := &model.SubmitDialogRequest{
-			CallbackId: "test_callback",
+			CallbackID: "test_callback",
 			URL:        "https://example.com/lookup",
 		}
 
@@ -392,15 +392,15 @@ func TestBuildResponse(t *testing.T) {
 			StatusCode: http.StatusOK,
 			Header:     make(http.Header),
 		}
-		httpResp.Header.Set(model.HeaderRequestId, "test-request-id")
+		httpResp.Header.Set(model.HeaderRequestID, "test-request-id")
 		httpResp.Header.Set(model.HeaderEtagServer, "test-etag")
-		httpResp.Header.Set(model.HeaderVersionId, "test-version")
+		httpResp.Header.Set(model.HeaderVersionID, "test-version")
 
 		response := model.BuildResponse(httpResp)
 		require.NotNil(t, response)
 
 		assert.Equal(t, http.StatusOK, response.StatusCode)
-		assert.Equal(t, "test-request-id", response.RequestId)
+		assert.Equal(t, "test-request-id", response.RequestID)
 		assert.Equal(t, "test-etag", response.Etag)
 		assert.Equal(t, "test-version", response.ServerVersion)
 		assert.Equal(t, httpResp.Header, response.Header)
@@ -415,7 +415,7 @@ func TestBuildResponse(t *testing.T) {
 		require.NotNil(t, response)
 
 		assert.Equal(t, http.StatusNoContent, response.StatusCode)
-		assert.Empty(t, response.RequestId)
+		assert.Empty(t, response.RequestID)
 		assert.Empty(t, response.Etag)
 		assert.Empty(t, response.ServerVersion)
 		assert.Equal(t, httpResp.Header, response.Header)

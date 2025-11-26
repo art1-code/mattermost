@@ -12,12 +12,12 @@ import (
 
 func TestCommandIsValid(t *testing.T) {
 	o := Command{
-		Id:          NewId(),
-		Token:       NewId(),
+		ID:          NewID(),
+		Token:       NewID(),
 		CreateAt:    GetMillis(),
 		UpdateAt:    GetMillis(),
-		CreatorId:   NewId(),
-		TeamId:      NewId(),
+		CreatorID:   NewID(),
+		TeamID:      NewID(),
 		Trigger:     "trigger",
 		URL:         "http://example.com",
 		Method:      CommandMethodGet,
@@ -27,16 +27,16 @@ func TestCommandIsValid(t *testing.T) {
 
 	require.Nil(t, o.IsValid())
 
-	o.Id = ""
+	o.ID = ""
 	require.NotNil(t, o.IsValid(), "should be invalid")
 
-	o.Id = NewId()
+	o.ID = NewID()
 	require.Nil(t, o.IsValid())
 
 	o.Token = ""
 	require.NotNil(t, o.IsValid(), "should be invalid")
 
-	o.Token = NewId()
+	o.Token = NewID()
 	require.Nil(t, o.IsValid())
 
 	o.CreateAt = 0
@@ -51,16 +51,16 @@ func TestCommandIsValid(t *testing.T) {
 	o.UpdateAt = GetMillis()
 	require.Nil(t, o.IsValid())
 
-	o.CreatorId = ""
+	o.CreatorID = ""
 	require.NotNil(t, o.IsValid(), "should be invalid")
 
-	o.CreatorId = NewId()
+	o.CreatorID = NewID()
 	require.Nil(t, o.IsValid())
 
-	o.TeamId = ""
+	o.TeamID = ""
 	require.NotNil(t, o.IsValid(), "should be invalid")
 
-	o.TeamId = NewId()
+	o.TeamID = NewID()
 	require.Nil(t, o.IsValid())
 
 	o.Trigger = ""

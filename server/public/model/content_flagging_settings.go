@@ -97,7 +97,7 @@ func (cfs *ContentFlaggingNotificationSettings) IsValid() *AppError {
 
 type TeamReviewerSetting struct {
 	Enabled     *bool
-	ReviewerIds []string
+	ReviewerIDs []string
 }
 
 type ReviewerSettings struct {
@@ -218,13 +218,13 @@ type ContentFlaggingReportingConfig struct {
 }
 
 type ReviewerIDsSettings struct {
-	CommonReviewerIds    []string
+	CommonReviewerIDs    []string
 	TeamReviewersSetting map[string]*TeamReviewerSetting
 }
 
 func (rs *ReviewerIDsSettings) SetDefaults() {
-	if rs.CommonReviewerIds == nil {
-		rs.CommonReviewerIds = []string{}
+	if rs.CommonReviewerIDs == nil {
+		rs.CommonReviewerIDs = []string{}
 	}
 
 	if rs.TeamReviewersSetting == nil {

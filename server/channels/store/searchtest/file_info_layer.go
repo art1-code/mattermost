@@ -229,11 +229,11 @@ func testFileInfoSearchFileInfosIncludingDMs(t *testing.T, th *SearchTestHelper)
 	post2, err := th.createPost(th.User.Id, th.ChannelBasic.Id, "dm test", "", model.PostTypeDefault, 0, false)
 	require.NoError(t, err)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "dm test filename", "dm contenttest filename", "jpg", "image/jpeg", 0, 1)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "dm test filename", "dm contenttest filename", "jpg", "image/jpeg", 0, 1)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "dm other filename", "dm other filename", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "dm other filename", "dm other filename", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelId, "channel test filename", "channel contenttest filename", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelID, "channel test filename", "channel contenttest filename", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -270,11 +270,11 @@ func testFileInfoSearchFileInfosWithPagination(t *testing.T, th *SearchTestHelpe
 	post2, err := th.createPost(th.User.Id, th.ChannelBasic.Id, "dm test", "", model.PostTypeDefault, 20000, false)
 	require.NoError(t, err)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "dm test filename", "dm contenttest filename", "jpg", "image/jpeg", 10000, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "dm test filename", "dm contenttest filename", "jpg", "image/jpeg", 10000, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "dm other filename", "dm other filename", "jpg", "image/jpeg", 20000, 0)
+	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "dm other filename", "dm other filename", "jpg", "image/jpeg", 20000, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelId, "channel test filename", "channel contenttest filename", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelID, "channel test filename", "channel contenttest filename", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -314,9 +314,9 @@ func testFileInfoSearchExactPhraseInQuotes(t *testing.T, th *SearchTestHelper) {
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "channel test 1 2 3 filename", "channel content test 1 2 3 filename", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "channel test 1 2 3 filename", "channel content test 1 2 3 filename", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "channel test 123 filename", "channel content test 123 filename", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "channel test 123 filename", "channel content test 123 filename", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -344,9 +344,9 @@ func testFileInfoSearchEmailAddresses(t *testing.T, th *SearchTestHelper) {
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "test email test@test.com", "test email test@content.com", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "test email test@test.com", "test email test@content.com", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "test email test2@test.com", "test email test2@content.com", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "test email test2@test.com", "test email test2@content.com", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -395,7 +395,7 @@ func testFileInfoSearchMarkdownUnderscores(t *testing.T, th *SearchTestHelper) {
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "_start middle end_ _another_", "_start middle end_ _another_", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "_start middle end_ _another_", "_start middle end_ _another_", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -442,9 +442,9 @@ func testFileInfoSearchNonLatinWords(t *testing.T, th *SearchTestHelper) {
 	defer th.deleteUserPosts(th.User.Id)
 
 	t.Run("Should be able to search chinese words", func(t *testing.T) {
-		p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "你好", "你好", "jpg", "image/jpeg", 0, 0)
+		p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "你好", "你好", "jpg", "image/jpeg", 0, 0)
 		require.NoError(t, err)
-		p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "你", "你", "jpg", "image/jpeg", 0, 0)
+		p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "你", "你", "jpg", "image/jpeg", 0, 0)
 		require.NoError(t, err)
 		defer th.deleteUserFileInfos(th.User.Id)
 
@@ -475,7 +475,7 @@ func testFileInfoSearchNonLatinWords(t *testing.T, th *SearchTestHelper) {
 		})
 	})
 	t.Run("Should be able to search cyrillic words", func(t *testing.T) {
-		p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "слово test", "слово test", "jpg", "image/jpeg", 0, 0)
+		p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "слово test", "слово test", "jpg", "image/jpeg", 0, 0)
 		require.NoError(t, err)
 		defer th.deleteUserFileInfos(th.User.Id)
 
@@ -498,9 +498,9 @@ func testFileInfoSearchNonLatinWords(t *testing.T, th *SearchTestHelper) {
 	})
 
 	t.Run("Should be able to search japanese words", func(t *testing.T) {
-		p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "本", "本", "jpg", "image/jpeg", 0, 0)
+		p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "本", "本", "jpg", "image/jpeg", 0, 0)
 		require.NoError(t, err)
-		p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "本木", "本木", "jpg", "image/jpeg", 0, 0)
+		p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "本木", "本木", "jpg", "image/jpeg", 0, 0)
 		require.NoError(t, err)
 		defer th.deleteUserFileInfos(th.User.Id)
 
@@ -533,9 +533,9 @@ func testFileInfoSearchNonLatinWords(t *testing.T, th *SearchTestHelper) {
 	})
 
 	t.Run("Should be able to search korean words", func(t *testing.T) {
-		p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "불", "불", "jpg", "image/jpeg", 0, 0)
+		p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "불", "불", "jpg", "image/jpeg", 0, 0)
 		require.NoError(t, err)
-		p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "불다", "불다", "jpg", "image/jpeg", 0, 0)
+		p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "불다", "불다", "jpg", "image/jpeg", 0, 0)
 		require.NoError(t, err)
 		defer th.deleteUserFileInfos(th.User.Id)
 
@@ -572,9 +572,9 @@ func testFileInfoSearchAlternativeSpellings(t *testing.T, th *SearchTestHelper) 
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "Straße test", "Straße test", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "Straße test", "Straße test", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "Strasse test", "Strasse test", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "Strasse test", "Strasse test", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -600,9 +600,9 @@ func testFileInfoSearchAlternativeSpellingsAccents(t *testing.T, th *SearchTestH
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "café", "café", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "café", "café", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "café", "café", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "café", "café", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -634,9 +634,9 @@ func testFileInfoSearchOrExcludeFileInfosBySpecificUser(t *testing.T, th *Search
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "test fromuser filename", "test fromuser filename", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "test fromuser filename", "test fromuser filename", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User2.Id, post.Id, post.ChannelId, "test fromuser filename", "test fromuser filename", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User2.Id, post.Id, post.ChannelID, "test fromuser filename", "test fromuser filename", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 	defer th.deleteUserFileInfos(th.User2.Id)
@@ -657,9 +657,9 @@ func testFileInfoSearchOrExcludeFileInfosInChannel(t *testing.T, th *SearchTestH
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "test fromuser filename", "test fromuser filename", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "test fromuser filename", "test fromuser filename", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post2.Id, post2.ChannelId, "test fromuser filename", "test fromuser filename", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post2.Id, post2.ChannelID, "test fromuser filename", "test fromuser filename", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 	defer th.deleteUserFileInfos(th.User2.Id)
@@ -688,9 +688,9 @@ func testFileInfoSearchOrExcludeFileInfosInDMGM(t *testing.T, th *SearchTestHelp
 	defer th.deleteUserPosts(th.User.Id)
 	defer th.deleteUserPosts(th.User2.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelId, "test fromuser", "test fromuser", "jpg", "image/jpg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelID, "test fromuser", "test fromuser", "jpg", "image/jpg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User2.Id, post2.Id, post2.ChannelId, "test fromuser 2", "test fromuser 2", "jpg", "image/jpg", 0, 0)
+	p2, err := th.createFileInfo(th.User2.Id, post2.Id, post2.ChannelID, "test fromuser 2", "test fromuser 2", "jpg", "image/jpg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 	defer th.deleteUserFileInfos(th.User2.Id)
@@ -738,11 +738,11 @@ func testFileInfoSearchOrExcludeByExtensions(t *testing.T, th *SearchTestHelper)
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "test", "test", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "test", "test", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "test", "test", "png", "image/png", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "test", "test", "png", "image/png", 0, 0)
 	require.NoError(t, err)
-	p3, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "test", "test", "bmp", "image/bmp", 0, 0)
+	p3, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "test", "test", "bmp", "image/bmp", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -809,13 +809,13 @@ func testFileInfoFilterFilesInSpecificDate(t *testing.T, th *SearchTestHelper) {
 	defer th.deleteUserPosts(th.User.Id)
 
 	creationDate := model.GetMillisForTime(time.Date(2020, 03, 22, 12, 0, 0, 0, time.UTC))
-	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelId, "test in specific date", "test in specific date", "jpg", "image/jpeg", creationDate, 0)
+	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelID, "test in specific date", "test in specific date", "jpg", "image/jpeg", creationDate, 0)
 	require.NoError(t, err)
 	creationDate2 := model.GetMillisForTime(time.Date(2020, 03, 23, 0, 0, 0, 0, time.UTC))
-	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelId, "test in the present", "test in the present", "jpg", "image/jpeg", creationDate2, 0)
+	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelID, "test in the present", "test in the present", "jpg", "image/jpeg", creationDate2, 0)
 	require.NoError(t, err)
 	creationDate3 := model.GetMillisForTime(time.Date(2020, 03, 21, 23, 59, 59, 0, time.UTC))
-	p3, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelId, "test in the present", "test in the present", "jpg", "image/jpeg", creationDate3, 0)
+	p3, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelID, "test in the present", "test in the present", "jpg", "image/jpeg", creationDate3, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -852,13 +852,13 @@ func testFileInfoFilterFilesBeforeSpecificDate(t *testing.T, th *SearchTestHelpe
 	defer th.deleteUserPosts(th.User.Id)
 
 	creationDate := model.GetMillisForTime(time.Date(2020, 03, 01, 12, 0, 0, 0, time.UTC))
-	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelId, "test in specific date", "test in specific date", "jpg", "image/jpeg", creationDate, 0)
+	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelID, "test in specific date", "test in specific date", "jpg", "image/jpeg", creationDate, 0)
 	require.NoError(t, err)
 	creationDate2 := model.GetMillisForTime(time.Date(2020, 03, 22, 23, 59, 59, 0, time.UTC))
-	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelId, "test in specific date 2", "test in specific date 2", "jpg", "image/jpeg", creationDate2, 0)
+	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelID, "test in specific date 2", "test in specific date 2", "jpg", "image/jpeg", creationDate2, 0)
 	require.NoError(t, err)
 	creationDate3 := model.GetMillisForTime(time.Date(2020, 03, 26, 16, 55, 0, 0, time.UTC))
-	p3, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelId, "test in the present", "test in the present", "jpg", "image/jpeg", creationDate3, 0)
+	p3, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelID, "test in the present", "test in the present", "jpg", "image/jpeg", creationDate3, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -896,13 +896,13 @@ func testFileInfoFilterFilesAfterSpecificDate(t *testing.T, th *SearchTestHelper
 	defer th.deleteUserPosts(th.User.Id)
 
 	creationDate := model.GetMillisForTime(time.Date(2020, 03, 01, 12, 0, 0, 0, time.UTC))
-	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelId, "test in specific date", "test in specific date", "jpg", "image/jpeg", creationDate, 0)
+	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelID, "test in specific date", "test in specific date", "jpg", "image/jpeg", creationDate, 0)
 	require.NoError(t, err)
 	creationDate2 := model.GetMillisForTime(time.Date(2020, 03, 22, 23, 59, 59, 0, time.UTC))
-	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelId, "test in specific date 2", "test in specific date 2", "jpg", "image/jpeg", creationDate2, 0)
+	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelID, "test in specific date 2", "test in specific date 2", "jpg", "image/jpeg", creationDate2, 0)
 	require.NoError(t, err)
 	creationDate3 := model.GetMillisForTime(time.Date(2020, 03, 26, 16, 55, 0, 0, time.UTC))
-	p3, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelId, "test in the present", "test in the present", "jpg", "image/jpeg", creationDate3, 0)
+	p3, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelID, "test in the present", "test in the present", "jpg", "image/jpeg", creationDate3, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -939,11 +939,11 @@ func testFileInfoFilterFilesWithATerm(t *testing.T, th *SearchTestHelper) {
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelId, "one two three", "one two three", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelID, "one two three", "one two three", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelId, "one four five six", "one four five six", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelID, "one four five six", "one four five six", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post1.Id, post1.ChannelId, "one seven eight nine", "one seven eight nine", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post1.Id, post1.ChannelID, "one seven eight nine", "one seven eight nine", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -978,11 +978,11 @@ func testFileInfoSearchUsingBooleanOperators(t *testing.T, th *SearchTestHelper)
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "one two three message", "one two three message", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "one two three message", "one two three message", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "two messages", "two messages", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "two messages", "two messages", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "another message", "another message", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "another message", "another message", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1020,13 +1020,13 @@ func testFileInfoSearchUsingCombinedFilters(t *testing.T, th *SearchTestHelper) 
 	defer th.deleteUserPosts(th.User.Id)
 
 	creationDate := model.GetMillisForTime(time.Date(2020, 03, 01, 12, 0, 0, 0, time.UTC))
-	p1, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelId, "one two three message", "one two three message", "jpg", "image/jpeg", creationDate, 0)
+	p1, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelID, "one two three message", "one two three message", "jpg", "image/jpeg", creationDate, 0)
 	require.NoError(t, err)
 	creationDate2 := model.GetMillisForTime(time.Date(2020, 03, 10, 12, 0, 0, 0, time.UTC))
-	p2, err := th.createFileInfo(th.User2.Id, post2.Id, post2.ChannelId, "two messages", "two messages", "jpg", "image/jpeg", creationDate2, 0)
+	p2, err := th.createFileInfo(th.User2.Id, post2.Id, post2.ChannelID, "two messages", "two messages", "jpg", "image/jpeg", creationDate2, 0)
 	require.NoError(t, err)
 	creationDate3 := model.GetMillisForTime(time.Date(2020, 03, 20, 12, 0, 0, 0, time.UTC))
-	p3, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelId, "two another message", "two another message", "jpg", "image/jpeg", creationDate3, 0)
+	p3, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelID, "two another message", "two another message", "jpg", "image/jpeg", creationDate3, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 	defer th.deleteUserFileInfos(th.User2.Id)
@@ -1089,13 +1089,13 @@ func testFileInfoSearchIgnoringStopWords(t *testing.T, th *SearchTestHelper) {
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "the search for a bunch of stop words", "the search for a bunch of stop words", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "the search for a bunch of stop words", "the search for a bunch of stop words", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "the objective is to avoid a bunch of stop words", "the objective is to avoid a bunch of stop words", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "the objective is to avoid a bunch of stop words", "the objective is to avoid a bunch of stop words", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p3, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "in the a on to where you", "in the a on to where you", "jpg", "image/jpeg", 0, 0)
+	p3, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "in the a on to where you", "in the a on to where you", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p4, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "where is the car?", "where is the car?", "jpg", "image/jpeg", 0, 0)
+	p4, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "where is the car?", "where is the car?", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1151,11 +1151,11 @@ func testFileInfoSupportStemming(t *testing.T, th *SearchTestHelper) {
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "search post", "search post", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "search post", "search post", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "searching post", "searching post", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "searching post", "searching post", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "another post", "another post", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "another post", "another post", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1175,11 +1175,11 @@ func testFileInfoSupportWildcards(t *testing.T, th *SearchTestHelper) {
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "search post", "search post", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "search post", "search post", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "searching", "searching", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "searching", "searching", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "another post", "another post", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "another post", "another post", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1212,11 +1212,11 @@ func testFileInfoNotSupportPrecedingWildcards(t *testing.T, th *SearchTestHelper
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "search post", "search post", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "search post", "search post", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "searching post", "searching post", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "searching post", "searching post", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "another post", "another post", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "another post", "another post", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1234,9 +1234,9 @@ func testFileInfoSearchDiscardWildcardAlone(t *testing.T, th *SearchTestHelper) 
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "qwerty", "qwerty", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "qwerty", "qwerty", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "qwertyjkl", "qwertyjkl", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "qwertyjkl", "qwertyjkl", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1255,9 +1255,9 @@ func testFileInfoSupportTermsWithDash(t *testing.T, th *SearchTestHelper) {
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "search term-with-dash", "search term-with-dash", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "search term-with-dash", "search term-with-dash", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "searching term with dash", "searching term with dash", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "searching term with dash", "searching term with dash", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1289,9 +1289,9 @@ func testFileInfoSupportTermsWithUnderscore(t *testing.T, th *SearchTestHelper) 
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "search term_with_underscore", "search term_with_underscore", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "search term_with_underscore", "search term_with_underscore", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "searching term with underscore", "searching term with underscore", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "searching term with underscore", "searching term with underscore", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1329,11 +1329,11 @@ func testFileInfoSearchInDeletedOrArchivedChannels(t *testing.T, th *SearchTestH
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelId, "message in deleted channel", "message in deleted channel", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelID, "message in deleted channel", "message in deleted channel", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelId, "message in regular channel", "message in regular channel", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelID, "message in regular channel", "message in regular channel", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p3, err := th.createFileInfo(th.User.Id, post3.Id, post3.ChannelId, "message in private channel", "message in private channel", "jpg", "image/jpeg", 0, 0)
+	p3, err := th.createFileInfo(th.User.Id, post3.Id, post3.ChannelID, "message in private channel", "message in private channel", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1404,9 +1404,9 @@ func testFileInfoSearchTermsWithDashes(t *testing.T, th *SearchTestHelper) {
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "message with-dash-term", "message with-dash-term", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "message with-dash-term", "message with-dash-term", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "message with dash term", "message with dash term", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "message with dash term", "message with dash term", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1453,9 +1453,9 @@ func testFileInfoSearchTermsWithDots(t *testing.T, th *SearchTestHelper) {
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "message with.dots.term", "message with.dots.term", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "message with.dots.term", "message with.dots.term", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "message with dots term", "message with dots term", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "message with dots term", "message with dots term", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1502,9 +1502,9 @@ func testFileInfoSearchTermsWithUnderscores(t *testing.T, th *SearchTestHelper) 
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "message with_underscores_term", "message with_underscores_term", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "message with_underscores_term", "message with_underscores_term", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "message with underscores term", "message with underscores term", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "message with underscores term", "message with underscores term", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1554,11 +1554,11 @@ func testFileInfoSupportStemmingAndWildcards(t *testing.T, th *SearchTestHelper)
 	require.NoError(t, err)
 
 	defer th.deleteUserPosts(th.User.Id)
-	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelId, "approve", "approve", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelID, "approve", "approve", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelId, "approved", "approved", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelID, "approved", "approved", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p3, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelId, "approvedz", "approvedz", "jpg", "image/jpeg", 0, 0)
+	p3, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelID, "approvedz", "approvedz", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1590,9 +1590,9 @@ func testFileInfoSupportWildcardOutsideQuotes(t *testing.T, th *SearchTestHelper
 	post2, err := th.createPost(th.User.Id, th.ChannelPrivate.Id, "testmessage", "", model.PostTypeDefault, 0, false)
 	require.NoError(t, err)
 
-	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelId, "hello world", "hello world", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post1.Id, post1.ChannelID, "hello world", "hello world", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelId, "hell or heaven", "hell or heaven", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(th.User.Id, post2.Id, post2.ChannelID, "hell or heaven", "hell or heaven", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1621,7 +1621,7 @@ func testFileInfoSlashShouldNotBeCharSeparator(t *testing.T, th *SearchTestHelpe
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "alpha/beta gamma, theta", "alpha/beta gamma, theta", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "alpha/beta gamma, theta", "alpha/beta gamma, theta", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1652,9 +1652,9 @@ func testFileInfoSearchEmailsWithoutQuotes(t *testing.T, th *SearchTestHelper) {
 	require.NoError(t, err)
 	defer th.deleteUserPosts(th.User.Id)
 
-	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "message test@test.com", "message test@test.com", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "message test@test.com", "message test@test.com", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
-	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "message test2@test.com", "message test2@test.com", "jpg", "image/jpeg", 0, 0)
+	_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "message test2@test.com", "message test2@test.com", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 
@@ -1671,7 +1671,7 @@ func testSearchFileDeletedPost(t *testing.T, th *SearchTestHelper) {
 		post, err := th.createPost(th.User.Id, th.ChannelBasic.Id, "deletedmessage", "", model.PostTypeDefault, 0, false)
 		require.NoError(t, err)
 
-		_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "deletedmessage", "deletedmessage", "jpg", "image/jpeg", 0, 0)
+		_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "deletedmessage", "deletedmessage", "jpg", "image/jpeg", 0, 0)
 		require.NoError(t, err)
 
 		_, err = th.Store.FileInfo().DeleteForPost(th.Context, post.Id)
@@ -1688,7 +1688,7 @@ func testSearchFileDeletedPost(t *testing.T, th *SearchTestHelper) {
 		post, err := th.createPost(th.User.Id, th.ChannelBasic.Id, "deletedmessage", "", model.PostTypeDefault, 0, false)
 		require.NoError(t, err)
 
-		_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelId, "deletedmessage", "deletedmessage", "jpg", "image/jpeg", 0, 0)
+		_, err = th.createFileInfo(th.User.Id, post.Id, post.ChannelID, "deletedmessage", "deletedmessage", "jpg", "image/jpeg", 0, 0)
 		require.NoError(t, err)
 
 		err = th.Store.FileInfo().PermanentDeleteForPost(th.Context, post.Id)
@@ -1777,10 +1777,10 @@ func testFileInfoSearchAcrossTeams(t *testing.T, th *SearchTestHelper) {
 	require.NoError(t, err)
 	defer th.deleteUserPosts(user1.Id)
 
-	p1, err := th.createFileInfo(user1.Id, postInChannel1.Id, postInChannel1.ChannelId, "channel test filename", "channel contenttest filename", "jpg", "image/jpeg", 0, 0)
+	p1, err := th.createFileInfo(user1.Id, postInChannel1.Id, postInChannel1.ChannelID, "channel test filename", "channel contenttest filename", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
-	p2, err := th.createFileInfo(user1.Id, postInChannel2.Id, postInChannel2.ChannelId, "channel test filename", "channel contenttest filename", "jpg", "image/jpeg", 0, 0)
+	p2, err := th.createFileInfo(user1.Id, postInChannel2.Id, postInChannel2.ChannelID, "channel test filename", "channel contenttest filename", "jpg", "image/jpeg", 0, 0)
 	require.NoError(t, err)
 	defer th.deleteUserFileInfos(th.User.Id)
 

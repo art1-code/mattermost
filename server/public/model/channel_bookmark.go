@@ -21,35 +21,35 @@ const (
 )
 
 type ChannelBookmark struct {
-	Id          string              `json:"id"`
+	ID          string              `json:"id"`
 	CreateAt    int64               `json:"create_at"`
 	UpdateAt    int64               `json:"update_at"`
 	DeleteAt    int64               `json:"delete_at"`
-	ChannelId   string              `json:"channel_id"`
-	OwnerId     string              `json:"owner_id"`
-	FileId      string              `json:"file_id"`
+	ChannelID   string              `json:"channel_id"`
+	OwnerID     string              `json:"owner_id"`
+	FileID      string              `json:"file_id"`
 	DisplayName string              `json:"display_name"`
 	SortOrder   int64               `json:"sort_order"`
 	LinkUrl     string              `json:"link_url,omitempty"`
 	ImageUrl    string              `json:"image_url,omitempty"`
 	Emoji       string              `json:"emoji,omitempty"`
 	Type        ChannelBookmarkType `json:"type"`
-	OriginalId  string              `json:"original_id,omitempty"`
-	ParentId    string              `json:"parent_id,omitempty"`
+	OriginalID  string              `json:"original_id,omitempty"`
+	ParentID    string              `json:"parent_id,omitempty"`
 }
 
 func (o *ChannelBookmark) Auditable() map[string]any {
 	return map[string]any{
-		"id":          o.Id,
+		"id":          o.ID,
 		"create_at":   o.CreateAt,
 		"update_at":   o.UpdateAt,
 		"delete_at":   o.DeleteAt,
-		"channel_id":  o.ChannelId,
-		"owner_id":    o.OwnerId,
-		"file_id":     o.FileId,
+		"channel_id":  o.ChannelID,
+		"owner_id":    o.OwnerID,
+		"file_id":     o.FileID,
 		"type":        o.Type,
-		"original_id": o.OriginalId,
-		"parent_id":   o.ParentId,
+		"original_id": o.OriginalID,
+		"parent_id":   o.ParentID,
 	}
 }
 
@@ -61,36 +61,36 @@ func (o *ChannelBookmark) Clone() *ChannelBookmark {
 
 // SetOriginal generates a new bookmark copying the data of the
 // receiver bookmark, resets its timestamps and main ID, updates its
-// OriginalId and sets the owner to the ID passed as a parameter
-func (o *ChannelBookmark) SetOriginal(newOwnerId string) *ChannelBookmark {
+// OriginalID and sets the owner to the ID passed as a parameter
+func (o *ChannelBookmark) SetOriginal(newOwnerID string) *ChannelBookmark {
 	bCopy := *o
-	bCopy.Id = ""
+	bCopy.ID = ""
 	bCopy.CreateAt = 0
 	bCopy.DeleteAt = 0
 	bCopy.UpdateAt = 0
-	bCopy.OriginalId = o.Id
-	bCopy.OwnerId = newOwnerId
+	bCopy.OriginalID = o.ID
+	bCopy.OwnerID = newOwnerID
 	return &bCopy
 }
 
 func (o *ChannelBookmark) IsValid() *AppError {
-	if !IsValidId(o.Id) {
+	if !IsValidID(o.ID) {
 		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.id.app_error", nil, "", http.StatusBadRequest)
 	}
 
 	if o.CreateAt == 0 {
-		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.create_at.app_error", nil, "id="+o.Id, http.StatusBadRequest)
+		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.create_at.app_error", nil, "id="+o.ID, http.StatusBadRequest)
 	}
 
 	if o.UpdateAt == 0 {
-		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.update_at.app_error", nil, "id="+o.Id, http.StatusBadRequest)
+		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.update_at.app_error", nil, "id="+o.ID, http.StatusBadRequest)
 	}
 
-	if !IsValidId(o.ChannelId) {
+	if !IsValidID(o.ChannelID) {
 		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.channel_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
-	if !IsValidId(o.OwnerId) {
+	if !IsValidID(o.OwnerID) {
 		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.owner_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
@@ -99,38 +99,38 @@ func (o *ChannelBookmark) IsValid() *AppError {
 	}
 
 	if !(o.Type == ChannelBookmarkFile || o.Type == ChannelBookmarkLink) {
-		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.type.app_error", nil, "id="+o.Id, http.StatusBadRequest)
+		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.type.app_error", nil, "id="+o.ID, http.StatusBadRequest)
 	}
 
-	if o.Type == ChannelBookmarkLink && o.FileId != "" {
-		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.file_id.missing_or_invalid.app_error", nil, "id="+o.Id, http.StatusBadRequest)
+	if o.Type == ChannelBookmarkLink && o.FileID != "" {
+		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.file_id.missing_or_invalid.app_error", nil, "id="+o.ID, http.StatusBadRequest)
 	}
 
 	if o.Type == ChannelBookmarkFile && o.LinkUrl != "" {
-		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.link_url.missing_or_invalid.app_error", nil, "id="+o.Id, http.StatusBadRequest)
+		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.link_url.missing_or_invalid.app_error", nil, "id="+o.ID, http.StatusBadRequest)
 	}
 
 	if o.Type == ChannelBookmarkLink && (o.LinkUrl == "" || !IsValidHTTPURL(o.LinkUrl) || utf8.RuneCountInString(o.LinkUrl) > LinkMaxRunes) {
-		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.link_url.missing_or_invalid.app_error", nil, "id="+o.Id, http.StatusBadRequest)
+		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.link_url.missing_or_invalid.app_error", nil, "id="+o.ID, http.StatusBadRequest)
 	}
 
 	if o.Type == ChannelBookmarkLink && o.ImageUrl != "" && (!IsValidHTTPURL(o.ImageUrl) || utf8.RuneCountInString(o.ImageUrl) > LinkMaxRunes) {
-		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.image_url.app_error", nil, "id="+o.Id, http.StatusBadRequest)
+		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.image_url.app_error", nil, "id="+o.ID, http.StatusBadRequest)
 	}
 
-	if o.Type == ChannelBookmarkFile && (o.FileId == "" || !IsValidId(o.FileId)) {
-		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.file_id.missing_or_invalid.app_error", nil, "id="+o.Id, http.StatusBadRequest)
+	if o.Type == ChannelBookmarkFile && (o.FileID == "" || !IsValidID(o.FileID)) {
+		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.file_id.missing_or_invalid.app_error", nil, "id="+o.ID, http.StatusBadRequest)
 	}
 
-	if o.ImageUrl != "" && o.FileId != "" {
-		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.link_file.app_error", nil, "id="+o.Id, http.StatusBadRequest)
+	if o.ImageUrl != "" && o.FileID != "" {
+		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.link_file.app_error", nil, "id="+o.ID, http.StatusBadRequest)
 	}
 
-	if o.OriginalId != "" && !IsValidId(o.OriginalId) {
+	if o.OriginalID != "" && !IsValidID(o.OriginalID) {
 		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.original_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
-	if o.ParentId != "" && !IsValidId(o.ParentId) {
+	if o.ParentID != "" && !IsValidID(o.ParentID) {
 		return NewAppError("ChannelBookmark.IsValid", "model.channel_bookmark.is_valid.parent_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
@@ -138,8 +138,8 @@ func (o *ChannelBookmark) IsValid() *AppError {
 }
 
 func (o *ChannelBookmark) PreSave() {
-	if o.Id == "" {
-		o.Id = NewId()
+	if o.ID == "" {
+		o.ID = NewID()
 	}
 
 	o.DisplayName = SanitizeUnicode(o.DisplayName)
@@ -159,25 +159,25 @@ func (o *ChannelBookmark) PreUpdate() {
 func (o *ChannelBookmark) ToBookmarkWithFileInfo(f *FileInfo) *ChannelBookmarkWithFileInfo {
 	bwf := ChannelBookmarkWithFileInfo{
 		ChannelBookmark: &ChannelBookmark{
-			Id:          o.Id,
+			ID:          o.ID,
 			CreateAt:    o.CreateAt,
 			UpdateAt:    o.UpdateAt,
 			DeleteAt:    o.DeleteAt,
-			ChannelId:   o.ChannelId,
-			OwnerId:     o.OwnerId,
-			FileId:      o.FileId,
+			ChannelID:   o.ChannelID,
+			OwnerID:     o.OwnerID,
+			FileID:      o.FileID,
 			DisplayName: o.DisplayName,
 			SortOrder:   o.SortOrder,
 			LinkUrl:     o.LinkUrl,
 			ImageUrl:    o.ImageUrl,
 			Emoji:       strings.Trim(o.Emoji, ":"),
 			Type:        o.Type,
-			OriginalId:  o.OriginalId,
-			ParentId:    o.ParentId,
+			OriginalID:  o.OriginalID,
+			ParentID:    o.ParentID,
 		},
 	}
 
-	if f != nil && f.Id != "" {
+	if f != nil && f.ID != "" {
 		bwf.FileInfo = f
 	}
 
@@ -185,7 +185,7 @@ func (o *ChannelBookmark) ToBookmarkWithFileInfo(f *FileInfo) *ChannelBookmarkWi
 }
 
 type ChannelBookmarkPatch struct {
-	FileId      *string `json:"file_id"`
+	FileID      *string `json:"file_id"`
 	DisplayName *string `json:"display_name"`
 	SortOrder   *int64  `json:"sort_order"`
 	LinkUrl     *string `json:"link_url,omitempty"`
@@ -195,13 +195,13 @@ type ChannelBookmarkPatch struct {
 
 func (o *ChannelBookmarkPatch) Auditable() map[string]any {
 	return map[string]any{
-		"file_id": o.FileId,
+		"file_id": o.FileID,
 	}
 }
 
 func (o *ChannelBookmark) Patch(patch *ChannelBookmarkPatch) {
-	if patch.FileId != nil {
-		o.FileId = *patch.FileId
+	if patch.FileID != nil {
+		o.FileID = *patch.FileID
 	}
 
 	if patch.DisplayName != nil {
@@ -268,22 +268,22 @@ func (o *UpdateChannelBookmarkResponse) Auditable() map[string]any {
 }
 
 type ChannelBookmarkAndFileInfo struct {
-	Id              string
+	ID              string
 	CreateAt        int64
 	UpdateAt        int64
 	DeleteAt        int64
-	ChannelId       string
-	OwnerId         string
-	FileInfoId      string
+	ChannelID       string
+	OwnerID         string
+	FileInfoID      string
 	DisplayName     string
 	SortOrder       int64
 	LinkUrl         string
 	ImageUrl        string
 	Emoji           string
 	Type            ChannelBookmarkType
-	OriginalId      string
-	ParentId        string
-	FileId          string
+	OriginalID      string
+	ParentID        string
+	FileID          string
 	FileName        string
 	Extension       string
 	Size            int64
@@ -297,31 +297,31 @@ type ChannelBookmarkAndFileInfo struct {
 func (o *ChannelBookmarkAndFileInfo) ToChannelBookmarkWithFileInfo() *ChannelBookmarkWithFileInfo {
 	bwf := &ChannelBookmarkWithFileInfo{
 		ChannelBookmark: &ChannelBookmark{
-			Id:          o.Id,
+			ID:          o.ID,
 			CreateAt:    o.CreateAt,
 			UpdateAt:    o.UpdateAt,
 			DeleteAt:    o.DeleteAt,
-			ChannelId:   o.ChannelId,
-			OwnerId:     o.OwnerId,
-			FileId:      o.FileInfoId,
+			ChannelID:   o.ChannelID,
+			OwnerID:     o.OwnerID,
+			FileID:      o.FileInfoID,
 			DisplayName: o.DisplayName,
 			SortOrder:   o.SortOrder,
 			LinkUrl:     o.LinkUrl,
 			ImageUrl:    o.ImageUrl,
 			Emoji:       o.Emoji,
 			Type:        o.Type,
-			OriginalId:  o.OriginalId,
-			ParentId:    o.ParentId,
+			OriginalID:  o.OriginalID,
+			ParentID:    o.ParentID,
 		},
 	}
 
-	if o.FileInfoId != "" && o.FileId != "" {
+	if o.FileInfoID != "" && o.FileID != "" {
 		miniPreview := o.MiniPreview
 		if len(*miniPreview) == 0 {
 			miniPreview = nil
 		}
 		bwf.FileInfo = &FileInfo{
-			Id:              o.FileId,
+			ID:              o.FileID,
 			Name:            o.FileName,
 			Extension:       o.Extension,
 			Size:            o.Size,

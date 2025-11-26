@@ -228,7 +228,8 @@ func testExpression(c *Context, w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get channelID from request body (required for channel-specific permission check)
-c	if channelID != "" && !model.IsValidId(channelID) {
+	channelID := checkExpressionRequest.ChannelID
+	if channelID != "" && !model.IsValidId(channelID) {
 		c.SetInvalidParam("channelID")
 		return
 	}

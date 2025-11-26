@@ -91,7 +91,7 @@ func TestCommandResponseFromJSON(t *testing.T) {
 				ResponseType: "ephemeral",
 				Text:         "response text",
 				Username:     "response username",
-				ChannelId:    "response channel id",
+				ChannelID:    "response channel id",
 				IconURL:      "response icon url",
 				GotoLocation: "response goto location",
 				Attachments: []*SlackAttachment{

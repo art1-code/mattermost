@@ -4,5 +4,5 @@
 package model
 
 type CommandMoveRequest struct {
-	TeamId string `json:"team_id"`
+	TeamID string `json:"team_id"`
 }

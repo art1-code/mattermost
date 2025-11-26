@@ -87,7 +87,7 @@ func (c CustomProfileAttributesSelectOption) IsValid() error {
 		return errors.New("id cannot be empty")
 	}
 
-	if !IsValidId(c.ID) {
+	if !IsValidID(c.ID) {
 		return errors.New("id is not a valid ID")
 	}
 
@@ -226,7 +226,7 @@ func (c *CPAField) SanitizeAndValidate() *AppError {
 		// add an ID to options with no ID
 		for i := range options {
 			if options[i].ID == "" {
-				options[i].ID = NewId()
+				options[i].ID = NewID()
 			}
 		}
 
@@ -328,7 +328,7 @@ func SanitizeAndValidatePropertyValue(cpaField *CPAField, rawValue json.RawMessa
 			}
 		}
 
-		if fieldType == PropertyFieldTypeUser && value != "" && !IsValidId(value) {
+		if fieldType == PropertyFieldTypeUser && value != "" && !IsValidID(value) {
 			return nil, fmt.Errorf("invalid user id")
 		}
 		return json.Marshal(value)
@@ -350,7 +350,7 @@ func SanitizeAndValidatePropertyValue(cpaField *CPAField, rawValue json.RawMessa
 				}
 			}
 
-			if fieldType == PropertyFieldTypeMultiuser && !IsValidId(trimmed) {
+			if fieldType == PropertyFieldTypeMultiuser && !IsValidID(trimmed) {
 				return nil, fmt.Errorf("invalid user id: %s", trimmed)
 			}
 			filteredValues = append(filteredValues, trimmed)

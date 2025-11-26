@@ -22,9 +22,9 @@ const (
 )
 
 type Compliance struct {
-	Id       string `json:"id"`
+	ID       string `json:"id"`
 	CreateAt int64  `json:"create_at"`
-	UserId   string `json:"user_id"`
+	UserID   string `json:"user_id"`
 	Status   string `json:"status"`
 	Count    int    `json:"count"`
 	Desc     string `json:"desc"`
@@ -37,9 +37,9 @@ type Compliance struct {
 
 func (c *Compliance) Auditable() map[string]any {
 	return map[string]any{
-		"id":        c.Id,
+		"id":        c.ID,
 		"create_at": c.CreateAt,
-		"user_id":   c.UserId,
+		"user_id":   c.UserID,
 		"status":    c.Status,
 		"count":     c.Count,
 		"desc":      c.Desc,
@@ -67,8 +67,8 @@ type ComplianceExportCursor struct {
 }
 
 func (c *Compliance) PreSave() {
-	if c.Id == "" {
-		c.Id = NewId()
+	if c.ID == "" {
+		c.ID = NewID()
 	}
 
 	if c.Status == "" {
@@ -93,13 +93,13 @@ func (c *Compliance) JobName() string {
 		jobName += "-" + c.Desc
 	}
 
-	jobName += "-" + c.Id
+	jobName += "-" + c.ID
 
 	return jobName
 }
 
 func (c *Compliance) IsValid() *AppError {
-	if !IsValidId(c.Id) {
+	if !IsValidID(c.ID) {
 		return NewAppError("Compliance.IsValid", "model.compliance.is_valid.id.app_error", nil, "", http.StatusBadRequest)
 	}
 
@@ -133,7 +133,7 @@ func (c *Compliance) LoggerFields() []mlog.Field {
 	}
 
 	return []mlog.Field{
-		mlog.String("job_id", c.Id),
+		mlog.String("job_id", c.ID),
 		mlog.String("job_type", c.Type),
 		mlog.String("job_name", c.JobName()),
 		mlog.Millis("job_create_at", c.CreateAt),

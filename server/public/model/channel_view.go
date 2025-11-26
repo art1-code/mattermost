@@ -4,8 +4,8 @@
 package model
 
 type ChannelView struct {
-	ChannelId                 string `json:"channel_id"`
-	PrevChannelId             string `json:"prev_channel_id"`
+	ChannelID                 string `json:"channel_id"`
+	PrevChannelID             string `json:"prev_channel_id"`
 	CollapsedThreadsSupported bool   `json:"collapsed_threads_supported"`
 }
 

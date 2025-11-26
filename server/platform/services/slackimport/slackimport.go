@@ -349,19 +349,19 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 			}
 			newPost := model.Post{
 				UserId:    users[sPost.User].Id,
-				ChannelId: channel.Id,
+				ChannelID: channel.Id,
 				Message:   sPost.Text,
 				CreateAt:  slackConvertTimeStamp(sPost.TimeStamp),
 			}
 			if sPost.Upload {
 				if sPost.File != nil {
-					if fileInfo, ok := si.slackUploadFile(rctx, sPost.File, uploads, teamId, newPost.ChannelId, newPost.UserId, sPost.TimeStamp); ok {
-						newPost.FileIds = append(newPost.FileIds, fileInfo.Id)
+					if fileInfo, ok := si.slackUploadFile(rctx, sPost.File, uploads, teamId, newPost.ChannelID, newPost.UserId, sPost.TimeStamp); ok {
+						newPost.FileIDs = append(newPost.FileIDs, fileInfo.Id)
 					}
 				} else if sPost.Files != nil {
 					for _, file := range sPost.Files {
-						if fileInfo, ok := si.slackUploadFile(rctx, file, uploads, teamId, newPost.ChannelId, newPost.UserId, sPost.TimeStamp); ok {
-							newPost.FileIds = append(newPost.FileIds, fileInfo.Id)
+						if fileInfo, ok := si.slackUploadFile(rctx, file, uploads, teamId, newPost.ChannelID, newPost.UserId, sPost.TimeStamp); ok {
+							newPost.FileIDs = append(newPost.FileIDs, fileInfo.Id)
 						}
 					}
 				}
@@ -390,7 +390,7 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 			}
 			newPost := model.Post{
 				UserId:    users[sPost.Comment.User].Id,
-				ChannelId: channel.Id,
+				ChannelID: channel.Id,
 				Message:   sPost.Comment.Comment,
 				CreateAt:  slackConvertTimeStamp(sPost.TimeStamp),
 			}
@@ -413,7 +413,7 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 
 			post := &model.Post{
 				UserId:    botUser.Id,
-				ChannelId: channel.Id,
+				ChannelID: channel.Id,
 				CreateAt:  slackConvertTimeStamp(sPost.TimeStamp),
 				Message:   sPost.Text,
 				Type:      model.PostTypeSlackAttachment,
@@ -443,7 +443,7 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 
 			newPost := model.Post{
 				UserId:    users[sPost.User].Id,
-				ChannelId: channel.Id,
+				ChannelID: channel.Id,
 				Message:   sPost.Text,
 				CreateAt:  slackConvertTimeStamp(sPost.TimeStamp),
 				Type:      postType,
@@ -463,7 +463,7 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 			}
 			newPost := model.Post{
 				UserId:    users[sPost.User].Id,
-				ChannelId: channel.Id,
+				ChannelID: channel.Id,
 				Message:   "*" + sPost.Text + "*",
 				CreateAt:  slackConvertTimeStamp(sPost.TimeStamp),
 			}
@@ -483,7 +483,7 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 			}
 			newPost := model.Post{
 				UserId:    users[sPost.User].Id,
-				ChannelId: channel.Id,
+				ChannelID: channel.Id,
 				Message:   sPost.Text,
 				CreateAt:  slackConvertTimeStamp(sPost.TimeStamp),
 				Type:      model.PostTypeHeaderChange,
@@ -500,7 +500,7 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 			}
 			newPost := model.Post{
 				UserId:    users[sPost.User].Id,
-				ChannelId: channel.Id,
+				ChannelID: channel.Id,
 				Message:   sPost.Text,
 				CreateAt:  slackConvertTimeStamp(sPost.TimeStamp),
 				Type:      model.PostTypePurposeChange,
@@ -517,7 +517,7 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 			}
 			newPost := model.Post{
 				UserId:    users[sPost.User].Id,
-				ChannelId: channel.Id,
+				ChannelID: channel.Id,
 				Message:   sPost.Text,
 				CreateAt:  slackConvertTimeStamp(sPost.TimeStamp),
 				Type:      model.PostTypeDisplaynameChange,
@@ -697,18 +697,18 @@ func (si *SlackImporter) oldImportPost(rctx request.CTX, post *model.Post) strin
 			if firstPostId == "" {
 				firstPostId = post.Id
 			}
-			for _, fileId := range post.FileIds {
-				if err := si.store.FileInfo().AttachToPost(rctx, fileId, post.Id, post.ChannelId, post.UserId); err != nil {
+			for _, fileId := range post.FileIDs {
+				if err := si.store.FileInfo().AttachToPost(rctx, fileId, post.Id, post.ChannelID, post.UserId); err != nil {
 					rctx.Logger().Error(
 						"Error attaching files to post.",
 						mlog.String("post_id", post.Id),
-						mlog.String("file_ids", strings.Join(post.FileIds, ",")),
+						mlog.String("file_ids", strings.Join(post.FileIDs, ",")),
 						mlog.String("user_id", post.UserId),
 						mlog.Err(err),
 					)
 				}
 			}
-			post.FileIds = nil
+			post.FileIDs = nil
 		}
 
 		post.Id = ""

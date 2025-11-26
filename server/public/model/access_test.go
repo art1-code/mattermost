@@ -14,34 +14,34 @@ func TestAccessIsValid(t *testing.T) {
 
 	require.NotNil(t, ad.IsValid())
 
-	ad.ClientId = NewRandomString(28)
+	ad.ClientID = NewRandomString(28)
 	require.NotNil(t, ad.IsValid())
 
-	ad.ClientId = ""
+	ad.ClientID = ""
 	require.NotNil(t, ad.IsValid())
 
-	ad.ClientId = NewId()
+	ad.ClientID = NewID()
 	require.NotNil(t, ad.IsValid())
 
-	ad.UserId = NewRandomString(28)
+	ad.UserID = NewRandomString(28)
 	require.NotNil(t, ad.IsValid())
 
-	ad.UserId = ""
+	ad.UserID = ""
 	require.NotNil(t, ad.IsValid())
 
-	ad.UserId = NewId()
+	ad.UserID = NewID()
 	require.NotNil(t, ad.IsValid())
 
 	ad.Token = NewRandomString(22)
 	require.NotNil(t, ad.IsValid())
 
-	ad.Token = NewId()
+	ad.Token = NewID()
 	require.NotNil(t, ad.IsValid())
 
 	ad.RefreshToken = NewRandomString(28)
 	require.NotNil(t, ad.IsValid())
 
-	ad.RefreshToken = NewId()
+	ad.RefreshToken = NewID()
 	require.NotNil(t, ad.IsValid())
 
 	ad.RedirectUri = ""
@@ -57,9 +57,9 @@ func TestAccessIsValid(t *testing.T) {
 func TestAccessData_AudienceValidation(t *testing.T) {
 	// Create a valid AccessData base
 	accessData := &AccessData{
-		ClientId:     NewId(),
-		UserId:       NewId(),
-		Token:        NewId(),
+		ClientID:     NewID(),
+		UserID:       NewID(),
+		Token:        NewID(),
 		RefreshToken: "",
 		RedirectUri:  "https://example.com/callback",
 		ExpiresAt:    GetMillis() + 3600000,

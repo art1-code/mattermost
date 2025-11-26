@@ -23,7 +23,7 @@ func TestNewCPAFieldFromPropertyField(t *testing.T) {
 		{
 			name: "valid property field with all attributes",
 			propertyField: &PropertyField{
-				ID:      NewId(),
+				ID:      NewID(),
 				GroupID: CustomProfileAttributesPropertyGroupName,
 				Name:    "Test Field",
 				Type:    PropertyFieldTypeSelect,
@@ -33,7 +33,7 @@ func TestNewCPAFieldFromPropertyField(t *testing.T) {
 					CustomProfileAttributesPropertyAttrsValueType:  CustomProfileAttributesValueTypeEmail,
 					PropertyFieldAttributeOptions: []*CustomProfileAttributesSelectOption{
 						{
-							ID:    NewId(),
+							ID:    NewID(),
 							Name:  "Option 1",
 							Color: "#FF0000",
 						},
@@ -59,7 +59,7 @@ func TestNewCPAFieldFromPropertyField(t *testing.T) {
 		{
 			name: "valid property field with minimal attributes",
 			propertyField: &PropertyField{
-				ID:      NewId(),
+				ID:      NewID(),
 				GroupID: CustomProfileAttributesPropertyGroupName,
 				Name:    "Test Field",
 				Type:    PropertyFieldTypeText,
@@ -81,7 +81,7 @@ func TestNewCPAFieldFromPropertyField(t *testing.T) {
 		{
 			name: "property field with empty attributes returns default values",
 			propertyField: &PropertyField{
-				ID:       NewId(),
+				ID:       NewID(),
 				GroupID:  CustomProfileAttributesPropertyGroupName,
 				Name:     "Empty Field",
 				Type:     PropertyFieldTypeText,
@@ -145,7 +145,7 @@ func TestCPAFieldToPropertyField(t *testing.T) {
 			name: "convert CPA field with all attributes",
 			cpaField: &CPAField{
 				PropertyField: PropertyField{
-					ID:       NewId(),
+					ID:       NewID(),
 					GroupID:  CustomProfileAttributesPropertyGroupName,
 					Name:     "Test Field",
 					Type:     PropertyFieldTypeSelect,
@@ -158,7 +158,7 @@ func TestCPAFieldToPropertyField(t *testing.T) {
 					ValueType:  CustomProfileAttributesValueTypeEmail,
 					Options: []*CustomProfileAttributesSelectOption{
 						{
-							ID:    NewId(),
+							ID:    NewID(),
 							Name:  "Option 1",
 							Color: "#FF0000",
 						},
@@ -170,7 +170,7 @@ func TestCPAFieldToPropertyField(t *testing.T) {
 			name: "convert CPA field with minimal attributes",
 			cpaField: &CPAField{
 				PropertyField: PropertyField{
-					ID:       NewId(),
+					ID:       NewID(),
 					GroupID:  CustomProfileAttributesPropertyGroupName,
 					Name:     "Test Field",
 					Type:     PropertyFieldTypeText,
@@ -187,7 +187,7 @@ func TestCPAFieldToPropertyField(t *testing.T) {
 			name: "convert CPA field with empty attributes",
 			cpaField: &CPAField{
 				PropertyField: PropertyField{
-					ID:       NewId(),
+					ID:       NewID(),
 					GroupID:  CustomProfileAttributesPropertyGroupName,
 					Name:     "Empty Field",
 					Type:     PropertyFieldTypeText,
@@ -237,7 +237,7 @@ func TestCPAFieldToPropertyField(t *testing.T) {
 				name: "CPA field with managed attribute should include it in conversion",
 				cpaField: &CPAField{
 					PropertyField: PropertyField{
-						ID:       NewId(),
+						ID:       NewID(),
 						GroupID:  CustomProfileAttributesPropertyGroupName,
 						Name:     "Managed Field",
 						Type:     PropertyFieldTypeText,
@@ -255,7 +255,7 @@ func TestCPAFieldToPropertyField(t *testing.T) {
 				name: "CPA field with empty managed attribute should include it in conversion",
 				cpaField: &CPAField{
 					PropertyField: PropertyField{
-						ID:       NewId(),
+						ID:       NewID(),
 						GroupID:  CustomProfileAttributesPropertyGroupName,
 						Name:     "Non-managed Field",
 						Type:     PropertyFieldTypeText,
@@ -299,7 +299,7 @@ func TestCustomProfileAttributeSelectOptionIsValid(t *testing.T) {
 		{
 			name: "valid option with color",
 			option: CustomProfileAttributesSelectOption{
-				ID:    NewId(),
+				ID:    NewID(),
 				Name:  "Test Option",
 				Color: "#FF0000",
 			},
@@ -308,7 +308,7 @@ func TestCustomProfileAttributeSelectOptionIsValid(t *testing.T) {
 		{
 			name: "valid option without color",
 			option: CustomProfileAttributesSelectOption{
-				ID:   NewId(),
+				ID:   NewID(),
 				Name: "Test Option",
 			},
 			wantErr: "",
@@ -334,7 +334,7 @@ func TestCustomProfileAttributeSelectOptionIsValid(t *testing.T) {
 		{
 			name: "empty name",
 			option: CustomProfileAttributesSelectOption{
-				ID:    NewId(),
+				ID:    NewID(),
 				Name:  "",
 				Color: "#FF0000",
 			},
@@ -343,7 +343,7 @@ func TestCustomProfileAttributeSelectOptionIsValid(t *testing.T) {
 		{
 			name: "name too long",
 			option: CustomProfileAttributesSelectOption{
-				ID:    NewId(),
+				ID:    NewID(),
 				Name:  strings.Repeat("a", CPAOptionNameMaxLength+1),
 				Color: "#FF0000",
 			},
@@ -352,7 +352,7 @@ func TestCustomProfileAttributeSelectOptionIsValid(t *testing.T) {
 		{
 			name: "color too long",
 			option: CustomProfileAttributesSelectOption{
-				ID:    NewId(),
+				ID:    NewID(),
 				Name:  "Test Option",
 				Color: strings.Repeat("a", CPAOptionColorMaxLength+1),
 			},
@@ -361,7 +361,7 @@ func TestCustomProfileAttributeSelectOptionIsValid(t *testing.T) {
 		{
 			name: "name exactly at max length",
 			option: CustomProfileAttributesSelectOption{
-				ID:    NewId(),
+				ID:    NewID(),
 				Name:  strings.Repeat("a", CPAOptionNameMaxLength),
 				Color: "#FF0000",
 			},
@@ -370,7 +370,7 @@ func TestCustomProfileAttributeSelectOptionIsValid(t *testing.T) {
 		{
 			name: "color exactly at max length",
 			option: CustomProfileAttributesSelectOption{
-				ID:    NewId(),
+				ID:    NewID(),
 				Name:  "Test Option",
 				Color: strings.Repeat("a", CPAOptionColorMaxLength),
 			},
@@ -395,7 +395,7 @@ func TestCPAField_SanitizeAndValidate(t *testing.T) {
 		name           string
 		field          *CPAField
 		expectError    bool
-		errorId        string
+		errorID        string
 		expectedAttrs  CPAAttrs
 		checkOptionsID bool
 	}{
@@ -453,7 +453,7 @@ func TestCPAField_SanitizeAndValidate(t *testing.T) {
 				},
 			},
 			expectError: true,
-			errorId:     "app.custom_profile_attributes.sanitize_and_validate.app_error",
+			errorID:     "app.custom_profile_attributes.sanitize_and_validate.app_error",
 		},
 		{
 			name: "valid select field with valid options",
@@ -528,7 +528,7 @@ func TestCPAField_SanitizeAndValidate(t *testing.T) {
 				},
 			},
 			expectError: true,
-			errorId:     "app.custom_profile_attributes.sanitize_and_validate.app_error",
+			errorID:     "app.custom_profile_attributes.sanitize_and_validate.app_error",
 		},
 		{
 			name: "invalid field with unknown visibility",
@@ -541,7 +541,7 @@ func TestCPAField_SanitizeAndValidate(t *testing.T) {
 				},
 			},
 			expectError: true,
-			errorId:     "app.custom_profile_attributes.sanitize_and_validate.app_error",
+			errorID:     "app.custom_profile_attributes.sanitize_and_validate.app_error",
 		},
 
 		// Test options cleaning for types that don't support options
@@ -554,7 +554,7 @@ func TestCPAField_SanitizeAndValidate(t *testing.T) {
 				Attrs: CPAAttrs{
 					Options: []*CustomProfileAttributesSelectOption{
 						{
-							ID:    NewId(),
+							ID:    NewID(),
 							Name:  "Option 1",
 							Color: "#123456",
 						},
@@ -576,7 +576,7 @@ func TestCPAField_SanitizeAndValidate(t *testing.T) {
 				Attrs: CPAAttrs{
 					Options: []*CustomProfileAttributesSelectOption{
 						{
-							ID:    NewId(),
+							ID:    NewID(),
 							Name:  "Option 1",
 							Color: "#123456",
 						},
@@ -598,7 +598,7 @@ func TestCPAField_SanitizeAndValidate(t *testing.T) {
 				Attrs: CPAAttrs{
 					Options: []*CustomProfileAttributesSelectOption{
 						{
-							ID:    NewId(),
+							ID:    NewID(),
 							Name:  "Option 1",
 							Color: "#123456",
 						},
@@ -622,7 +622,7 @@ func TestCPAField_SanitizeAndValidate(t *testing.T) {
 				Attrs: CPAAttrs{
 					Options: []*CustomProfileAttributesSelectOption{
 						{
-							ID:    NewId(),
+							ID:    NewID(),
 							Name:  "Option 1",
 							Color: "#123456",
 						},
@@ -646,7 +646,7 @@ func TestCPAField_SanitizeAndValidate(t *testing.T) {
 				Attrs: CPAAttrs{
 					Options: []*CustomProfileAttributesSelectOption{
 						{
-							ID:    NewId(),
+							ID:    NewID(),
 							Name:  "Option 1",
 							Color: "#123456",
 						},
@@ -674,7 +674,7 @@ func TestCPAField_SanitizeAndValidate(t *testing.T) {
 					SAML: "saml_attribute",
 					Options: []*CustomProfileAttributesSelectOption{
 						{
-							ID:    NewId(),
+							ID:    NewID(),
 							Name:  "Option 1",
 							Color: "#123456",
 						},
@@ -736,7 +736,7 @@ func TestCPAField_SanitizeAndValidate(t *testing.T) {
 			err := tt.field.SanitizeAndValidate()
 			if tt.expectError {
 				require.NotNil(t, err)
-				require.Equal(t, tt.errorId, err.Id)
+				require.Equal(t, tt.errorID, err.ID)
 			} else {
 				var ogErr error
 				if err != nil {
@@ -764,7 +764,7 @@ func TestCPAField_SanitizeAndValidate(t *testing.T) {
 			name          string
 			field         *CPAField
 			expectError   bool
-			errorId       string
+			errorID       string
 			expectedAttrs CPAAttrs
 		}{
 			{
@@ -826,7 +826,7 @@ func TestCPAField_SanitizeAndValidate(t *testing.T) {
 					},
 				},
 				expectError: true,
-				errorId:     "app.custom_profile_attributes.sanitize_and_validate.app_error",
+				errorID:     "app.custom_profile_attributes.sanitize_and_validate.app_error",
 			},
 			{
 				name: "managed field should clear LDAP sync properties",
@@ -874,7 +874,7 @@ func TestCPAField_SanitizeAndValidate(t *testing.T) {
 				err := tt.field.SanitizeAndValidate()
 				if tt.expectError {
 					require.NotNil(t, err)
-					require.Equal(t, tt.errorId, err.Id)
+					require.Equal(t, tt.errorID, err.ID)
 				} else {
 					require.Nil(t, err)
 					assert.Equal(t, tt.expectedAttrs.Visibility, tt.field.Attrs.Visibility)
@@ -973,7 +973,7 @@ func TestSanitizeAndValidatePropertyValue(t *testing.T) {
 
 	t.Run("user field type", func(t *testing.T) {
 		t.Run("valid user ID", func(t *testing.T) {
-			validID := NewId()
+			validID := NewID()
 			result, err := SanitizeAndValidatePropertyValue(&CPAField{PropertyField: PropertyField{Type: PropertyFieldTypeUser}}, json.RawMessage(fmt.Sprintf(`"%s"`, validID)))
 			require.NoError(t, err)
 			var value string
@@ -995,9 +995,9 @@ func TestSanitizeAndValidatePropertyValue(t *testing.T) {
 
 	t.Run("multiselect field type", func(t *testing.T) {
 		t.Run("valid options", func(t *testing.T) {
-			option1ID := NewId()
-			option2ID := NewId()
-			option3ID := NewId()
+			option1ID := NewID()
+			option2ID := NewID()
+			option3ID := NewID()
 			result, err := SanitizeAndValidatePropertyValue(&CPAField{
 				PropertyField: PropertyField{Type: PropertyFieldTypeMultiselect},
 				Attrs: CPAAttrs{
@@ -1014,9 +1014,9 @@ func TestSanitizeAndValidatePropertyValue(t *testing.T) {
 		})
 
 		t.Run("empty array", func(t *testing.T) {
-			option1ID := NewId()
-			option2ID := NewId()
-			option3ID := NewId()
+			option1ID := NewID()
+			option2ID := NewID()
+			option3ID := NewID()
 			_, err := SanitizeAndValidatePropertyValue(&CPAField{
 				PropertyField: PropertyField{Type: PropertyFieldTypeMultiselect},
 				Attrs: CPAAttrs{
@@ -1030,9 +1030,9 @@ func TestSanitizeAndValidatePropertyValue(t *testing.T) {
 		})
 
 		t.Run("array with empty values should filter them out", func(t *testing.T) {
-			option1ID := NewId()
-			option2ID := NewId()
-			option3ID := NewId()
+			option1ID := NewID()
+			option2ID := NewID()
+			option3ID := NewID()
 			result, err := SanitizeAndValidatePropertyValue(&CPAField{
 				PropertyField: PropertyField{Type: PropertyFieldTypeMultiselect},
 				Attrs: CPAAttrs{
@@ -1051,8 +1051,8 @@ func TestSanitizeAndValidatePropertyValue(t *testing.T) {
 
 	t.Run("multiuser field type", func(t *testing.T) {
 		t.Run("valid user IDs", func(t *testing.T) {
-			validID1 := NewId()
-			validID2 := NewId()
+			validID1 := NewID()
+			validID2 := NewID()
 			result, err := SanitizeAndValidatePropertyValue(&CPAField{PropertyField: PropertyField{Type: PropertyFieldTypeMultiuser}}, json.RawMessage(fmt.Sprintf(`["%s", "%s"]`, validID1, validID2)))
 			require.NoError(t, err)
 			var values []string
@@ -1066,8 +1066,8 @@ func TestSanitizeAndValidatePropertyValue(t *testing.T) {
 		})
 
 		t.Run("array with empty strings should be filtered out", func(t *testing.T) {
-			validID1 := NewId()
-			validID2 := NewId()
+			validID1 := NewID()
+			validID2 := NewID()
 			result, err := SanitizeAndValidatePropertyValue(&CPAField{PropertyField: PropertyField{Type: PropertyFieldTypeMultiuser}}, json.RawMessage(fmt.Sprintf(`["%s", "", "   ", "%s"]`, validID1, validID2)))
 			require.NoError(t, err)
 			var values []string
@@ -1076,7 +1076,7 @@ func TestSanitizeAndValidatePropertyValue(t *testing.T) {
 		})
 
 		t.Run("array with invalid ID should return error", func(t *testing.T) {
-			validID1 := NewId()
+			validID1 := NewID()
 			_, err := SanitizeAndValidatePropertyValue(&CPAField{PropertyField: PropertyField{Type: PropertyFieldTypeMultiuser}}, json.RawMessage(fmt.Sprintf(`["%s", "invalid-id"]`, validID1)))
 			require.Error(t, err)
 			require.Equal(t, "invalid user id: invalid-id", err.Error())
@@ -1212,7 +1212,7 @@ func TestCPAField_Patch(t *testing.T) {
 			name: "patch name",
 			field: &CPAField{
 				PropertyField: PropertyField{
-					ID:       NewId(),
+					ID:       NewID(),
 					GroupID:  "group1",
 					Name:     "Original Name",
 					Type:     PropertyFieldTypeText,
@@ -1241,7 +1241,7 @@ func TestCPAField_Patch(t *testing.T) {
 			name: "patch type",
 			field: &CPAField{
 				PropertyField: PropertyField{
-					ID:       NewId(),
+					ID:       NewID(),
 					GroupID:  "group1",
 					Name:     "Test Field",
 					Type:     PropertyFieldTypeText,
@@ -1270,7 +1270,7 @@ func TestCPAField_Patch(t *testing.T) {
 			name: "patch visibility (attrs replacement - sort order is lost)",
 			field: &CPAField{
 				PropertyField: PropertyField{
-					ID:       NewId(),
+					ID:       NewID(),
 					GroupID:  "group1",
 					Name:     "Test Field",
 					Type:     PropertyFieldTypeText,
@@ -1303,7 +1303,7 @@ func TestCPAField_Patch(t *testing.T) {
 			name: "patch visibility preserving sort order (must include both in patch)",
 			field: &CPAField{
 				PropertyField: PropertyField{
-					ID:       NewId(),
+					ID:       NewID(),
 					GroupID:  "group1",
 					Name:     "Test Field",
 					Type:     PropertyFieldTypeText,
@@ -1337,7 +1337,7 @@ func TestCPAField_Patch(t *testing.T) {
 			name: "patch sort order",
 			field: &CPAField{
 				PropertyField: PropertyField{
-					ID:       NewId(),
+					ID:       NewID(),
 					GroupID:  "group1",
 					Name:     "Test Field",
 					Type:     PropertyFieldTypeText,
@@ -1370,7 +1370,7 @@ func TestCPAField_Patch(t *testing.T) {
 			name: "patch managed attribute",
 			field: &CPAField{
 				PropertyField: PropertyField{
-					ID:       NewId(),
+					ID:       NewID(),
 					GroupID:  "group1",
 					Name:     "Test Field",
 					Type:     PropertyFieldTypeText,
@@ -1403,7 +1403,7 @@ func TestCPAField_Patch(t *testing.T) {
 			name: "patch LDAP attribute",
 			field: &CPAField{
 				PropertyField: PropertyField{
-					ID:       NewId(),
+					ID:       NewID(),
 					GroupID:  "group1",
 					Name:     "Test Field",
 					Type:     PropertyFieldTypeText,
@@ -1435,7 +1435,7 @@ func TestCPAField_Patch(t *testing.T) {
 			name: "patch options for select field",
 			field: &CPAField{
 				PropertyField: PropertyField{
-					ID:       NewId(),
+					ID:       NewID(),
 					GroupID:  "group1",
 					Name:     "Test Field",
 					Type:     PropertyFieldTypeSelect,
@@ -1476,7 +1476,7 @@ func TestCPAField_Patch(t *testing.T) {
 			name: "patch with TargetID should clear it (CPA doesn't use targets)",
 			field: &CPAField{
 				PropertyField: PropertyField{
-					ID:       NewId(),
+					ID:       NewID(),
 					GroupID:  "group1",
 					Name:     "Test Field",
 					Type:     PropertyFieldTypeText,
@@ -1507,7 +1507,7 @@ func TestCPAField_Patch(t *testing.T) {
 			name: "patch with TargetType should clear it (CPA doesn't use targets)",
 			field: &CPAField{
 				PropertyField: PropertyField{
-					ID:       NewId(),
+					ID:       NewID(),
 					GroupID:  "group1",
 					Name:     "Test Field",
 					Type:     PropertyFieldTypeText,
@@ -1538,7 +1538,7 @@ func TestCPAField_Patch(t *testing.T) {
 			name: "patch multiple attributes at once",
 			field: &CPAField{
 				PropertyField: PropertyField{
-					ID:       NewId(),
+					ID:       NewID(),
 					GroupID:  "group1",
 					Name:     "Original Name",
 					Type:     PropertyFieldTypeText,

@@ -4,7 +4,7 @@
 package model
 
 type ClusterInfo struct {
-	Id            string `json:"id"`
+	ID            string `json:"id"`
 	Version       string `json:"version"`
 	SchemaVersion string `json:"schema_version"`
 	ConfigHash    string `json:"config_hash"`

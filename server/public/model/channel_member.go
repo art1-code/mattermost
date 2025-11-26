@@ -28,8 +28,8 @@ const (
 )
 
 type ChannelUnread struct {
-	TeamId             string    `json:"team_id"`
-	ChannelId          string    `json:"channel_id"`
+	TeamID             string    `json:"team_id"`
+	ChannelID          string    `json:"channel_id"`
 	MsgCount           int64     `json:"msg_count"`
 	MentionCount       int64     `json:"mention_count"`
 	MentionCountRoot   int64     `json:"mention_count_root"`
@@ -39,9 +39,9 @@ type ChannelUnread struct {
 }
 
 type ChannelUnreadAt struct {
-	TeamId             string    `json:"team_id"`
-	UserId             string    `json:"user_id"`
-	ChannelId          string    `json:"channel_id"`
+	TeamID             string    `json:"team_id"`
+	UserID             string    `json:"user_id"`
+	ChannelID          string    `json:"channel_id"`
 	MsgCount           int64     `json:"msg_count"`
 	MentionCount       int64     `json:"mention_count"`
 	MentionCountRoot   int64     `json:"mention_count_root"`
@@ -52,8 +52,8 @@ type ChannelUnreadAt struct {
 }
 
 type ChannelMember struct {
-	ChannelId          string    `json:"channel_id"`
-	UserId             string    `json:"user_id"`
+	ChannelID          string    `json:"channel_id"`
+	UserID             string    `json:"user_id"`
 	Roles              string    `json:"roles"`
 	LastViewedAt       int64     `json:"last_viewed_at"`
 	MsgCount           int64     `json:"msg_count"`
@@ -71,8 +71,8 @@ type ChannelMember struct {
 
 func (o *ChannelMember) Auditable() map[string]any {
 	return map[string]any{
-		"channel_id":           o.ChannelId,
-		"user_id":              o.UserId,
+		"channel_id":           o.ChannelID,
+		"user_id":              o.UserID,
 		"roles":                o.Roles,
 		"last_viewed_at":       o.LastViewedAt,
 		"msg_count":            o.MsgCount,
@@ -91,10 +91,10 @@ func (o *ChannelMember) Auditable() map[string]any {
 
 // SanitizeForCurrentUser sanitizes channel member data based on whether
 // it's the current user's own membership or another user's membership
-func (o *ChannelMember) SanitizeForCurrentUser(currentUserId string) {
+func (o *ChannelMember) SanitizeForCurrentUser(currentUserID string) {
 	// If this is not the current user's own membership,
 	// sanitize sensitive timestamp fields
-	if o.UserId != currentUserId {
+	if o.UserID != currentUserID {
 		o.LastViewedAt = -1
 		o.LastUpdateAt = -1
 	}
@@ -126,11 +126,11 @@ type ChannelMemberCursor struct {
 }
 
 func (o *ChannelMember) IsValid() *AppError {
-	if !IsValidId(o.ChannelId) {
+	if !IsValidID(o.ChannelID) {
 		return NewAppError("ChannelMember.IsValid", "model.channel_member.is_valid.channel_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
-	if !IsValidId(o.UserId) {
+	if !IsValidID(o.UserID) {
 		return NewAppError("ChannelMember.IsValid", "model.channel_member.is_valid.user_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
@@ -249,7 +249,7 @@ func GetDefaultChannelNotifyProps() StringMap {
 	}
 }
 
-type ChannelMemberIdentifier struct {
-	ChannelId string `json:"channel_id"`
-	UserId    string `json:"user_id"`
+type ChannelMemberIDentifier struct {
+	ChannelID string `json:"channel_id"`
+	UserID    string `json:"user_id"`
 }

@@ -53,7 +53,7 @@ func (s *ScheduledPost) BaseIsValid() *AppError {
 		return NewAppError("ScheduledPost.IsValid", "model.scheduled_post.is_valid.id.app_error", nil, "id="+s.Id, http.StatusBadRequest)
 	}
 
-	if len(s.Message) == 0 && len(s.FileIds) == 0 {
+	if len(s.Message) == 0 && len(s.FileIDs) == 0 {
 		return NewAppError("ScheduledPost.IsValid", "model.scheduled_post.is_valid.empty_post.app_error", nil, "id="+s.Id, http.StatusBadRequest)
 	}
 
@@ -88,9 +88,9 @@ func (s *ScheduledPost) PreUpdate() {
 func (s *ScheduledPost) ToPost() (*Post, error) {
 	post := &Post{
 		UserId:    s.UserId,
-		ChannelId: s.ChannelId,
+		ChannelID: s.ChannelID,
 		Message:   s.Message,
-		FileIds:   s.FileIds,
+		FileIDs:   s.FileIDs,
 		RootId:    s.RootId,
 		Metadata:  s.Metadata,
 	}
@@ -140,10 +140,10 @@ func (s *ScheduledPost) Auditable() map[string]any {
 		"create_at":  s.CreateAt,
 		"update_at":  s.UpdateAt,
 		"user_id":    s.UserId,
-		"channel_id": s.ChannelId,
+		"channel_id": s.ChannelID,
 		"root_id":    s.RootId,
 		"props":      s.GetProps(),
-		"file_ids":   s.FileIds,
+		"file_ids":   s.FileIDs,
 		"metadata":   metaData,
 	}
 }
@@ -152,7 +152,7 @@ func (s *ScheduledPost) RestoreNonUpdatableFields(originalScheduledPost *Schedul
 	s.Id = originalScheduledPost.Id
 	s.CreateAt = originalScheduledPost.CreateAt
 	s.UserId = originalScheduledPost.UserId
-	s.ChannelId = originalScheduledPost.ChannelId
+	s.ChannelID = originalScheduledPost.ChannelID
 	s.RootId = originalScheduledPost.RootId
 }
 

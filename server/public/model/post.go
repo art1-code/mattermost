@@ -97,7 +97,7 @@ type Post struct {
 	DeleteAt   int64  `json:"delete_at"`
 	IsPinned   bool   `json:"is_pinned"`
 	UserId     string `json:"user_id"`
-	ChannelId  string `json:"channel_id"`
+	ChannelID  string `json:"channel_id"`
 	RootId     string `json:"root_id"`
 	OriginalId string `json:"original_id"`
 
@@ -112,7 +112,7 @@ type Post struct {
 	Props         StringInterface `json:"props"` // Deprecated: use GetProps()
 	Hashtags      string          `json:"hashtags"`
 	Filenames     StringArray     `json:"-"` // Deprecated, do not use this field any more
-	FileIds       StringArray     `json:"file_ids"`
+	FileIDs       StringArray     `json:"file_ids"`
 	PendingPostId string          `json:"pending_post_id"`
 	HasReactions  bool            `json:"has_reactions,omitempty"`
 	RemoteId      *string         `json:"remote_id,omitempty"`
@@ -139,12 +139,12 @@ func (o *Post) Auditable() map[string]any {
 		"delete_at":       o.DeleteAt,
 		"is_pinned":       o.IsPinned,
 		"user_id":         o.UserId,
-		"channel_id":      o.ChannelId,
+		"channel_id":      o.ChannelID,
 		"root_id":         o.RootId,
 		"original_id":     o.OriginalId,
 		"type":            o.Type,
 		"props":           o.GetProps(),
-		"file_ids":        o.FileIds,
+		"file_ids":        o.FileIDs,
 		"pending_post_id": o.PendingPostId,
 		"remote_id":       o.RemoteId,
 		"reply_count":     o.ReplyCount,
@@ -167,7 +167,7 @@ type PostPatch struct {
 	IsPinned     *bool            `json:"is_pinned"`
 	Message      *string          `json:"message"`
 	Props        *StringInterface `json:"props"`
-	FileIds      *StringArray     `json:"file_ids"`
+	FileIDs      *StringArray     `json:"file_ids"`
 	HasReactions *bool            `json:"has_reactions"`
 }
 
@@ -247,7 +247,7 @@ func (o *PostPatch) Auditable() map[string]any {
 	return map[string]any{
 		"is_pinned":     o.IsPinned,
 		"props":         o.Props,
-		"file_ids":      o.FileIds,
+		"file_ids":      o.FileIDs,
 		"has_reactions": o.HasReactions,
 	}
 }
@@ -319,7 +319,7 @@ func (o *Post) ShallowCopy(dst *Post) error {
 	dst.DeleteAt = o.DeleteAt
 	dst.IsPinned = o.IsPinned
 	dst.UserId = o.UserId
-	dst.ChannelId = o.ChannelId
+	dst.ChannelID = o.ChannelID
 	dst.RootId = o.RootId
 	dst.OriginalId = o.OriginalId
 	dst.Message = o.Message
@@ -328,7 +328,7 @@ func (o *Post) ShallowCopy(dst *Post) error {
 	dst.Props = o.Props
 	dst.Hashtags = o.Hashtags
 	dst.Filenames = o.Filenames
-	dst.FileIds = o.FileIds
+	dst.FileIDs = o.FileIDs
 	dst.PendingPostId = o.PendingPostId
 	dst.HasReactions = o.HasReactions
 	dst.ReplyCount = o.ReplyCount
@@ -452,7 +452,7 @@ func (o *Post) IsValid(maxPostSize int) *AppError {
 		return NewAppError("Post.IsValid", "model.post.is_valid.user_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
-	if !IsValidId(o.ChannelId) {
+	if !IsValidId(o.ChannelID) {
 		return NewAppError("Post.IsValid", "model.post.is_valid.channel_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
@@ -514,7 +514,7 @@ func (o *Post) IsValid(maxPostSize int) *AppError {
 		return NewAppError("Post.IsValid", "model.post.is_valid.filenames.app_error", nil, "id="+o.Id, http.StatusBadRequest)
 	}
 
-	if utf8.RuneCountInString(ArrayToJSON(o.FileIds)) > PostFileidsMaxRunes {
+	if utf8.RuneCountInString(ArrayToJSON(o.FileIDs)) > PostFileidsMaxRunes {
 		return NewAppError("Post.IsValid", "model.post.is_valid.file_ids.app_error", nil, "id="+o.Id, http.StatusBadRequest)
 	}
 
@@ -611,14 +611,14 @@ func (o *Post) PreCommit() {
 		o.Filenames = []string{}
 	}
 
-	if o.FileIds == nil {
-		o.FileIds = []string{}
+	if o.FileIDs == nil {
+		o.FileIDs = []string{}
 	}
 
 	o.GenerateActionIds()
 
 	// There's a rare bug where the client sends up duplicate FileIds so protect against that
-	o.FileIds = RemoveDuplicateStrings(o.FileIds)
+	o.FileIDs = RemoveDuplicateStrings(o.FileIDs)
 }
 
 func (o *Post) MakeNonNil() {
@@ -852,8 +852,8 @@ func (o *Post) Patch(patch *PostPatch) {
 		o.SetProps(newProps)
 	}
 
-	if patch.FileIds != nil {
-		o.FileIds = *patch.FileIds
+	if patch.FileIDs != nil {
+		o.FileIDs = *patch.FileIDs
 	}
 
 	if patch.HasReactions != nil {
@@ -1163,6 +1163,6 @@ type RewriteResponse struct {
 	RewrittenText string `json:"rewritten_text"`
 }
 
-const RewriteSystemPrompt = `You are a JSON API that rewrites text. Your response must be valid JSON only. 
-Return this exact format: {"rewritten_text":"content"}. 
+const RewriteSystemPrompt = `You are a JSON API that rewrites text. Your response must be valid JSON only.
+Return this exact format: {"rewritten_text":"content"}.
 Do not use markdown, code blocks, or any formatting. Start with { and end with }.`

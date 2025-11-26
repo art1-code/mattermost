@@ -266,7 +266,7 @@ type PostActionCookie struct {
 	Type        string                 `json:"type,omitempty"`
 	PostId      string                 `json:"post_id,omitempty"`
 	RootPostId  string                 `json:"root_post_id,omitempty"`
-	ChannelId   string                 `json:"channel_id,omitempty"`
+	ChannelID   string                 `json:"channel_id,omitempty"`
 	DataSource  string                 `json:"data_source,omitempty"`
 	Integration *PostActionIntegration `json:"integration,omitempty"`
 	RetainProps map[string]any         `json:"retain_props,omitempty"`
@@ -850,7 +850,7 @@ func AddPostActionCookies(o *Post, secret []byte) *Post {
 		for _, action := range attachment.Actions {
 			c := &PostActionCookie{
 				Type:        action.Type,
-				ChannelId:   p.ChannelId,
+				ChannelID:   p.ChannelID,
 				DataSource:  action.DataSource,
 				Integration: action.Integration,
 				RetainProps: retainProps,

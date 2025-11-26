@@ -342,7 +342,7 @@ func (th *SearchTestHelper) deleteChannels(channels []*model.Channel) error {
 func (th *SearchTestHelper) createPostModel(userID, channelID, message, hashtags, postType string, createAt int64, pinned bool) *model.Post {
 	return &model.Post{
 		Message:       message,
-		ChannelId:     channelID,
+		ChannelID:     channelID,
 		PendingPostId: model.NewId() + ":" + strconv.FormatInt(model.GetMillis(), 10),
 		UserId:        userID,
 		Hashtags:      hashtags,
@@ -388,7 +388,7 @@ func (th *SearchTestHelper) createFileInfo(creatorID, postID, channelID, name, c
 }
 
 func (th *SearchTestHelper) createReply(userID, message, hashtags string, parent *model.Post, createAt int64, pinned bool) (*model.Post, error) {
-	replyModel := th.createPostModel(userID, parent.ChannelId, message, hashtags, parent.Type, createAt, pinned)
+	replyModel := th.createPostModel(userID, parent.ChannelID, message, hashtags, parent.Type, createAt, pinned)
 	replyModel.RootId = parent.Id
 	return th.Store.Post().Save(th.Context, replyModel)
 }

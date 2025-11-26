@@ -38,9 +38,9 @@ func upsertDraft(c *Context, w http.ResponseWriter, r *http.Request) {
 
 	hasPermission := false
 
-	if c.App.SessionHasPermissionToChannel(c.AppContext, *c.AppContext.Session(), draft.ChannelId, model.PermissionCreatePost) {
+	if c.App.SessionHasPermissionToChannel(c.AppContext, *c.AppContext.Session(), draft.ChannelID, model.PermissionCreatePost) {
 		hasPermission = true
-	} else if channel, err := c.App.GetChannel(c.AppContext, draft.ChannelId); err == nil {
+	} else if channel, err := c.App.GetChannel(c.AppContext, draft.ChannelID); err == nil {
 		// Temporary permission check method until advanced permissions, please do not copy
 		if channel.Type == model.ChannelTypeOpen && c.App.SessionHasPermissionToTeam(*c.AppContext.Session(), channel.TeamId, model.PermissionCreatePostPublic) {
 			hasPermission = true

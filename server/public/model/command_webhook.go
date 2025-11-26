@@ -8,12 +8,12 @@ import (
 )
 
 type CommandWebhook struct {
-	Id        string
+	ID        string
 	CreateAt  int64
-	CommandId string
-	UserId    string
-	ChannelId string
-	RootId    string
+	CommandID string
+	UserID    string
+	ChannelID string
+	RootID    string
 	UseCount  int
 }
 
@@ -22,8 +22,8 @@ const (
 )
 
 func (o *CommandWebhook) PreSave() {
-	if o.Id == "" {
-		o.Id = NewId()
+	if o.ID == "" {
+		o.ID = NewID()
 	}
 
 	if o.CreateAt == 0 {
@@ -32,27 +32,27 @@ func (o *CommandWebhook) PreSave() {
 }
 
 func (o *CommandWebhook) IsValid() *AppError {
-	if !IsValidId(o.Id) {
+	if !IsValidID(o.ID) {
 		return NewAppError("CommandWebhook.IsValid", "model.command_hook.id.app_error", nil, "", http.StatusBadRequest)
 	}
 
 	if o.CreateAt == 0 {
-		return NewAppError("CommandWebhook.IsValid", "model.command_hook.create_at.app_error", nil, "id="+o.Id, http.StatusBadRequest)
+		return NewAppError("CommandWebhook.IsValid", "model.command_hook.create_at.app_error", nil, "id="+o.ID, http.StatusBadRequest)
 	}
 
-	if !IsValidId(o.CommandId) {
+	if !IsValidID(o.CommandID) {
 		return NewAppError("CommandWebhook.IsValid", "model.command_hook.command_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
-	if !IsValidId(o.UserId) {
+	if !IsValidID(o.UserID) {
 		return NewAppError("CommandWebhook.IsValid", "model.command_hook.user_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
-	if !IsValidId(o.ChannelId) {
+	if !IsValidID(o.ChannelID) {
 		return NewAppError("CommandWebhook.IsValid", "model.command_hook.channel_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
-	if o.RootId != "" && !IsValidId(o.RootId) {
+	if o.RootID != "" && !IsValidID(o.RootID) {
 		return NewAppError("CommandWebhook.IsValid", "model.command_hook.root_id.app_error", nil, "", http.StatusBadRequest)
 	}
 

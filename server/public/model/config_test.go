@@ -289,7 +289,7 @@ func TestFileSettingsDirectoryWhitespaceValidation(t *testing.T) {
 
 					err := cfg.FileSettings.isValid()
 					require.NotNil(t, err, "Expected an error but got none")
-					assert.Equal(t, "model.config.is_valid.directory_whitespace.app_error", err.Id)
+					assert.Equal(t, "model.config.is_valid.directory_whitespace.app_error", err.ID)
 				})
 			}
 		}
@@ -345,10 +345,10 @@ func TestConfigIsValidDefaultAlgorithms(t *testing.T) {
 	*c1.SamlSettings.Verify = false
 	*c1.SamlSettings.Encrypt = false
 
-	*c1.SamlSettings.IdpURL = "http://test.url.com"
-	*c1.SamlSettings.IdpDescriptorURL = "http://test.url.com"
-	*c1.SamlSettings.IdpCertificateFile = "certificatefile"
-	*c1.SamlSettings.ServiceProviderIdentifier = "http://test.url.com"
+	*c1.SamlSettings.IDpURL = "http://test.url.com"
+	*c1.SamlSettings.IDpDescriptorURL = "http://test.url.com"
+	*c1.SamlSettings.IDpCertificateFile = "certificatefile"
+	*c1.SamlSettings.ServiceProviderIDentifier = "http://test.url.com"
 	*c1.SamlSettings.EmailAttribute = "Email"
 	*c1.SamlSettings.UsernameAttribute = "Username"
 
@@ -362,16 +362,16 @@ func TestConfigServiceProviderDefault(t *testing.T) {
 			Enable:             NewPointer(true),
 			Verify:             NewPointer(false),
 			Encrypt:            NewPointer(false),
-			IdpURL:             NewPointer("http://test.url.com"),
-			IdpDescriptorURL:   NewPointer("http://test2.url.com"),
-			IdpCertificateFile: NewPointer("certificatefile"),
+			IDpURL:             NewPointer("http://test.url.com"),
+			IDpDescriptorURL:   NewPointer("http://test2.url.com"),
+			IDpCertificateFile: NewPointer("certificatefile"),
 			EmailAttribute:     NewPointer("Email"),
 			UsernameAttribute:  NewPointer("Username"),
 		},
 	}
 
 	c1.SetDefaults()
-	assert.Equal(t, *c1.SamlSettings.ServiceProviderIdentifier, *c1.SamlSettings.IdpDescriptorURL)
+	assert.Equal(t, *c1.SamlSettings.ServiceProviderIDentifier, *c1.SamlSettings.IDpDescriptorURL)
 
 	appErr := c1.SamlSettings.isValid()
 	require.Nil(t, appErr)
@@ -385,11 +385,11 @@ func TestConfigIsValidFakeAlgorithm(t *testing.T) {
 	*c1.SamlSettings.Verify = false
 	*c1.SamlSettings.Encrypt = false
 
-	*c1.SamlSettings.IdpURL = "http://test.url.com"
-	*c1.SamlSettings.IdpDescriptorURL = "http://test.url.com"
-	*c1.SamlSettings.IdpMetadataURL = "http://test.url.com"
-	*c1.SamlSettings.IdpCertificateFile = "certificatefile"
-	*c1.SamlSettings.ServiceProviderIdentifier = "http://test.url.com"
+	*c1.SamlSettings.IDpURL = "http://test.url.com"
+	*c1.SamlSettings.IDpDescriptorURL = "http://test.url.com"
+	*c1.SamlSettings.IDpMetadataURL = "http://test.url.com"
+	*c1.SamlSettings.IDpCertificateFile = "certificatefile"
+	*c1.SamlSettings.ServiceProviderIDentifier = "http://test.url.com"
 	*c1.SamlSettings.EmailAttribute = "Email"
 	*c1.SamlSettings.UsernameAttribute = "Username"
 
@@ -1072,8 +1072,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				UserFilter:        NewPointer(""),
 			},
 			ExpectError: true,
@@ -1086,8 +1086,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				UserFilter:        NewPointer(""),
 			},
 			ExpectError: false,
@@ -1100,8 +1100,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				UserFilter:        NewPointer("(property=value)"),
 			},
 			ExpectError: false,
@@ -1114,8 +1114,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				UserFilter:        NewPointer("("),
 			},
 			ExpectError: true,
@@ -1128,8 +1128,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				UserFilter:        NewPointer("()"),
 			},
 			ExpectError: true,
@@ -1142,8 +1142,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				UserFilter:        NewPointer("(&(property=value)(otherthing=othervalue))"),
 			},
 			ExpectError: false,
@@ -1156,8 +1156,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				UserFilter:        NewPointer("(&(property=value)(|(otherthing=othervalue)(other=thing)))"),
 			},
 			ExpectError: false,
@@ -1170,8 +1170,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				UserFilter:        NewPointer("(&(property=value)(|(otherthing=othervalue)(other=thing))"),
 			},
 			ExpectError: true,
@@ -1184,8 +1184,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				UserFilter:        NewPointer("(&(property=value)((otherthing=othervalue)(other=thing)))"),
 			},
 			ExpectError: true,
@@ -1199,8 +1199,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				GuestFilter:       NewPointer("(property=value)"),
 			},
 			ExpectError: false,
@@ -1213,8 +1213,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				GuestFilter:       NewPointer("("),
 			},
 			ExpectError: true,
@@ -1227,8 +1227,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				GuestFilter:       NewPointer("()"),
 			},
 			ExpectError: true,
@@ -1241,8 +1241,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				GuestFilter:       NewPointer("(&(property=value)(otherthing=othervalue))"),
 			},
 			ExpectError: false,
@@ -1255,8 +1255,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				GuestFilter:       NewPointer("(&(property=value)(|(otherthing=othervalue)(other=thing)))"),
 			},
 			ExpectError: false,
@@ -1269,8 +1269,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				GuestFilter:       NewPointer("(&(property=value)(|(otherthing=othervalue)(other=thing))"),
 			},
 			ExpectError: true,
@@ -1283,8 +1283,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				GuestFilter:       NewPointer("(&(property=value)((otherthing=othervalue)(other=thing)))"),
 			},
 			ExpectError: true,
@@ -1298,8 +1298,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				AdminFilter:       NewPointer("(property=value)"),
 			},
 			ExpectError: false,
@@ -1312,8 +1312,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				AdminFilter:       NewPointer("("),
 			},
 			ExpectError: true,
@@ -1326,8 +1326,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				AdminFilter:       NewPointer("()"),
 			},
 			ExpectError: true,
@@ -1340,8 +1340,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				AdminFilter:       NewPointer("(&(property=value)(otherthing=othervalue))"),
 			},
 			ExpectError: false,
@@ -1354,8 +1354,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				AdminFilter:       NewPointer("(&(property=value)(|(otherthing=othervalue)(other=thing)))"),
 			},
 			ExpectError: false,
@@ -1368,8 +1368,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				AdminFilter:       NewPointer("(&(property=value)(|(otherthing=othervalue)(other=thing))"),
 			},
 			ExpectError: true,
@@ -1382,8 +1382,8 @@ func TestLdapSettingsIsValid(t *testing.T) {
 				BaseDN:            NewPointer("basedn"),
 				EmailAttribute:    NewPointer("email"),
 				UsernameAttribute: NewPointer("username"),
-				IdAttribute:       NewPointer("id"),
-				LoginIdAttribute:  NewPointer("loginid"),
+				IDAttribute:       NewPointer("id"),
+				LoginIDAttribute:  NewPointer("loginid"),
 				AdminFilter:       NewPointer("(&(property=value)((otherthing=othervalue)(other=thing)))"),
 			},
 			ExpectError: true,
@@ -1515,7 +1515,7 @@ func TestConfigSanitize(t *testing.T) {
 	*c.FileSettings.AmazonS3SecretAccessKey = "bar"
 	*c.EmailSettings.SMTPPassword = "baz"
 	*c.GitLabSettings.Secret = "bingo"
-	*c.OpenIdSettings.Secret = "secret"
+	*c.OpenIDSettings.Secret = "secret"
 	c.SqlSettings.DataSourceReplicas = []string{"stuff"}
 	c.SqlSettings.DataSourceSearchReplicas = []string{"stuff"}
 	c.SqlSettings.ReplicaLagSettings = []*ReplicaLagSettings{{
@@ -1531,7 +1531,7 @@ func TestConfigSanitize(t *testing.T) {
 	assert.Equal(t, FakeSetting, *c.FileSettings.AmazonS3SecretAccessKey)
 	assert.Equal(t, FakeSetting, *c.EmailSettings.SMTPPassword)
 	assert.Equal(t, FakeSetting, *c.GitLabSettings.Secret)
-	assert.Equal(t, FakeSetting, *c.OpenIdSettings.Secret)
+	assert.Equal(t, FakeSetting, *c.OpenIDSettings.Secret)
 	assert.Equal(t, FakeSetting, *c.SqlSettings.DataSource)
 	assert.Equal(t, FakeSetting, *c.SqlSettings.AtRestEncryptKey)
 	assert.Equal(t, FakeSetting, *c.ElasticsearchSettings.Password)
@@ -1593,7 +1593,7 @@ func TestPluginSettingsSanitize(t *testing.T) {
 		"one plugin installed without settings schema": {
 			manifests: []*Manifest{
 				{
-					Id:             pluginID1,
+					ID:             pluginID1,
 					SettingsSchema: nil,
 				},
 			},
@@ -1609,7 +1609,7 @@ func TestPluginSettingsSanitize(t *testing.T) {
 		"one plugin installed empty settings schema": {
 			manifests: []*Manifest{
 				{
-					Id:             pluginID1,
+					ID:             pluginID1,
 					SettingsSchema: &PluginSettingsSchema{},
 				},
 			},
@@ -1625,7 +1625,7 @@ func TestPluginSettingsSanitize(t *testing.T) {
 		"one plugin installed empty settings list": {
 			manifests: []*Manifest{
 				{
-					Id: pluginID1,
+					ID: pluginID1,
 					SettingsSchema: &PluginSettingsSchema{
 						Settings: []*PluginSetting{},
 					},
@@ -1643,7 +1643,7 @@ func TestPluginSettingsSanitize(t *testing.T) {
 		"one plugin installed": {
 			manifests: []*Manifest{
 				{
-					Id: pluginID1,
+					ID: pluginID1,
 					SettingsSchema: &PluginSettingsSchema{
 						Settings: []*PluginSetting{
 							{
@@ -1677,7 +1677,7 @@ func TestPluginSettingsSanitize(t *testing.T) {
 		"two plugins installed": {
 			manifests: []*Manifest{
 				{
-					Id: pluginID1,
+					ID: pluginID1,
 					SettingsSchema: &PluginSettingsSchema{
 						Settings: []*PluginSetting{
 							{
@@ -1699,7 +1699,7 @@ func TestPluginSettingsSanitize(t *testing.T) {
 					},
 				},
 				{
-					Id: pluginID2,
+					ID: pluginID2,
 					SettingsSchema: &PluginSettingsSchema{
 						Settings: []*PluginSetting{
 							{
@@ -1886,14 +1886,14 @@ func TestConfigImportSettingsIsValid(t *testing.T) {
 	*cfg.ImportSettings.Directory = ""
 	appErr = cfg.ImportSettings.isValid()
 	require.NotNil(t, appErr)
-	require.Equal(t, "model.config.is_valid.import.directory.app_error", appErr.Id)
+	require.Equal(t, "model.config.is_valid.import.directory.app_error", appErr.ID)
 
 	cfg.SetDefaults()
 
 	*cfg.ImportSettings.RetentionDays = 0
 	appErr = cfg.ImportSettings.isValid()
 	require.NotNil(t, appErr)
-	require.Equal(t, "model.config.is_valid.import.retention_days_too_low.app_error", appErr.Id)
+	require.Equal(t, "model.config.is_valid.import.retention_days_too_low.app_error", appErr.ID)
 }
 
 func TestConfigExportSettingsDefaults(t *testing.T) {
@@ -1914,14 +1914,14 @@ func TestConfigExportSettingsIsValid(t *testing.T) {
 	*cfg.ExportSettings.Directory = ""
 	appErr = cfg.ExportSettings.isValid()
 	require.NotNil(t, appErr)
-	require.Equal(t, "model.config.is_valid.export.directory.app_error", appErr.Id)
+	require.Equal(t, "model.config.is_valid.export.directory.app_error", appErr.ID)
 
 	cfg.SetDefaults()
 
 	*cfg.ExportSettings.RetentionDays = 0
 	appErr = cfg.ExportSettings.isValid()
 	require.NotNil(t, appErr)
-	require.Equal(t, "model.config.is_valid.export.retention_days_too_low.app_error", appErr.Id)
+	require.Equal(t, "model.config.is_valid.export.retention_days_too_low.app_error", appErr.ID)
 }
 
 func TestConfigServiceSettingsIsValid(t *testing.T) {
@@ -1943,7 +1943,7 @@ func TestConfigServiceSettingsIsValid(t *testing.T) {
 		*cfg.ServiceSettings.LocalModeSocketLocation = "/invalid_directory/mattermost_local.socket"
 		appErr = cfg.ServiceSettings.isValid()
 		require.NotNil(t, appErr)
-		require.Equal(t, "model.config.is_valid.local_mode_socket.app_error", appErr.Id)
+		require.Equal(t, "model.config.is_valid.local_mode_socket.app_error", appErr.ID)
 	})
 
 	t.Run("CRT settings should have consistent values", func(t *testing.T) {
@@ -1964,23 +1964,23 @@ func TestConfigServiceSettingsIsValid(t *testing.T) {
 		*cfg.ServiceSettings.CollapsedThreads = CollapsedThreadsDefaultOff
 		appErr = cfg.ServiceSettings.isValid()
 		require.NotNil(t, appErr)
-		require.Equal(t, "model.config.is_valid.collapsed_threads.autofollow.app_error", appErr.Id)
+		require.Equal(t, "model.config.is_valid.collapsed_threads.autofollow.app_error", appErr.ID)
 
 		*cfg.ServiceSettings.CollapsedThreads = CollapsedThreadsDefaultOn
 		appErr = cfg.ServiceSettings.isValid()
 		require.NotNil(t, appErr)
-		require.Equal(t, "model.config.is_valid.collapsed_threads.autofollow.app_error", appErr.Id)
+		require.Equal(t, "model.config.is_valid.collapsed_threads.autofollow.app_error", appErr.ID)
 
 		*cfg.ServiceSettings.CollapsedThreads = CollapsedThreadsAlwaysOn
 		appErr = cfg.ServiceSettings.isValid()
 		require.NotNil(t, appErr)
-		require.Equal(t, "model.config.is_valid.collapsed_threads.autofollow.app_error", appErr.Id)
+		require.Equal(t, "model.config.is_valid.collapsed_threads.autofollow.app_error", appErr.ID)
 
 		*cfg.ServiceSettings.ThreadAutoFollow = true
 		*cfg.ServiceSettings.CollapsedThreads = "test_status"
 		appErr = cfg.ServiceSettings.isValid()
 		require.NotNil(t, appErr)
-		require.Equal(t, "model.config.is_valid.collapsed_threads.app_error", appErr.Id)
+		require.Equal(t, "model.config.is_valid.collapsed_threads.app_error", appErr.ID)
 	})
 }
 
@@ -2488,7 +2488,7 @@ func TestAutoTranslationSettingsDefaults(t *testing.T) {
 		require.Equal(t, "", *c.AutoTranslationSettings.LibreTranslate.URL)
 		require.Equal(t, "", *c.AutoTranslationSettings.LibreTranslate.APIKey)
 		// TODO: Enable Agents provider in future release
-		// require.Equal(t, "", *c.AutoTranslationSettings.Agents.BotUserId)
+		// require.Equal(t, "", *c.AutoTranslationSettings.Agents.BotUserID)
 	})
 }
 
@@ -2497,7 +2497,7 @@ func TestAutoTranslationSettingsIsValid(t *testing.T) {
 		name        string
 		settings    AutoTranslationSettings
 		expectError bool
-		errorId     string
+		errorID     string
 	}{
 		{
 			name: "disabled settings should be valid",
@@ -2513,7 +2513,7 @@ func TestAutoTranslationSettingsIsValid(t *testing.T) {
 				Provider: nil,
 			},
 			expectError: true,
-			errorId:     "model.config.is_valid.autotranslation.provider.app_error",
+			errorID:     "model.config.is_valid.autotranslation.provider.app_error",
 		},
 		{
 			name: "enabled with unsupported provider should fail",
@@ -2522,7 +2522,7 @@ func TestAutoTranslationSettingsIsValid(t *testing.T) {
 				Provider: NewPointer("unsupported"),
 			},
 			expectError: true,
-			errorId:     "model.config.is_valid.autotranslation.provider.unsupported.app_error",
+			errorID:     "model.config.is_valid.autotranslation.provider.unsupported.app_error",
 		},
 		{
 			name: "libretranslate without URL should fail",
@@ -2534,7 +2534,7 @@ func TestAutoTranslationSettingsIsValid(t *testing.T) {
 				},
 			},
 			expectError: true,
-			errorId:     "model.config.is_valid.autotranslation.libretranslate.url.app_error",
+			errorID:     "model.config.is_valid.autotranslation.libretranslate.url.app_error",
 		},
 		// TODO: Enable Agents provider in future release
 		// {
@@ -2543,11 +2543,11 @@ func TestAutoTranslationSettingsIsValid(t *testing.T) {
 		// 		Enable:   NewPointer(true),
 		// 		Provider: NewPointer("agents"),
 		// 		Agents: &AgentsProviderSettings{
-		// 			BotUserId: NewPointer(""),
+		// 			BotUserID: NewPointer(""),
 		// 		},
 		// 	},
 		// 	expectError: true,
-		// 	errorId:     "model.config.is_valid.autotranslation.agents.bot_user_id.app_error",
+		// 	errorID:     "model.config.is_valid.autotranslation.agents.bot_user_id.app_error",
 		// },
 		{
 			name: "valid libretranslate settings",
@@ -2568,7 +2568,7 @@ func TestAutoTranslationSettingsIsValid(t *testing.T) {
 		// 		Enable:   NewPointer(true),
 		// 		Provider: NewPointer("agents"),
 		// 		Agents: &AgentsProviderSettings{
-		// 			BotUserId: NewPointer("bot123"),
+		// 			BotUserID: NewPointer("bot123"),
 		// 		},
 		// 	},
 		// 	expectError: false,
@@ -2581,7 +2581,7 @@ func TestAutoTranslationSettingsIsValid(t *testing.T) {
 			err := tc.settings.isValid()
 			if tc.expectError {
 				require.NotNil(t, err)
-				require.Equal(t, tc.errorId, err.Id)
+				require.Equal(t, tc.errorID, err.ID)
 			} else {
 				require.Nil(t, err)
 			}

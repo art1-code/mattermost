@@ -43,8 +43,8 @@ type AuditEventData struct {
 
 // AuditEventActor is the subject triggering the event
 type AuditEventActor struct {
-	UserId        string `json:"user_id"`
-	SessionId     string `json:"session_id"`
+	UserID        string `json:"user_id"`
+	SessionID     string `json:"session_id"`
 	Client        string `json:"client"`
 	IpAddress     string `json:"ip_address"`
 	XForwardedFor string `json:"x_forwarded_for"`
@@ -53,7 +53,7 @@ type AuditEventActor struct {
 // EventMeta is a key-value store to store related information to the event that is not directly related to the modified entity
 type EventMeta struct {
 	ApiPath   string `json:"api_path"`
-	ClusterId string `json:"cluster_id"`
+	ClusterID string `json:"cluster_id"`
 }
 
 // AuditEventError contains error information in case of failure of the event

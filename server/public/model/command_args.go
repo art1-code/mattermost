@@ -8,12 +8,12 @@ import (
 )
 
 type CommandArgs struct {
-	UserId          string             `json:"user_id"`
-	ChannelId       string             `json:"channel_id"`
-	TeamId          string             `json:"team_id"`
-	RootId          string             `json:"root_id"`
-	ParentId        string             `json:"parent_id"`
-	TriggerId       string             `json:"trigger_id,omitempty"`
+	UserID          string             `json:"user_id"`
+	ChannelID       string             `json:"channel_id"`
+	TeamID          string             `json:"team_id"`
+	RootID          string             `json:"root_id"`
+	ParentID        string             `json:"parent_id"`
+	TriggerID       string             `json:"trigger_id,omitempty"`
 	Command         string             `json:"command"`
 	SiteURL         string             `json:"-"`
 	T               i18n.TranslateFunc `json:"-"`
@@ -23,33 +23,33 @@ type CommandArgs struct {
 
 func (o *CommandArgs) Auditable() map[string]any {
 	return map[string]any{
-		"user_id":    o.UserId,
-		"channel_id": o.ChannelId,
-		"team_id":    o.TeamId,
-		"root_id":    o.RootId,
-		"parent_id":  o.ParentId,
-		"trigger_id": o.TriggerId,
+		"user_id":    o.UserID,
+		"channel_id": o.ChannelID,
+		"team_id":    o.TeamID,
+		"root_id":    o.RootID,
+		"parent_id":  o.ParentID,
+		"trigger_id": o.TriggerID,
 		"command":    o.Command,
 		"site_url":   o.SiteURL,
 	}
 }
 
 // AddUserMention adds or overrides an entry in UserMentions with name username
-// and identifier userId
-func (o *CommandArgs) AddUserMention(username, userId string) {
+// and identifier userID
+func (o *CommandArgs) AddUserMention(username, userID string) {
 	if o.UserMentions == nil {
 		o.UserMentions = make(UserMentionMap)
 	}
 
-	o.UserMentions[username] = userId
+	o.UserMentions[username] = userID
 }
 
 // AddChannelMention adds or overrides an entry in ChannelMentions with name
-// channelName and identifier channelId
-func (o *CommandArgs) AddChannelMention(channelName, channelId string) {
+// channelName and identifier channelID
+func (o *CommandArgs) AddChannelMention(channelName, channelID string) {
 	if o.ChannelMentions == nil {
 		o.ChannelMentions = make(ChannelMentionMap)
 	}
 
-	o.ChannelMentions[channelName] = channelId
+	o.ChannelMentions[channelName] = channelID
 }

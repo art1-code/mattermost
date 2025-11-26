@@ -14,7 +14,7 @@ const (
 )
 
 type ClusterDiscovery struct {
-	Id          string `json:"id"`
+	ID          string `json:"id"`
 	Type        string `json:"type"`
 	ClusterName string `json:"cluster_name"`
 	Hostname    string `json:"hostname"`
@@ -25,8 +25,8 @@ type ClusterDiscovery struct {
 }
 
 func (o *ClusterDiscovery) PreSave() {
-	if o.Id == "" {
-		o.Id = NewId()
+	if o.ID == "" {
+		o.ID = NewID()
 	}
 
 	if o.CreateAt == 0 {
@@ -87,7 +87,7 @@ func FilterClusterDiscovery(vs []*ClusterDiscovery, f func(*ClusterDiscovery) bo
 }
 
 func (o *ClusterDiscovery) IsValid() *AppError {
-	if !IsValidId(o.Id) {
+	if !IsValidID(o.ID) {
 		return NewAppError("ClusterDiscovery.IsValid", "model.cluster.is_valid.id.app_error", nil, "", http.StatusBadRequest)
 	}
 

@@ -55,7 +55,7 @@ func TestContentFlaggingNotificationSettings_IsValid(t *testing.T) {
 
 		err := settings.IsValid()
 		require.NotNil(t, err)
-		require.Equal(t, "model.config.is_valid.notification_settings.reviewer_flagged_notification_disabled", err.Id)
+		require.Equal(t, "model.config.is_valid.notification_settings.reviewer_flagged_notification_disabled", err.ID)
 	})
 
 	t.Run("should be invalid when flagged event mapping is nil", func(t *testing.T) {
@@ -65,7 +65,7 @@ func TestContentFlaggingNotificationSettings_IsValid(t *testing.T) {
 
 		err := settings.IsValid()
 		require.NotNil(t, err)
-		require.Equal(t, "model.config.is_valid.notification_settings.reviewer_flagged_notification_disabled", err.Id)
+		require.Equal(t, "model.config.is_valid.notification_settings.reviewer_flagged_notification_disabled", err.ID)
 	})
 
 	t.Run("should be invalid when reviewers not included in flagged event targets", func(t *testing.T) {
@@ -77,7 +77,7 @@ func TestContentFlaggingNotificationSettings_IsValid(t *testing.T) {
 
 		err := settings.IsValid()
 		require.NotNil(t, err)
-		require.Equal(t, "model.config.is_valid.notification_settings.reviewer_flagged_notification_disabled", err.Id)
+		require.Equal(t, "model.config.is_valid.notification_settings.reviewer_flagged_notification_disabled", err.ID)
 	})
 
 	t.Run("should be invalid when invalid events and targets are specified", func(t *testing.T) {
@@ -89,7 +89,7 @@ func TestContentFlaggingNotificationSettings_IsValid(t *testing.T) {
 
 		err := settings.IsValid()
 		require.NotNil(t, err)
-		require.Equal(t, "model.config.is_valid.notification_settings.invalid_event", err.Id)
+		require.Equal(t, "model.config.is_valid.notification_settings.invalid_event", err.ID)
 
 		settings = &ContentFlaggingNotificationSettings{
 			EventTargetMapping: map[ContentFlaggingEvent][]NotificationTarget{
@@ -99,7 +99,7 @@ func TestContentFlaggingNotificationSettings_IsValid(t *testing.T) {
 
 		err = settings.IsValid()
 		require.NotNil(t, err)
-		require.Equal(t, "model.config.is_valid.notification_settings.invalid_target", err.Id)
+		require.Equal(t, "model.config.is_valid.notification_settings.invalid_target", err.ID)
 
 		settings = &ContentFlaggingNotificationSettings{
 			EventTargetMapping: map[ContentFlaggingEvent][]NotificationTarget{
@@ -109,7 +109,7 @@ func TestContentFlaggingNotificationSettings_IsValid(t *testing.T) {
 
 		err = settings.IsValid()
 		require.NotNil(t, err)
-		require.Equal(t, "model.config.is_valid.notification_settings.invalid_event", err.Id)
+		require.Equal(t, "model.config.is_valid.notification_settings.invalid_event", err.ID)
 	})
 }
 
@@ -122,7 +122,7 @@ func TestReviewerSettings_IsValid(t *testing.T) {
 				TeamAdminsAsReviewers:   NewPointer(false),
 			},
 			ReviewerIDsSettings: ReviewerIDsSettings{
-				CommonReviewerIds:    []string{"user1", "user2"},
+				CommonReviewerIDs:    []string{"user1", "user2"},
 				TeamReviewersSetting: map[string]*TeamReviewerSetting{},
 			},
 		}
@@ -139,7 +139,7 @@ func TestReviewerSettings_IsValid(t *testing.T) {
 				TeamAdminsAsReviewers:   NewPointer(false),
 			},
 			ReviewerIDsSettings: ReviewerIDsSettings{
-				CommonReviewerIds:    []string{},
+				CommonReviewerIDs:    []string{},
 				TeamReviewersSetting: map[string]*TeamReviewerSetting{},
 			},
 		}
@@ -156,14 +156,14 @@ func TestReviewerSettings_IsValid(t *testing.T) {
 				TeamAdminsAsReviewers:   NewPointer(false),
 			},
 			ReviewerIDsSettings: ReviewerIDsSettings{
-				CommonReviewerIds:    []string{},
+				CommonReviewerIDs:    []string{},
 				TeamReviewersSetting: map[string]*TeamReviewerSetting{},
 			},
 		}
 
 		err := settings.IsValid()
 		require.NotNil(t, err)
-		require.Equal(t, "model.config.is_valid.content_flagging.common_reviewers_not_set.app_error", err.Id)
+		require.Equal(t, "model.config.is_valid.content_flagging.common_reviewers_not_set.app_error", err.ID)
 	})
 
 	t.Run("should be valid when team reviewers enabled with reviewer IDs", func(t *testing.T) {
@@ -174,11 +174,11 @@ func TestReviewerSettings_IsValid(t *testing.T) {
 				TeamAdminsAsReviewers:   NewPointer(false),
 			},
 			ReviewerIDsSettings: ReviewerIDsSettings{
-				CommonReviewerIds: []string{},
+				CommonReviewerIDs: []string{},
 				TeamReviewersSetting: map[string]*TeamReviewerSetting{
 					"team1": {
 						Enabled:     NewPointer(true),
-						ReviewerIds: []string{"user1"},
+						ReviewerIDs: []string{"user1"},
 					},
 				},
 			},
@@ -196,11 +196,11 @@ func TestReviewerSettings_IsValid(t *testing.T) {
 				TeamAdminsAsReviewers:   NewPointer(false),
 			},
 			ReviewerIDsSettings: ReviewerIDsSettings{
-				CommonReviewerIds: []string{},
+				CommonReviewerIDs: []string{},
 				TeamReviewersSetting: map[string]*TeamReviewerSetting{
 					"team1": {
 						Enabled:     NewPointer(true),
-						ReviewerIds: []string{},
+						ReviewerIDs: []string{},
 					},
 				},
 			},
@@ -208,7 +208,7 @@ func TestReviewerSettings_IsValid(t *testing.T) {
 
 		err := settings.IsValid()
 		require.NotNil(t, err)
-		require.Equal(t, "model.config.is_valid.content_flagging.team_reviewers_not_set.app_error", err.Id)
+		require.Equal(t, "model.config.is_valid.content_flagging.team_reviewers_not_set.app_error", err.ID)
 	})
 
 	t.Run("should be valid when team reviewers enabled but no reviewer IDs with Additional Reviewers", func(t *testing.T) {
@@ -219,11 +219,11 @@ func TestReviewerSettings_IsValid(t *testing.T) {
 				TeamAdminsAsReviewers:   NewPointer(false),
 			},
 			ReviewerIDsSettings: ReviewerIDsSettings{
-				CommonReviewerIds: []string{},
+				CommonReviewerIDs: []string{},
 				TeamReviewersSetting: map[string]*TeamReviewerSetting{
 					"team1": {
 						Enabled:     NewPointer(true),
-						ReviewerIds: []string{},
+						ReviewerIDs: []string{},
 					},
 				},
 			},
@@ -264,7 +264,7 @@ func TestAdditionalContentFlaggingSettings_IsValid(t *testing.T) {
 
 		err := settings.IsValid()
 		require.NotNil(t, err)
-		require.Equal(t, "model.config.is_valid.content_flagging.reasons_not_set.app_error", err.Id)
+		require.Equal(t, "model.config.is_valid.content_flagging.reasons_not_set.app_error", err.ID)
 	})
 
 	t.Run("should be invalid when reasons are empty", func(t *testing.T) {
@@ -274,7 +274,7 @@ func TestAdditionalContentFlaggingSettings_IsValid(t *testing.T) {
 
 		err := settings.IsValid()
 		require.NotNil(t, err)
-		require.Equal(t, "model.config.is_valid.content_flagging.reasons_not_set.app_error", err.Id)
+		require.Equal(t, "model.config.is_valid.content_flagging.reasons_not_set.app_error", err.ID)
 	})
 }
 
@@ -316,7 +316,7 @@ func TestContentFlaggingSettings_IsValid(t *testing.T) {
 
 		err := settings.IsValid()
 		require.NotNil(t, err)
-		require.Contains(t, err.Id, "notification_settings")
+		require.Contains(t, err.ID, "notification_settings")
 	})
 
 	t.Run("should be invalid when reviewer settings are invalid", func(t *testing.T) {
@@ -332,7 +332,7 @@ func TestContentFlaggingSettings_IsValid(t *testing.T) {
 					TeamAdminsAsReviewers:   NewPointer(false),
 				},
 				ReviewerIDsSettings: ReviewerIDsSettings{
-					CommonReviewerIds:    []string{},
+					CommonReviewerIDs:    []string{},
 					TeamReviewersSetting: map[string]*TeamReviewerSetting{},
 				},
 			},
@@ -342,7 +342,7 @@ func TestContentFlaggingSettings_IsValid(t *testing.T) {
 
 		err := settings.IsValid()
 		require.NotNil(t, err)
-		require.Contains(t, err.Id, "common_reviewers_not_set")
+		require.Contains(t, err.ID, "common_reviewers_not_set")
 	})
 
 	t.Run("should be invalid when additional settings are invalid", func(t *testing.T) {
@@ -359,7 +359,7 @@ func TestContentFlaggingSettings_IsValid(t *testing.T) {
 
 		err := settings.IsValid()
 		require.NotNil(t, err)
-		require.Contains(t, err.Id, "reasons_not_set")
+		require.Contains(t, err.ID, "reasons_not_set")
 	})
 }
 

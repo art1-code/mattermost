@@ -190,7 +190,7 @@ const (
 const (
 	AuditEventAddLdapPrivateCertificate    = "addLdapPrivateCertificate"    // add private certificate for LDAP
 	AuditEventAddLdapPublicCertificate     = "addLdapPublicCertificate"     // add public certificate for LDAP
-	AuditEventIdMigrateLdap                = "idMigrateLdap"                // migrate user ID mapping to another attribute
+	AuditEventIDMigrateLdap                = "idMigrateLdap"                // migrate user ID mapping to another attribute
 	AuditEventLinkLdapGroup                = "linkLdapGroup"                // link LDAP group to Mattermost team or channel
 	AuditEventRemoveLdapPrivateCertificate = "removeLdapPrivateCertificate" // remove private certificate for LDAP
 	AuditEventRemoveLdapPublicCertificate  = "removeLdapPublicCertificate"  // remove public certificate for LDAP
@@ -280,11 +280,11 @@ const (
 
 // SAML
 const (
-	AuditEventAddSamlIdpCertificate        = "addSamlIdpCertificate"        // add SAML identity provider certificate
+	AuditEventAddSamlIDpCertificate        = "addSamlIDpCertificate"        // add SAML identity provider certificate
 	AuditEventAddSamlPrivateCertificate    = "addSamlPrivateCertificate"    // add SAML private certificate
 	AuditEventAddSamlPublicCertificate     = "addSamlPublicCertificate"     // add SAML public certificate
 	AuditEventCompleteSaml                 = "completeSaml"                 // complete SAML authentication flow
-	AuditEventRemoveSamlIdpCertificate     = "removeSamlIdpCertificate"     // remove SAML identity provider certificate
+	AuditEventRemoveSamlIDpCertificate     = "removeSamlIDpCertificate"     // remove SAML identity provider certificate
 	AuditEventRemoveSamlPrivateCertificate = "removeSamlPrivateCertificate" // remove SAML private certificate
 	AuditEventRemoveSamlPublicCertificate  = "removeSamlPublicCertificate"  // remove SAML public certificate
 )
@@ -342,7 +342,7 @@ const (
 	AuditEventLocalDeleteTeam             = "localDeleteTeam"             // delete team locally
 	AuditEventLocalInviteUsersToTeam      = "localInviteUsersToTeam"      // invite users to team locally
 	AuditEventPatchTeam                   = "patchTeam"                   // update team properties
-	AuditEventRegenerateTeamInviteId      = "regenerateTeamInviteId"      // regenerate team invitation ID
+	AuditEventRegenerateTeamInviteID      = "regenerateTeamInviteID"      // regenerate team invitation ID
 	AuditEventRemoveTeamIcon              = "removeTeamIcon"              // remove custom icon from team
 	AuditEventRemoveTeamMember            = "removeTeamMember"            // remove member from team
 	AuditEventRestoreTeam                 = "restoreTeam"                 // restore previously deleted team
@@ -363,7 +363,7 @@ const (
 // Threads
 const (
 	AuditEventFollowThreadByUser              = "followThreadByUser"              // follow thread to receive notifications about replies
-	AuditEventSetUnreadThreadByPostId         = "setUnreadThreadByPostId"         // mark thread as unread for user by post ID
+	AuditEventSetUnreadThreadByPostID         = "setUnreadThreadByPostID"         // mark thread as unread for user by post ID
 	AuditEventUnfollowThreadByUser            = "unfollowThreadByUser"            // unfollow thread to stop receiving notifications about replies
 	AuditEventUpdateReadStateAllThreadsByUser = "updateReadStateAllThreadsByUser" // update read status for all threads for user
 	AuditEventUpdateReadStateThreadByUser     = "updateReadStateThreadByUser"     // update read status for specific thread for user
@@ -377,7 +377,7 @@ const (
 
 // Users
 const (
-	AuditEventAttachDeviceId               = "attachDeviceId"               // attach device ID to user session for mobile app
+	AuditEventAttachDeviceID               = "attachDeviceID"               // attach device ID to user session for mobile app
 	AuditEventCreateUser                   = "createUser"                   // create user account
 	AuditEventCreateUserAccessToken        = "createUserAccessToken"        // create personal access token for user API access
 	AuditEventDeleteUser                   = "deleteUser"                   // delete user account

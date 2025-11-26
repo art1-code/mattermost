@@ -25,10 +25,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark without create at timestamp",
 			&ChannelBookmark{
-				Id:          NewId(),
-				OwnerId:     NewId(),
-				ChannelId:   "",
-				FileId:      "",
+				ID:          NewID(),
+				OwnerID:     NewID(),
+				ChannelID:   "",
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -44,10 +44,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark without update at timestamp",
 			&ChannelBookmark{
-				Id:          NewId(),
-				OwnerId:     NewId(),
-				ChannelId:   "",
-				FileId:      "",
+				ID:          NewID(),
+				OwnerID:     NewID(),
+				ChannelID:   "",
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -63,10 +63,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark with missing channel id",
 			&ChannelBookmark{
-				Id:          NewId(),
-				OwnerId:     NewId(),
-				ChannelId:   "",
-				FileId:      "",
+				ID:          NewID(),
+				OwnerID:     NewID(),
+				ChannelID:   "",
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -82,10 +82,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark with invalid channel id",
 			&ChannelBookmark{
-				Id:          NewId(),
-				OwnerId:     NewId(),
-				ChannelId:   "invalid",
-				FileId:      "",
+				ID:          NewID(),
+				OwnerID:     NewID(),
+				ChannelID:   "invalid",
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -101,10 +101,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark with missing owner id",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     "",
-				FileId:      "",
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     "",
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -120,10 +120,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark with invalid user id",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     "invalid",
-				FileId:      "",
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     "invalid",
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -139,10 +139,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark with missing displayname",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     NewId(),
-				FileId:      "",
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     NewID(),
+				FileID:      "",
 				DisplayName: "",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -158,10 +158,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark with missing type",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     NewId(),
-				FileId:      "",
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     NewID(),
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -177,10 +177,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark with invalid type",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     NewId(),
-				FileId:      "",
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     NewID(),
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -196,10 +196,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark of type link with missing link url",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     NewId(),
-				FileId:      "",
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     NewID(),
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -215,10 +215,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark of type link with invalid link url",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     NewId(),
-				FileId:      "",
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     NewID(),
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "invalid",
@@ -234,10 +234,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark of type link with valid link url",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     NewId(),
-				FileId:      "",
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     NewID(),
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "https://mattermost.com",
@@ -253,10 +253,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark of type link with empty image url",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     NewId(),
-				FileId:      "",
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     NewID(),
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "https://mattermost.com",
@@ -272,10 +272,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark of type link with invalid image url",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     NewId(),
-				FileId:      "",
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     NewID(),
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "https://mattermost.com",
@@ -291,10 +291,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark of type link with valid image url",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     NewId(),
-				FileId:      "",
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     NewID(),
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "https://mattermost.com",
@@ -310,10 +310,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark of type file with missing file id",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     NewId(),
-				FileId:      "",
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     NewID(),
+				FileID:      "",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -329,10 +329,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark of type file with invalid file id",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     NewId(),
-				FileId:      "invalid",
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     NewID(),
+				FileID:      "invalid",
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -348,10 +348,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark of type file with valid file id",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     NewId(),
-				FileId:      NewId(),
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     NewID(),
+				FileID:      NewID(),
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -367,10 +367,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark of type file with invalid original id",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     NewId(),
-				FileId:      NewId(),
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     NewID(),
+				FileID:      NewID(),
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -380,17 +380,17 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 				CreateAt:    2,
 				UpdateAt:    3,
 				DeleteAt:    4,
-				OriginalId:  "invalid",
+				OriginalID:  "invalid",
 			},
 			false,
 		},
 		{
 			"bookmark of type file with invalid parent id",
 			&ChannelBookmark{
-				Id:          NewId(),
-				ChannelId:   NewId(),
-				OwnerId:     NewId(),
-				FileId:      NewId(),
+				ID:          NewID(),
+				ChannelID:   NewID(),
+				OwnerID:     NewID(),
+				FileID:      NewID(),
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -400,17 +400,17 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 				CreateAt:    2,
 				UpdateAt:    3,
 				DeleteAt:    4,
-				ParentId:    "invalid",
+				ParentID:    "invalid",
 			},
 			false,
 		},
 		{
-			"bookmark of type link with a file Id attached",
+			"bookmark of type link with a file ID attached",
 			&ChannelBookmark{
-				Id:          NewId(),
-				OwnerId:     NewId(),
-				ChannelId:   NewId(),
-				FileId:      NewId(),
+				ID:          NewID(),
+				OwnerID:     NewID(),
+				ChannelID:   NewID(),
+				FileID:      NewID(),
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "http://somelink",
@@ -426,10 +426,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark of type file with a url",
 			&ChannelBookmark{
-				Id:          NewId(),
-				OwnerId:     NewId(),
-				ChannelId:   NewId(),
-				FileId:      NewId(),
+				ID:          NewID(),
+				OwnerID:     NewID(),
+				ChannelID:   NewID(),
+				FileID:      NewID(),
 				DisplayName: "display name",
 				SortOrder:   0,
 				LinkUrl:     "http://somelink",
@@ -445,10 +445,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark with long display name > limit",
 			&ChannelBookmark{
-				Id:          NewId(),
-				OwnerId:     NewId(),
-				ChannelId:   NewId(),
-				FileId:      "",
+				ID:          NewID(),
+				OwnerID:     NewID(),
+				ChannelID:   NewID(),
+				FileID:      "",
 				DisplayName: strings.Repeat("1", 65),
 				SortOrder:   0,
 				LinkUrl:     "http://somelink",
@@ -464,10 +464,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark with long display name < limit",
 			&ChannelBookmark{
-				Id:          NewId(),
-				OwnerId:     NewId(),
-				ChannelId:   NewId(),
-				FileId:      "",
+				ID:          NewID(),
+				OwnerID:     NewID(),
+				ChannelID:   NewID(),
+				FileID:      "",
 				DisplayName: strings.Repeat("1", 64),
 				SortOrder:   0,
 				LinkUrl:     "http://somelink",
@@ -484,10 +484,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark with link url > limit",
 			&ChannelBookmark{
-				Id:          NewId(),
-				OwnerId:     NewId(),
-				ChannelId:   NewId(),
-				FileId:      "",
+				ID:          NewID(),
+				OwnerID:     NewID(),
+				ChannelID:   NewID(),
+				FileID:      "",
 				DisplayName: "not last test",
 				SortOrder:   0,
 				LinkUrl:     "http://somelink?" + strings.Repeat("h", 1024),
@@ -503,10 +503,10 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 		{
 			"bookmark with image url > limit",
 			&ChannelBookmark{
-				Id:          NewId(),
-				OwnerId:     NewId(),
-				ChannelId:   NewId(),
-				FileId:      "",
+				ID:          NewID(),
+				OwnerID:     NewID(),
+				ChannelID:   NewID(),
+				FileID:      "",
 				DisplayName: "last test",
 				SortOrder:   0,
 				LinkUrl:     "",
@@ -534,9 +534,9 @@ func TestChannelBookmarkIsValid(t *testing.T) {
 
 func TestChannelBookmarkPreSave(t *testing.T) {
 	bookmark := &ChannelBookmark{
-		Id:          NewId(),
-		ChannelId:   NewId(),
-		OwnerId:     NewId(),
+		ID:          NewID(),
+		ChannelID:   NewID(),
+		OwnerID:     NewID(),
 		DisplayName: "display name",
 		SortOrder:   0,
 		LinkUrl:     "https://mattermost.com",
@@ -545,9 +545,9 @@ func TestChannelBookmarkPreSave(t *testing.T) {
 	}
 
 	originalBookmark := &ChannelBookmark{
-		Id:          bookmark.Id,
-		ChannelId:   bookmark.ChannelId,
-		OwnerId:     bookmark.OwnerId,
+		ID:          bookmark.ID,
+		ChannelID:   bookmark.ChannelID,
+		OwnerID:     bookmark.OwnerID,
 		DisplayName: bookmark.DisplayName,
 		SortOrder:   bookmark.SortOrder,
 		LinkUrl:     bookmark.LinkUrl,
@@ -566,9 +566,9 @@ func TestChannelBookmarkPreSave(t *testing.T) {
 
 func TestChannelBookmarkPreUpdate(t *testing.T) {
 	bookmark := &ChannelBookmark{
-		Id:          NewId(),
-		ChannelId:   NewId(),
-		OwnerId:     NewId(),
+		ID:          NewID(),
+		ChannelID:   NewID(),
+		OwnerID:     NewID(),
 		DisplayName: "display name",
 		SortOrder:   0,
 		LinkUrl:     "https://mattermost.com",
@@ -578,9 +578,9 @@ func TestChannelBookmarkPreUpdate(t *testing.T) {
 	}
 
 	originalBookmark := &ChannelBookmark{
-		Id:          bookmark.Id,
-		ChannelId:   bookmark.ChannelId,
-		OwnerId:     bookmark.OwnerId,
+		ID:          bookmark.ID,
+		ChannelID:   bookmark.ChannelID,
+		OwnerID:     bookmark.OwnerID,
 		DisplayName: bookmark.DisplayName,
 		SortOrder:   bookmark.SortOrder,
 		LinkUrl:     bookmark.LinkUrl,
@@ -609,7 +609,7 @@ func TestToBookmarkWithFileInfo(t *testing.T) {
 		{
 			name: "emoji with colons",
 			bookmark: &ChannelBookmark{
-				Id:          NewId(),
+				ID:          NewID(),
 				DisplayName: "test bookmark",
 				Emoji:       ":smile:",
 				Type:        ChannelBookmarkLink,
@@ -620,7 +620,7 @@ func TestToBookmarkWithFileInfo(t *testing.T) {
 		{
 			name: "emoji without colons",
 			bookmark: &ChannelBookmark{
-				Id:          NewId(),
+				ID:          NewID(),
 				DisplayName: "test bookmark",
 				Emoji:       "smile",
 				Type:        ChannelBookmarkLink,
@@ -631,7 +631,7 @@ func TestToBookmarkWithFileInfo(t *testing.T) {
 		{
 			name: "empty emoji",
 			bookmark: &ChannelBookmark{
-				Id:          NewId(),
+				ID:          NewID(),
 				DisplayName: "test bookmark",
 				Emoji:       "",
 				Type:        ChannelBookmarkLink,
@@ -651,20 +651,20 @@ func TestToBookmarkWithFileInfo(t *testing.T) {
 
 func TestChannelBookmarkPatch(t *testing.T) {
 	p := &ChannelBookmarkPatch{
-		DisplayName: NewPointer(NewId()),
+		DisplayName: NewPointer(NewID()),
 		SortOrder:   NewPointer(int64(1)),
-		LinkUrl:     NewPointer(NewId()),
+		LinkUrl:     NewPointer(NewID()),
 	}
 
 	b := ChannelBookmark{
-		Id:          NewId(),
-		DisplayName: NewId(),
+		ID:          NewID(),
+		DisplayName: NewID(),
 		Type:        ChannelBookmarkLink, // should not update
-		LinkUrl:     NewId(),
+		LinkUrl:     NewID(),
 	}
 	b.Patch(p)
 
-	require.Empty(t, b.FileId)
+	require.Empty(t, b.FileID)
 	require.Equal(t, *p.DisplayName, b.DisplayName)
 	require.Equal(t, *p.SortOrder, b.SortOrder)
 	require.Equal(t, *p.LinkUrl, b.LinkUrl)

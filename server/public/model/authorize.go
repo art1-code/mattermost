@@ -29,8 +29,8 @@ const (
 )
 
 type AuthData struct {
-	ClientId            string `json:"client_id"`
-	UserId              string `json:"user_id"`
+	ClientID            string `json:"client_id"`
+	UserID              string `json:"user_id"`
 	Code                string `json:"code"`
 	ExpiresIn           int32  `json:"expires_in"`
 	CreateAt            int64  `json:"create_at"`
@@ -44,7 +44,7 @@ type AuthData struct {
 
 type AuthorizeRequest struct {
 	ResponseType        string `json:"response_type"`
-	ClientId            string `json:"client_id"`
+	ClientID            string `json:"client_id"`
 	RedirectURI         string `json:"redirect_uri"`
 	Scope               string `json:"scope"`
 	State               string `json:"state"`
@@ -56,16 +56,16 @@ type AuthorizeRequest struct {
 // IsValid validates the AuthData and returns an error if it isn't configured
 // correctly.
 func (ad *AuthData) IsValid() *AppError {
-	if !IsValidId(ad.ClientId) {
+	if !IsValidID(ad.ClientID) {
 		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.client_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
-	if !IsValidId(ad.UserId) {
+	if !IsValidID(ad.UserID) {
 		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.user_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
 	if ad.Code == "" || len(ad.Code) > 128 {
-		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.auth_code.app_error", nil, "client_id="+ad.ClientId, http.StatusBadRequest)
+		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.auth_code.app_error", nil, "client_id="+ad.ClientID, http.StatusBadRequest)
 	}
 
 	if ad.ExpiresIn == 0 {
@@ -73,19 +73,19 @@ func (ad *AuthData) IsValid() *AppError {
 	}
 
 	if ad.CreateAt <= 0 {
-		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.create_at.app_error", nil, "client_id="+ad.ClientId, http.StatusBadRequest)
+		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.create_at.app_error", nil, "client_id="+ad.ClientID, http.StatusBadRequest)
 	}
 
 	if len(ad.RedirectUri) > 256 || !IsValidHTTPURL(ad.RedirectUri) {
-		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.redirect_uri.app_error", nil, "client_id="+ad.ClientId, http.StatusBadRequest)
+		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.redirect_uri.app_error", nil, "client_id="+ad.ClientID, http.StatusBadRequest)
 	}
 
 	if len(ad.State) > 1024 {
-		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.state.app_error", nil, "client_id="+ad.ClientId, http.StatusBadRequest)
+		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.state.app_error", nil, "client_id="+ad.ClientID, http.StatusBadRequest)
 	}
 
 	if len(ad.Scope) > 128 {
-		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.scope.app_error", nil, "client_id="+ad.ClientId, http.StatusBadRequest)
+		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.scope.app_error", nil, "client_id="+ad.ClientID, http.StatusBadRequest)
 	}
 
 	// PKCE validation - if one PKCE field is present, both must be present and valid
@@ -97,7 +97,7 @@ func (ad *AuthData) IsValid() *AppError {
 
 	// Resource validation per RFC 8707
 	if ad.Resource != "" {
-		if err := ValidateResourceParameter(ad.Resource, ad.ClientId, "AuthData.IsValid"); err != nil {
+		if err := ValidateResourceParameter(ad.Resource, ad.ClientID, "AuthData.IsValid"); err != nil {
 			return err
 		}
 	}
@@ -108,7 +108,7 @@ func (ad *AuthData) IsValid() *AppError {
 // IsValid validates the AuthorizeRequest and returns an error if it isn't configured
 // correctly.
 func (ar *AuthorizeRequest) IsValid() *AppError {
-	if !IsValidId(ar.ClientId) {
+	if !IsValidID(ar.ClientID) {
 		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.client_id.app_error", nil, "", http.StatusBadRequest)
 	}
 
@@ -117,15 +117,15 @@ func (ar *AuthorizeRequest) IsValid() *AppError {
 	}
 
 	if ar.RedirectURI == "" || len(ar.RedirectURI) > 256 || !IsValidHTTPURL(ar.RedirectURI) {
-		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.redirect_uri.app_error", nil, "client_id="+ar.ClientId, http.StatusBadRequest)
+		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.redirect_uri.app_error", nil, "client_id="+ar.ClientID, http.StatusBadRequest)
 	}
 
 	if len(ar.State) > 1024 {
-		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.state.app_error", nil, "client_id="+ar.ClientId, http.StatusBadRequest)
+		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.state.app_error", nil, "client_id="+ar.ClientID, http.StatusBadRequest)
 	}
 
 	if len(ar.Scope) > 128 {
-		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.scope.app_error", nil, "client_id="+ar.ClientId, http.StatusBadRequest)
+		return NewAppError("AuthData.IsValid", "model.authorize.is_valid.scope.app_error", nil, "client_id="+ar.ClientID, http.StatusBadRequest)
 	}
 
 	// PKCE validation - if one PKCE field is present, both must be present and valid
@@ -137,7 +137,7 @@ func (ar *AuthorizeRequest) IsValid() *AppError {
 
 	// Resource validation per RFC 8707
 	if ar.Resource != "" {
-		if err := ValidateResourceParameter(ar.Resource, ar.ClientId, "AuthorizeRequest.IsValid"); err != nil {
+		if err := ValidateResourceParameter(ar.Resource, ar.ClientID, "AuthorizeRequest.IsValid"); err != nil {
 			return err
 		}
 	}
@@ -164,28 +164,28 @@ func (ad *AuthData) IsExpired() bool {
 }
 
 // validatePKCEParameters validates PKCE parameters (shared validation logic)
-func validatePKCEParameters(codeChallenge, codeChallengeMethod, clientId, caller string) *AppError {
+func validatePKCEParameters(codeChallenge, codeChallengeMethod, clientID, caller string) *AppError {
 	if codeChallenge == "" {
-		return NewAppError(caller, "model.authorize.is_valid.code_challenge.app_error", nil, "client_id="+clientId, http.StatusBadRequest)
+		return NewAppError(caller, "model.authorize.is_valid.code_challenge.app_error", nil, "client_id="+clientID, http.StatusBadRequest)
 	}
 
 	if codeChallengeMethod == "" {
-		return NewAppError(caller, "model.authorize.is_valid.code_challenge_method.app_error", nil, "client_id="+clientId, http.StatusBadRequest)
+		return NewAppError(caller, "model.authorize.is_valid.code_challenge_method.app_error", nil, "client_id="+clientID, http.StatusBadRequest)
 	}
 
 	// Only support S256 method for security
 	if codeChallengeMethod != PKCECodeChallengeMethodS256 {
-		return NewAppError(caller, "model.authorize.is_valid.code_challenge_method.unsupported.app_error", nil, "client_id="+clientId+", method="+codeChallengeMethod, http.StatusBadRequest)
+		return NewAppError(caller, "model.authorize.is_valid.code_challenge_method.unsupported.app_error", nil, "client_id="+clientID+", method="+codeChallengeMethod, http.StatusBadRequest)
 	}
 
 	// Validate code challenge format (base64url encoded)
 	if len(codeChallenge) < PKCECodeChallengeMinLength || len(codeChallenge) > PKCECodeChallengeMaxLength {
-		return NewAppError(caller, "model.authorize.is_valid.code_challenge.length.app_error", nil, "client_id="+clientId, http.StatusBadRequest)
+		return NewAppError(caller, "model.authorize.is_valid.code_challenge.length.app_error", nil, "client_id="+clientID, http.StatusBadRequest)
 	}
 
 	// Validate base64url format (no padding, URL-safe characters)
 	if !codeChallengeRegex.MatchString(codeChallenge) {
-		return NewAppError(caller, "model.authorize.is_valid.code_challenge.format.app_error", nil, "client_id="+clientId, http.StatusBadRequest)
+		return NewAppError(caller, "model.authorize.is_valid.code_challenge.format.app_error", nil, "client_id="+clientID, http.StatusBadRequest)
 	}
 
 	return nil
@@ -193,12 +193,12 @@ func validatePKCEParameters(codeChallenge, codeChallengeMethod, clientId, caller
 
 // validatePKCE validates PKCE parameters for AuthData
 func (ad *AuthData) validatePKCE() *AppError {
-	return validatePKCEParameters(ad.CodeChallenge, ad.CodeChallengeMethod, ad.ClientId, "AuthData.validatePKCE")
+	return validatePKCEParameters(ad.CodeChallenge, ad.CodeChallengeMethod, ad.ClientID, "AuthData.validatePKCE")
 }
 
 // validatePKCE validates PKCE parameters for AuthorizeRequest
 func (ar *AuthorizeRequest) validatePKCE() *AppError {
-	return validatePKCEParameters(ar.CodeChallenge, ar.CodeChallengeMethod, ar.ClientId, "AuthorizeRequest.validatePKCE")
+	return validatePKCEParameters(ar.CodeChallenge, ar.CodeChallengeMethod, ar.ClientID, "AuthorizeRequest.validatePKCE")
 }
 
 // VerifyPKCE verifies a PKCE code_verifier against the stored code_challenge
@@ -240,29 +240,29 @@ func (ad *AuthData) ValidatePKCEForClientType(isPublicClient bool, codeVerifier 
 	if isPublicClient {
 		// RFC 7636: Public clients MUST use PKCE
 		if ad.CodeChallenge == "" {
-			return NewAppError("AuthData.ValidatePKCEForClientType", "model.authorize.validate_pkce.public_client_required.app_error", nil, "client_id="+ad.ClientId, http.StatusBadRequest)
+			return NewAppError("AuthData.ValidatePKCEForClientType", "model.authorize.validate_pkce.public_client_required.app_error", nil, "client_id="+ad.ClientID, http.StatusBadRequest)
 		}
 		if codeVerifier == "" {
-			return NewAppError("AuthData.ValidatePKCEForClientType", "model.authorize.validate_pkce.verifier_required.app_error", nil, "client_id="+ad.ClientId, http.StatusBadRequest)
+			return NewAppError("AuthData.ValidatePKCEForClientType", "model.authorize.validate_pkce.verifier_required.app_error", nil, "client_id="+ad.ClientID, http.StatusBadRequest)
 		}
 		// Verify the code verifier matches the stored code challenge
 		if !ad.VerifyPKCE(codeVerifier) {
-			return NewAppError("AuthData.ValidatePKCEForClientType", "model.authorize.validate_pkce.verification_failed.app_error", nil, "client_id="+ad.ClientId, http.StatusBadRequest)
+			return NewAppError("AuthData.ValidatePKCEForClientType", "model.authorize.validate_pkce.verification_failed.app_error", nil, "client_id="+ad.ClientID, http.StatusBadRequest)
 		}
 	} else {
 		// Confidential clients: PKCE is optional but enforced if initiated
 		if ad.CodeChallenge != "" {
 			// Client started flow with PKCE - code_verifier is required
 			if codeVerifier == "" {
-				return NewAppError("AuthData.ValidatePKCEForClientType", "model.authorize.validate_pkce.verifier_required.app_error", nil, "client_id="+ad.ClientId, http.StatusBadRequest)
+				return NewAppError("AuthData.ValidatePKCEForClientType", "model.authorize.validate_pkce.verifier_required.app_error", nil, "client_id="+ad.ClientID, http.StatusBadRequest)
 			}
 			// Verify the code verifier matches the stored code challenge
 			if !ad.VerifyPKCE(codeVerifier) {
-				return NewAppError("AuthData.ValidatePKCEForClientType", "model.authorize.validate_pkce.verification_failed.app_error", nil, "client_id="+ad.ClientId, http.StatusBadRequest)
+				return NewAppError("AuthData.ValidatePKCEForClientType", "model.authorize.validate_pkce.verification_failed.app_error", nil, "client_id="+ad.ClientID, http.StatusBadRequest)
 			}
 		} else if codeVerifier != "" {
 			// Client provided code_verifier but didn't use PKCE in authorization - reject
-			return NewAppError("AuthData.ValidatePKCEForClientType", "model.authorize.validate_pkce.not_used_in_auth.app_error", nil, "client_id="+ad.ClientId, http.StatusBadRequest)
+			return NewAppError("AuthData.ValidatePKCEForClientType", "model.authorize.validate_pkce.not_used_in_auth.app_error", nil, "client_id="+ad.ClientID, http.StatusBadRequest)
 		}
 	}
 
@@ -270,7 +270,7 @@ func (ad *AuthData) ValidatePKCEForClientType(isPublicClient bool, codeVerifier 
 }
 
 // ValidateResourceParameter validates a resource parameter per RFC 8707
-func ValidateResourceParameter(resource, clientId, caller string) *AppError {
+func ValidateResourceParameter(resource, clientID, caller string) *AppError {
 	// Empty resource parameter is allowed (no resource specified)
 	if resource == "" {
 		return nil
@@ -278,22 +278,22 @@ func ValidateResourceParameter(resource, clientId, caller string) *AppError {
 
 	// Resource must not exceed 512 characters to fit in database column
 	if len(resource) > 512 {
-		return NewAppError(caller, "model.authorize.is_valid.resource.length.app_error", nil, "client_id="+clientId, http.StatusBadRequest)
+		return NewAppError(caller, "model.authorize.is_valid.resource.length.app_error", nil, "client_id="+clientID, http.StatusBadRequest)
 	}
 
 	parsedURL, err := url.Parse(resource)
 	if err != nil {
-		return NewAppError(caller, "model.authorize.is_valid.resource.invalid_uri.app_error", nil, "client_id="+clientId, http.StatusBadRequest)
+		return NewAppError(caller, "model.authorize.is_valid.resource.invalid_uri.app_error", nil, "client_id="+clientID, http.StatusBadRequest)
 	}
 
 	// Must be absolute URI (has scheme)
 	if !parsedURL.IsAbs() {
-		return NewAppError(caller, "model.authorize.is_valid.resource.not_absolute.app_error", nil, "client_id="+clientId, http.StatusBadRequest)
+		return NewAppError(caller, "model.authorize.is_valid.resource.not_absolute.app_error", nil, "client_id="+clientID, http.StatusBadRequest)
 	}
 
 	// Must not include a fragment component per RFC 8707
 	if parsedURL.Fragment != "" {
-		return NewAppError(caller, "model.authorize.is_valid.resource.has_fragment.app_error", nil, "client_id="+clientId, http.StatusBadRequest)
+		return NewAppError(caller, "model.authorize.is_valid.resource.has_fragment.app_error", nil, "client_id="+clientID, http.StatusBadRequest)
 	}
 
 	return nil

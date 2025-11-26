@@ -11,9 +11,9 @@ import (
 
 func TestAuthPreSave(t *testing.T) {
 	a1 := AuthData{}
-	a1.ClientId = NewId()
-	a1.UserId = NewId()
-	a1.Code = NewId()
+	a1.ClientID = NewID()
+	a1.UserID = NewID()
+	a1.Code = NewID()
 	a1.PreSave()
 	a1.IsExpired()
 }
@@ -23,16 +23,16 @@ func TestAuthIsValid(t *testing.T) {
 
 	require.NotNil(t, ad.IsValid())
 
-	ad.ClientId = NewRandomString(28)
-	require.NotNil(t, ad.IsValid(), "Should have failed Client Id")
+	ad.ClientID = NewRandomString(28)
+	require.NotNil(t, ad.IsValid(), "Should have failed Client ID")
 
-	ad.ClientId = NewId()
+	ad.ClientID = NewID()
 	require.NotNil(t, ad.IsValid())
 
-	ad.UserId = NewRandomString(28)
-	require.NotNil(t, ad.IsValid(), "Should have failed User Id")
+	ad.UserID = NewRandomString(28)
+	require.NotNil(t, ad.IsValid(), "Should have failed User ID")
 
-	ad.UserId = NewId()
+	ad.UserID = NewID()
 	require.NotNil(t, ad.IsValid())
 
 	ad.Code = NewRandomString(129)
@@ -41,7 +41,7 @@ func TestAuthIsValid(t *testing.T) {
 	ad.Code = ""
 	require.NotNil(t, ad.IsValid(), "Should have failed Code not set")
 
-	ad.Code = NewId()
+	ad.Code = NewID()
 	require.NotNil(t, ad.IsValid())
 
 	ad.ExpiresIn = 0
@@ -133,26 +133,26 @@ func TestAuthDataVerifyPKCE(t *testing.T) {
 func TestValidatePKCEParameters(t *testing.T) {
 	validChallenge := "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM"
 	validMethod := PKCECodeChallengeMethodS256
-	clientId := NewId()
+	clientID := NewID()
 
 	t.Run("ValidParameters", func(t *testing.T) {
-		require.Nil(t, validatePKCEParameters(validChallenge, validMethod, clientId, "test"))
+		require.Nil(t, validatePKCEParameters(validChallenge, validMethod, clientID, "test"))
 	})
 
 	t.Run("EmptyChallenge", func(t *testing.T) {
-		require.NotNil(t, validatePKCEParameters("", validMethod, clientId, "test"))
+		require.NotNil(t, validatePKCEParameters("", validMethod, clientID, "test"))
 	})
 
 	t.Run("EmptyMethod", func(t *testing.T) {
-		require.NotNil(t, validatePKCEParameters(validChallenge, "", clientId, "test"))
+		require.NotNil(t, validatePKCEParameters(validChallenge, "", clientID, "test"))
 	})
 
 	t.Run("InvalidMethod", func(t *testing.T) {
-		require.NotNil(t, validatePKCEParameters(validChallenge, "plain", clientId, "test"))
+		require.NotNil(t, validatePKCEParameters(validChallenge, "plain", clientID, "test"))
 	})
 
 	t.Run("ChallengeTooShort", func(t *testing.T) {
-		require.NotNil(t, validatePKCEParameters("short", validMethod, clientId, "test"))
+		require.NotNil(t, validatePKCEParameters("short", validMethod, clientID, "test"))
 	})
 
 	t.Run("ChallengeTooLong", func(t *testing.T) {
@@ -160,7 +160,7 @@ func TestValidatePKCEParameters(t *testing.T) {
 		for i := range longChallenge {
 			longChallenge[i] = 'a'
 		}
-		require.NotNil(t, validatePKCEParameters(string(longChallenge), validMethod, clientId, "test"))
+		require.NotNil(t, validatePKCEParameters(string(longChallenge), validMethod, clientID, "test"))
 	})
 }
 
@@ -168,7 +168,7 @@ func TestAuthorizeRequestPKCE(t *testing.T) {
 	t.Run("RequiredTogether", func(t *testing.T) {
 		authRequest := &AuthorizeRequest{
 			ResponseType: ResponseTypeCode,
-			ClientId:     NewId(),
+			ClientID:     NewID(),
 			RedirectURI:  "https://example.com/callback",
 			State:        "test_state",
 			Scope:        "user",
@@ -189,7 +189,7 @@ func TestAuthorizeRequestPKCE(t *testing.T) {
 	t.Run("ValidationDetails", func(t *testing.T) {
 		authRequest := &AuthorizeRequest{
 			ResponseType:        ResponseTypeCode,
-			ClientId:            NewId(),
+			ClientID:            NewID(),
 			RedirectURI:         "https://example.com/callback",
 			State:               "test_state",
 			Scope:               "user",
@@ -217,7 +217,7 @@ func TestAuthorizeRequestPKCE(t *testing.T) {
 }
 
 func TestValidateResourceParameter(t *testing.T) {
-	clientId := NewId()
+	clientID := NewID()
 	caller := "TestValidateResourceParameter"
 
 	t.Run("Valid resource URIs should pass", func(t *testing.T) {
@@ -231,7 +231,7 @@ func TestValidateResourceParameter(t *testing.T) {
 		}
 
 		for _, resource := range validResources {
-			require.Nil(t, ValidateResourceParameter(resource, clientId, caller),
+			require.Nil(t, ValidateResourceParameter(resource, clientID, caller),
 				"Expected valid resource '%s' to pass validation", resource)
 		}
 	})
@@ -246,14 +246,14 @@ func TestValidateResourceParameter(t *testing.T) {
 		}
 
 		for _, resource := range invalidResources {
-			require.NotNil(t, ValidateResourceParameter(resource, clientId, caller),
+			require.NotNil(t, ValidateResourceParameter(resource, clientID, caller),
 				"Expected invalid resource '%s' to fail validation", resource)
 		}
 	})
 
 	t.Run("Empty resource should pass", func(t *testing.T) {
 		// Empty resource parameter should be allowed (means no resource specified)
-		require.Nil(t, ValidateResourceParameter("", clientId, caller),
+		require.Nil(t, ValidateResourceParameter("", clientID, caller),
 			"Expected empty resource to pass validation")
 	})
 
@@ -265,19 +265,19 @@ func TestValidateResourceParameter(t *testing.T) {
 		}
 		longResource := "https://example.com/" + string(longPath)
 
-		require.NotNil(t, ValidateResourceParameter(longResource, clientId, caller),
+		require.NotNil(t, ValidateResourceParameter(longResource, clientID, caller),
 			"Expected resource URI longer than 512 characters to fail validation")
 	})
 
 	t.Run("Fragment in URI should fail", func(t *testing.T) {
 		resourceWithFragment := "https://example.com/api#section1"
-		require.NotNil(t, ValidateResourceParameter(resourceWithFragment, clientId, caller),
+		require.NotNil(t, ValidateResourceParameter(resourceWithFragment, clientID, caller),
 			"Expected resource URI with fragment to fail validation")
 	})
 
 	t.Run("Query parameters are allowed", func(t *testing.T) {
 		resourceWithQuery := "https://example.com/api?param1=value1&param2=value2"
-		require.Nil(t, ValidateResourceParameter(resourceWithQuery, clientId, caller),
+		require.Nil(t, ValidateResourceParameter(resourceWithQuery, clientID, caller),
 			"Expected resource URI with query parameters to pass validation")
 	})
 
@@ -288,7 +288,7 @@ func TestValidateResourceParameter(t *testing.T) {
 		}
 
 		for _, resource := range validSchemes {
-			require.Nil(t, ValidateResourceParameter(resource, clientId, caller),
+			require.Nil(t, ValidateResourceParameter(resource, clientID, caller),
 				"Expected resource with scheme '%s' to pass validation", resource)
 		}
 	})
@@ -296,9 +296,9 @@ func TestValidateResourceParameter(t *testing.T) {
 
 func TestAuthData_ResourceValidation(t *testing.T) {
 	authData := &AuthData{
-		ClientId:    NewId(),
-		UserId:      NewId(),
-		Code:        NewId(),
+		ClientID:    NewID(),
+		UserID:      NewID(),
+		Code:        NewID(),
 		ExpiresIn:   300,
 		CreateAt:    GetMillis(),
 		RedirectUri: "https://example.com/callback",
@@ -334,7 +334,7 @@ func TestAuthData_ResourceValidation(t *testing.T) {
 func TestAuthorizeRequest_ResourceValidation(t *testing.T) {
 	authRequest := &AuthorizeRequest{
 		ResponseType: ResponseTypeCode,
-		ClientId:     NewId(),
+		ClientID:     NewID(),
 		RedirectURI:  "https://example.com/callback",
 		State:        "test_state",
 		Scope:        "user",

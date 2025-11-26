@@ -181,9 +181,9 @@ func (o *PostList) Etag() string {
 	return Etag(orderId, id, t)
 }
 
-func (o *PostList) IsChannelId(channelId string) bool {
+func (o *PostList) IsChannelId(channelID string) bool {
 	for _, v := range o.Posts {
-		if v.ChannelId != channelId {
+		if v.ChannelID != channelID {
 			return false
 		}
 	}
@@ -215,7 +215,7 @@ func (o *PostList) BuildWranglerPostList() *WranglerPostList {
 			wpl.ThreadUserIDs = append(wpl.ThreadUserIDs, p.UserId)
 		}
 
-		wpl.FileAttachmentCount += int64(len(p.FileIds))
+		wpl.FileAttachmentCount += int64(len(p.FileIDs))
 
 		wpl.Posts = append(wpl.Posts, p)
 	}

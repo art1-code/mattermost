@@ -37,9 +37,9 @@ const (
 
 // SidebarCategory represents the corresponding DB table
 type SidebarCategory struct {
-	Id          string                 `json:"id"`
-	UserId      string                 `json:"user_id"`
-	TeamId      string                 `json:"team_id"`
+	ID          string                 `json:"id"`
+	UserID      string                 `json:"user_id"`
+	TeamID      string                 `json:"team_id"`
 	SortOrder   int64                  `json:"sort_order"`
 	Sorting     SidebarCategorySorting `json:"sorting"`
 	Type        SidebarCategoryType    `json:"type"`
@@ -54,7 +54,7 @@ type SidebarCategoryWithChannels struct {
 	Channels []string `json:"channel_ids"`
 }
 
-func (sc SidebarCategoryWithChannels) ChannelIds() []string {
+func (sc SidebarCategoryWithChannels) ChannelIDs() []string {
 	return sc.Channels
 }
 
@@ -67,25 +67,25 @@ type OrderedSidebarCategories struct {
 }
 
 type SidebarChannel struct {
-	ChannelId  string `json:"channel_id"`
-	UserId     string `json:"user_id"`
-	CategoryId string `json:"category_id"`
+	ChannelID  string `json:"channel_id"`
+	UserID     string `json:"user_id"`
+	CategoryID string `json:"category_id"`
 	SortOrder  int64  `json:"-"`
 }
 
 type SidebarChannels []*SidebarChannel
 type SidebarCategoriesWithChannels []*SidebarCategoryWithChannels
 
-var categoryIdPattern = regexp.MustCompile("(favorites|channels|direct_messages)_[a-z0-9]{26}_[a-z0-9]{26}")
+var categoryIDPattern = regexp.MustCompile("(favorites|channels|direct_messages)_[a-z0-9]{26}_[a-z0-9]{26}")
 
-func IsValidCategoryId(s string) bool {
+func IsValidCategoryID(s string) bool {
 	// Category IDs can either be regular IDs
-	if IsValidId(s) {
+	if IsValidID(s) {
 		return true
 	}
 
 	// Or default categories can follow the pattern {type}_{userID}_{teamID}
-	return categoryIdPattern.MatchString(s)
+	return categoryIDPattern.MatchString(s)
 }
 
 func (t SidebarCategoryType) MarshalJSON() ([]byte, error) {

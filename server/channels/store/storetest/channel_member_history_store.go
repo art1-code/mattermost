@@ -168,7 +168,7 @@ func testGetChannelsWithActivityDuring(t *testing.T, rctx request.CTX, ss store.
 	assert.Empty(t, channelIds)
 
 	post := &model.Post{
-		ChannelId: channel1.Id,
+		ChannelID: channel1.Id,
 		Message:   "root post",
 		UserId:    user1.Id,
 		CreateAt:  now + 4,
@@ -209,7 +209,7 @@ func testGetChannelsWithActivityDuring(t *testing.T, rctx request.CTX, ss store.
 	assert.Empty(t, channelIds)
 
 	post2 := &model.Post{
-		ChannelId: channel1.Id,
+		ChannelID: channel1.Id,
 		Message:   "root post",
 		UserId:    user1.Id,
 		CreateAt:  now + 11,

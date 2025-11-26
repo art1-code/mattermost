@@ -58,7 +58,7 @@ const (
 	GenericNotificationServer    = "https://push-test.mattermost.com"
 	MmSupportAdvisorAddress      = "support-advisor@mattermost.com"
 	FullNotification             = "full"
-	IdLoadedNotification         = "id_loaded"
+	IDLoadedNotification         = "id_loaded"
 
 	DirectMessageAny  = "any"
 	DirectMessageTeam = "team"
@@ -113,7 +113,7 @@ const (
 	ServiceSettingsDefaultTLSKeyFile             = ""
 	ServiceSettingsDefaultReadTimeout            = 300
 	ServiceSettingsDefaultWriteTimeout           = 300
-	ServiceSettingsDefaultIdleTimeout            = 60
+	ServiceSettingsDefaultIDleTimeout            = 60
 	ServiceSettingsDefaultMaxLoginAttempts       = 10
 	ServiceSettingsDefaultAllowCorsFrom          = ""
 	ServiceSettingsDefaultListenAndAddress       = ":8065"
@@ -162,15 +162,15 @@ const (
 	LdapSettingsDefaultEmailAttribute            = ""
 	LdapSettingsDefaultUsernameAttribute         = ""
 	LdapSettingsDefaultNicknameAttribute         = ""
-	LdapSettingsDefaultIdAttribute               = ""
+	LdapSettingsDefaultIDAttribute               = ""
 	LdapSettingsDefaultPositionAttribute         = ""
 	LdapSettingsDefaultLoginFieldName            = ""
 	LdapSettingsDefaultGroupDisplayNameAttribute = ""
-	LdapSettingsDefaultGroupIdAttribute          = ""
+	LdapSettingsDefaultGroupIDAttribute          = ""
 	LdapSettingsDefaultPictureAttribute          = ""
 	LdapSettingsDefaultMaximumLoginAttempts      = 10
 
-	SamlSettingsDefaultIdAttribute        = ""
+	SamlSettingsDefaultIDAttribute        = ""
 	SamlSettingsDefaultGuestAttribute     = ""
 	SamlSettingsDefaultAdminAttribute     = ""
 	SamlSettingsDefaultFirstNameAttribute = ""
@@ -232,7 +232,7 @@ const (
 	DataRetentionSettingsDefaultDeletionJobStartTime           = "02:00"
 	DataRetentionSettingsDefaultBatchSize                      = 3000
 	DataRetentionSettingsDefaultTimeBetweenBatchesMilliseconds = 100
-	DataRetentionSettingsDefaultRetentionIdsBatchSize          = 100
+	DataRetentionSettingsDefaultRetentionIDsBatchSize          = 100
 
 	OutgoingIntegrationRequestsDefaultTimeout = 30
 
@@ -343,7 +343,7 @@ type ServiceSettings struct {
 	TrustedProxyIPHeader                []string `access:"write_restrictable,cloud_restrictable"` // telemetry: none
 	ReadTimeout                         *int     `access:"environment_web_server,write_restrictable,cloud_restrictable"`
 	WriteTimeout                        *int     `access:"environment_web_server,write_restrictable,cloud_restrictable"`
-	IdleTimeout                         *int     `access:"write_restrictable,cloud_restrictable"`
+	IDleTimeout                         *int     `access:"write_restrictable,cloud_restrictable"`
 	MaximumLoginAttempts                *int     `access:"authentication_password,write_restrictable,cloud_restrictable"`
 	GoroutineHealthThreshold            *int     `access:"write_restrictable,cloud_restrictable"` // telemetry: none
 	EnableOAuthServiceProvider          *bool    `access:"integrations_integration_management"`
@@ -388,7 +388,7 @@ type ServiceSettings struct {
 	SessionLengthSSOInHours *int `access:"environment_session_lengths,write_restrictable,cloud_restrictable"`
 
 	SessionCacheInMinutes                             *int    `access:"environment_session_lengths,write_restrictable,cloud_restrictable"`
-	SessionIdleTimeoutInMinutes                       *int    `access:"environment_session_lengths,write_restrictable,cloud_restrictable"`
+	SessionIDleTimeoutInMinutes                       *int    `access:"environment_session_lengths,write_restrictable,cloud_restrictable"`
 	WebsocketSecurePort                               *int    `access:"write_restrictable,cloud_restrictable"` // telemetry: none
 	WebsocketPort                                     *int    `access:"write_restrictable,cloud_restrictable"` // telemetry: none
 	WebserverMode                                     *string `access:"environment_web_server,write_restrictable,cloud_restrictable"`
@@ -612,8 +612,8 @@ func (s *ServiceSettings) SetDefaults(isUpdate bool) {
 		s.WriteTimeout = NewPointer(ServiceSettingsDefaultWriteTimeout)
 	}
 
-	if s.IdleTimeout == nil {
-		s.IdleTimeout = NewPointer(ServiceSettingsDefaultIdleTimeout)
+	if s.IDleTimeout == nil {
+		s.IDleTimeout = NewPointer(ServiceSettingsDefaultIDleTimeout)
 	}
 
 	if s.MaximumLoginAttempts == nil {
@@ -744,8 +744,8 @@ func (s *ServiceSettings) SetDefaults(isUpdate bool) {
 		s.SessionCacheInMinutes = NewPointer(10)
 	}
 
-	if s.SessionIdleTimeoutInMinutes == nil {
-		s.SessionIdleTimeoutInMinutes = NewPointer(43200)
+	if s.SessionIDleTimeoutInMinutes == nil {
+		s.SessionIDleTimeoutInMinutes = NewPointer(43200)
 	}
 
 	if s.EnableCommands == nil {
@@ -1122,7 +1122,7 @@ type MetricsSettings struct {
 	ListenAddress             *string  `access:"environment_performance_monitoring,write_restrictable,cloud_restrictable"` // telemetry: none
 	EnableClientMetrics       *bool    `access:"environment_performance_monitoring,write_restrictable,cloud_restrictable"`
 	EnableNotificationMetrics *bool    `access:"environment_performance_monitoring,write_restrictable,cloud_restrictable"`
-	ClientSideUserIds         []string `access:"environment_performance_monitoring,write_restrictable,cloud_restrictable"` // telemetry: none
+	ClientSideUserIDs         []string `access:"environment_performance_monitoring,write_restrictable,cloud_restrictable"` // telemetry: none
 }
 
 func (s *MetricsSettings) SetDefaults() {
@@ -1146,19 +1146,19 @@ func (s *MetricsSettings) SetDefaults() {
 		s.EnableNotificationMetrics = NewPointer(true)
 	}
 
-	if s.ClientSideUserIds == nil {
-		s.ClientSideUserIds = []string{}
+	if s.ClientSideUserIDs == nil {
+		s.ClientSideUserIDs = []string{}
 	}
 }
 
 func (s *MetricsSettings) isValid() *AppError {
 	const maxLength = 5
-	if len(s.ClientSideUserIds) > maxLength {
-		return NewAppError("MetricsSettings.IsValid", "model.config.is_valid.metrics_client_side_user_ids.app_error", map[string]any{"MaxLength": maxLength, "CurrentLength": len(s.ClientSideUserIds)}, "", http.StatusBadRequest)
+	if len(s.ClientSideUserIDs) > maxLength {
+		return NewAppError("MetricsSettings.IsValid", "model.config.is_valid.metrics_client_side_user_ids.app_error", map[string]any{"MaxLength": maxLength, "CurrentLength": len(s.ClientSideUserIDs)}, "", http.StatusBadRequest)
 	}
-	for _, id := range s.ClientSideUserIds {
-		if !IsValidId(id) {
-			return NewAppError("MetricsSettings.IsValid", "model.config.is_valid.metrics_client_side_user_id.app_error", map[string]any{"Id": id}, "", http.StatusBadRequest)
+	for _, id := range s.ClientSideUserIDs {
+		if !IsValidID(id) {
+			return NewAppError("MetricsSettings.IsValid", "model.config.is_valid.metrics_client_side_user_id.app_error", map[string]any{"ID": id}, "", http.StatusBadRequest)
 		}
 	}
 	return nil
@@ -1243,7 +1243,7 @@ func (s *AnalyticsSettings) SetDefaults() {
 type SSOSettings struct {
 	Enable            *bool   `access:"authentication_openid"`
 	Secret            *string `access:"authentication_openid"` // telemetry: none
-	Id                *string `access:"authentication_openid"` // telemetry: none
+	ID                *string `access:"authentication_openid"` // telemetry: none
 	Scope             *string `access:"authentication_openid"` // telemetry: none
 	AuthEndpoint      *string `access:"authentication_openid"` // telemetry: none
 	TokenEndpoint     *string `access:"authentication_openid"` // telemetry: none
@@ -1262,8 +1262,8 @@ func (s *SSOSettings) setDefaults(scope, authEndpoint, tokenEndpoint, userAPIEnd
 		s.Secret = NewPointer("")
 	}
 
-	if s.Id == nil {
-		s.Id = NewPointer("")
+	if s.ID == nil {
+		s.ID = NewPointer("")
 	}
 
 	if s.Scope == nil {
@@ -1298,13 +1298,13 @@ func (s *SSOSettings) setDefaults(scope, authEndpoint, tokenEndpoint, userAPIEnd
 type Office365Settings struct {
 	Enable            *bool   `access:"authentication_openid"`
 	Secret            *string `access:"authentication_openid"` // telemetry: none
-	Id                *string `access:"authentication_openid"` // telemetry: none
+	ID                *string `access:"authentication_openid"` // telemetry: none
 	Scope             *string `access:"authentication_openid"`
 	AuthEndpoint      *string `access:"authentication_openid"` // telemetry: none
 	TokenEndpoint     *string `access:"authentication_openid"` // telemetry: none
 	UserAPIEndpoint   *string `access:"authentication_openid"` // telemetry: none
 	DiscoveryEndpoint *string `access:"authentication_openid"` // telemetry: none
-	DirectoryId       *string `access:"authentication_openid"` // telemetry: none
+	DirectoryID       *string `access:"authentication_openid"` // telemetry: none
 }
 
 func (s *Office365Settings) setDefaults() {
@@ -1312,8 +1312,8 @@ func (s *Office365Settings) setDefaults() {
 		s.Enable = NewPointer(false)
 	}
 
-	if s.Id == nil {
-		s.Id = NewPointer("")
+	if s.ID == nil {
+		s.ID = NewPointer("")
 	}
 
 	if s.Secret == nil {
@@ -1340,8 +1340,8 @@ func (s *Office365Settings) setDefaults() {
 		s.UserAPIEndpoint = NewPointer(Office365SettingsDefaultUserAPIEndpoint)
 	}
 
-	if s.DirectoryId == nil {
-		s.DirectoryId = NewPointer("")
+	if s.DirectoryID == nil {
+		s.DirectoryID = NewPointer("")
 	}
 }
 
@@ -1349,7 +1349,7 @@ func (s *Office365Settings) SSOSettings() *SSOSettings {
 	ssoSettings := SSOSettings{}
 	ssoSettings.Enable = s.Enable
 	ssoSettings.Secret = s.Secret
-	ssoSettings.Id = s.Id
+	ssoSettings.ID = s.ID
 	ssoSettings.Scope = s.Scope
 	ssoSettings.DiscoveryEndpoint = s.DiscoveryEndpoint
 	ssoSettings.AuthEndpoint = s.AuthEndpoint
@@ -1369,9 +1369,9 @@ type SqlSettings struct {
 	DataSource                        *string               `access:"environment_database,write_restrictable,cloud_restrictable"` // telemetry: none
 	DataSourceReplicas                []string              `access:"environment_database,write_restrictable,cloud_restrictable"`
 	DataSourceSearchReplicas          []string              `access:"environment_database,write_restrictable,cloud_restrictable"`
-	MaxIdleConns                      *int                  `access:"environment_database,write_restrictable,cloud_restrictable"`
+	MaxIDleConns                      *int                  `access:"environment_database,write_restrictable,cloud_restrictable"`
 	ConnMaxLifetimeMilliseconds       *int                  `access:"environment_database,write_restrictable,cloud_restrictable"`
-	ConnMaxIdleTimeMilliseconds       *int                  `access:"environment_database,write_restrictable,cloud_restrictable"`
+	ConnMaxIDleTimeMilliseconds       *int                  `access:"environment_database,write_restrictable,cloud_restrictable"`
 	MaxOpenConns                      *int                  `access:"environment_database,write_restrictable,cloud_restrictable"`
 	Trace                             *bool                 `access:"environment_database,write_restrictable,cloud_restrictable"`
 	AtRestEncryptKey                  *string               `access:"environment_database,write_restrictable,cloud_restrictable"` // telemetry: none
@@ -1409,8 +1409,8 @@ func (s *SqlSettings) SetDefaults(isUpdate bool) {
 		s.AtRestEncryptKey = NewPointer("")
 	}
 
-	if s.MaxIdleConns == nil {
-		s.MaxIdleConns = NewPointer(50)
+	if s.MaxIDleConns == nil {
+		s.MaxIDleConns = NewPointer(50)
 	}
 
 	if s.MaxOpenConns == nil {
@@ -1421,8 +1421,8 @@ func (s *SqlSettings) SetDefaults(isUpdate bool) {
 		s.ConnMaxLifetimeMilliseconds = NewPointer(3600000)
 	}
 
-	if s.ConnMaxIdleTimeMilliseconds == nil {
-		s.ConnMaxIdleTimeMilliseconds = NewPointer(300000)
+	if s.ConnMaxIDleTimeMilliseconds == nil {
+		s.ConnMaxIDleTimeMilliseconds = NewPointer(300000)
 	}
 
 	if s.Trace == nil {
@@ -1699,7 +1699,7 @@ type FileSettings struct {
 	ArchiveRecursion                   *bool   `access:"environment_file_storage,write_restrictable"`
 	PublicLinkSalt                     *string `access:"site_public_links,cloud_restrictable"`                           // telemetry: none
 	InitialFont                        *string `access:"environment_file_storage,cloud_restrictable"`                    // telemetry: none
-	AmazonS3AccessKeyId                *string `access:"environment_file_storage,write_restrictable,cloud_restrictable"` // telemetry: none
+	AmazonS3AccessKeyID                *string `access:"environment_file_storage,write_restrictable,cloud_restrictable"` // telemetry: none
 	AmazonS3SecretAccessKey            *string `access:"environment_file_storage,write_restrictable,cloud_restrictable"` // telemetry: none
 	AmazonS3Bucket                     *string `access:"environment_file_storage,write_restrictable,cloud_restrictable"` // telemetry: none
 	AmazonS3PathPrefix                 *string `access:"environment_file_storage,write_restrictable,cloud_restrictable"` // telemetry: none
@@ -1716,7 +1716,7 @@ type FileSettings struct {
 	DedicatedExportStore                     *bool   `access:"environment_file_storage,write_restrictable"`
 	ExportDriverName                         *string `access:"environment_file_storage,write_restrictable"`
 	ExportDirectory                          *string `access:"environment_file_storage,write_restrictable"` // telemetry: none
-	ExportAmazonS3AccessKeyId                *string `access:"environment_file_storage,write_restrictable"` // telemetry: none
+	ExportAmazonS3AccessKeyID                *string `access:"environment_file_storage,write_restrictable"` // telemetry: none
 	ExportAmazonS3SecretAccessKey            *string `access:"environment_file_storage,write_restrictable"` // telemetry: none
 	ExportAmazonS3Bucket                     *string `access:"environment_file_storage,write_restrictable"` // telemetry: none
 	ExportAmazonS3PathPrefix                 *string `access:"environment_file_storage,write_restrictable"` // telemetry: none
@@ -1792,8 +1792,8 @@ func (s *FileSettings) SetDefaults(isUpdate bool) {
 		s.InitialFont = NewPointer("nunito-bold.ttf")
 	}
 
-	if s.AmazonS3AccessKeyId == nil {
-		s.AmazonS3AccessKeyId = NewPointer("")
+	if s.AmazonS3AccessKeyID == nil {
+		s.AmazonS3AccessKeyID = NewPointer("")
 	}
 
 	if s.AmazonS3SecretAccessKey == nil {
@@ -1858,8 +1858,8 @@ func (s *FileSettings) SetDefaults(isUpdate bool) {
 		s.ExportDirectory = NewPointer(FileSettingsDefaultDirectory)
 	}
 
-	if s.ExportAmazonS3AccessKeyId == nil {
-		s.ExportAmazonS3AccessKeyId = NewPointer("")
+	if s.ExportAmazonS3AccessKeyID == nil {
+		s.ExportAmazonS3AccessKeyID = NewPointer("")
 	}
 
 	if s.ExportAmazonS3SecretAccessKey == nil {
@@ -2464,7 +2464,7 @@ type LdapSettings struct {
 
 	// Group Mapping
 	GroupDisplayNameAttribute *string `access:"authentication_ldap"`
-	GroupIdAttribute          *string `access:"authentication_ldap"`
+	GroupIDAttribute          *string `access:"authentication_ldap"`
 
 	// User Mapping
 	FirstNameAttribute *string `access:"authentication_ldap"`
@@ -2472,9 +2472,9 @@ type LdapSettings struct {
 	EmailAttribute     *string `access:"authentication_ldap"`
 	UsernameAttribute  *string `access:"authentication_ldap"`
 	NicknameAttribute  *string `access:"authentication_ldap"`
-	IdAttribute        *string `access:"authentication_ldap"`
+	IDAttribute        *string `access:"authentication_ldap"`
 	PositionAttribute  *string `access:"authentication_ldap"`
-	LoginIdAttribute   *string `access:"authentication_ldap"`
+	LoginIDAttribute   *string `access:"authentication_ldap"`
 	PictureAttribute   *string `access:"authentication_ldap"`
 
 	// Synchronization
@@ -2566,8 +2566,8 @@ func (s *LdapSettings) SetDefaults() {
 		s.GroupDisplayNameAttribute = NewPointer(LdapSettingsDefaultGroupDisplayNameAttribute)
 	}
 
-	if s.GroupIdAttribute == nil {
-		s.GroupIdAttribute = NewPointer(LdapSettingsDefaultGroupIdAttribute)
+	if s.GroupIDAttribute == nil {
+		s.GroupIDAttribute = NewPointer(LdapSettingsDefaultGroupIDAttribute)
 	}
 
 	if s.FirstNameAttribute == nil {
@@ -2590,8 +2590,8 @@ func (s *LdapSettings) SetDefaults() {
 		s.NicknameAttribute = NewPointer(LdapSettingsDefaultNicknameAttribute)
 	}
 
-	if s.IdAttribute == nil {
-		s.IdAttribute = NewPointer(LdapSettingsDefaultIdAttribute)
+	if s.IDAttribute == nil {
+		s.IDAttribute = NewPointer(LdapSettingsDefaultIDAttribute)
 	}
 
 	if s.PositionAttribute == nil {
@@ -2602,10 +2602,10 @@ func (s *LdapSettings) SetDefaults() {
 		s.PictureAttribute = NewPointer(LdapSettingsDefaultPictureAttribute)
 	}
 
-	// For those upgrading to the version when LoginIdAttribute was added
-	// they need IdAttribute == LoginIdAttribute not to break
-	if s.LoginIdAttribute == nil {
-		s.LoginIdAttribute = s.IdAttribute
+	// For those upgrading to the version when LoginIDAttribute was added
+	// they need IDAttribute == LoginIDAttribute not to break
+	if s.LoginIDAttribute == nil {
+		s.LoginIDAttribute = s.IDAttribute
 	}
 
 	if s.SyncIntervalMinutes == nil {
@@ -2717,7 +2717,7 @@ type LibreTranslateProviderSettings struct {
 
 // TODO: Enable Agents provider in future release
 // type AgentsProviderSettings struct {
-// 	BotUserId *string `access:"site_localization,cloud_restrictable"`
+// 	BotUserID *string `access:"site_localization,cloud_restrictable"`
 // }
 
 func (s *AutoTranslationSettings) SetDefaults() {
@@ -2772,8 +2772,8 @@ func (s *LibreTranslateProviderSettings) SetDefaults() {
 
 // TODO: Enable Agents provider in future release
 // func (s *AgentsProviderSettings) SetDefaults() {
-// 	if s.BotUserId == nil {
-// 		s.BotUserId = NewPointer("")
+// 	if s.BotUserID == nil {
+// 		s.BotUserID = NewPointer("")
 // 	}
 // }
 
@@ -2788,24 +2788,24 @@ type SamlSettings struct {
 	Encrypt     *bool `access:"authentication_saml"`
 	SignRequest *bool `access:"authentication_saml"`
 
-	IdpURL                      *string `access:"authentication_saml"` // telemetry: none
-	IdpDescriptorURL            *string `access:"authentication_saml"` // telemetry: none
-	IdpMetadataURL              *string `access:"authentication_saml"` // telemetry: none
-	ServiceProviderIdentifier   *string `access:"authentication_saml"` // telemetry: none
+	IDpURL                      *string `access:"authentication_saml"` // telemetry: none
+	IDpDescriptorURL            *string `access:"authentication_saml"` // telemetry: none
+	IDpMetadataURL              *string `access:"authentication_saml"` // telemetry: none
+	ServiceProviderIDentifier   *string `access:"authentication_saml"` // telemetry: none
 	AssertionConsumerServiceURL *string `access:"authentication_saml"` // telemetry: none
 
 	SignatureAlgorithm *string `access:"authentication_saml"`
 	CanonicalAlgorithm *string `access:"authentication_saml"`
 
-	ScopingIDPProviderId *string `access:"authentication_saml"`
+	ScopingIDPProviderID *string `access:"authentication_saml"`
 	ScopingIDPName       *string `access:"authentication_saml"`
 
-	IdpCertificateFile    *string `access:"authentication_saml"` // telemetry: none
+	IDpCertificateFile    *string `access:"authentication_saml"` // telemetry: none
 	PublicCertificateFile *string `access:"authentication_saml"` // telemetry: none
 	PrivateKeyFile        *string `access:"authentication_saml"` // telemetry: none
 
 	// User Mapping
-	IdAttribute          *string `access:"authentication_saml"`
+	IDAttribute          *string `access:"authentication_saml"`
 	GuestAttribute       *string `access:"authentication_saml"`
 	EnableAdminAttribute *bool
 	AdminAttribute       *string
@@ -2865,28 +2865,28 @@ func (s *SamlSettings) SetDefaults() {
 		s.CanonicalAlgorithm = NewPointer(SamlSettingsDefaultCanonicalAlgorithm)
 	}
 
-	if s.IdpURL == nil {
-		s.IdpURL = NewPointer("")
+	if s.IDpURL == nil {
+		s.IDpURL = NewPointer("")
 	}
 
-	if s.IdpDescriptorURL == nil {
-		s.IdpDescriptorURL = NewPointer("")
+	if s.IDpDescriptorURL == nil {
+		s.IDpDescriptorURL = NewPointer("")
 	}
 
-	if s.ServiceProviderIdentifier == nil {
-		if s.IdpDescriptorURL != nil {
-			s.ServiceProviderIdentifier = NewPointer(*s.IdpDescriptorURL)
+	if s.ServiceProviderIDentifier == nil {
+		if s.IDpDescriptorURL != nil {
+			s.ServiceProviderIDentifier = NewPointer(*s.IDpDescriptorURL)
 		} else {
-			s.ServiceProviderIdentifier = NewPointer("")
+			s.ServiceProviderIDentifier = NewPointer("")
 		}
 	}
 
-	if s.IdpMetadataURL == nil {
-		s.IdpMetadataURL = NewPointer("")
+	if s.IDpMetadataURL == nil {
+		s.IDpMetadataURL = NewPointer("")
 	}
 
-	if s.IdpCertificateFile == nil {
-		s.IdpCertificateFile = NewPointer("")
+	if s.IDpCertificateFile == nil {
+		s.IDpCertificateFile = NewPointer("")
 	}
 
 	if s.PublicCertificateFile == nil {
@@ -2901,8 +2901,8 @@ func (s *SamlSettings) SetDefaults() {
 		s.AssertionConsumerServiceURL = NewPointer("")
 	}
 
-	if s.ScopingIDPProviderId == nil {
-		s.ScopingIDPProviderId = NewPointer("")
+	if s.ScopingIDPProviderID == nil {
+		s.ScopingIDPProviderID = NewPointer("")
 	}
 
 	if s.ScopingIDPName == nil {
@@ -2913,8 +2913,8 @@ func (s *SamlSettings) SetDefaults() {
 		s.LoginButtonText = NewPointer(UserAuthServiceSamlText)
 	}
 
-	if s.IdAttribute == nil {
-		s.IdAttribute = NewPointer(SamlSettingsDefaultIdAttribute)
+	if s.IDAttribute == nil {
+		s.IDAttribute = NewPointer(SamlSettingsDefaultIDAttribute)
 	}
 
 	if s.GuestAttribute == nil {
@@ -3172,7 +3172,7 @@ type DataRetentionSettings struct {
 	DeletionJobStartTime           *string `access:"compliance_data_retention_policy"`
 	BatchSize                      *int    `access:"compliance_data_retention_policy"`
 	TimeBetweenBatchesMilliseconds *int    `access:"compliance_data_retention_policy"`
-	RetentionIdsBatchSize          *int    `access:"compliance_data_retention_policy"`
+	RetentionIDsBatchSize          *int    `access:"compliance_data_retention_policy"`
 	PreservePinnedPosts            *bool   `access:"compliance_data_retention_policy"`
 }
 
@@ -3220,8 +3220,8 @@ func (s *DataRetentionSettings) SetDefaults() {
 	if s.TimeBetweenBatchesMilliseconds == nil {
 		s.TimeBetweenBatchesMilliseconds = NewPointer(DataRetentionSettingsDefaultTimeBetweenBatchesMilliseconds)
 	}
-	if s.RetentionIdsBatchSize == nil {
-		s.RetentionIdsBatchSize = NewPointer(DataRetentionSettingsDefaultRetentionIdsBatchSize)
+	if s.RetentionIDsBatchSize == nil {
+		s.RetentionIDsBatchSize = NewPointer(DataRetentionSettingsDefaultRetentionIDsBatchSize)
 	}
 
 	if s.PreservePinnedPosts == nil {
@@ -3374,24 +3374,24 @@ func (s *PluginSettings) SetDefaults(ls LogSettings) {
 		s.PluginStates = make(map[string]*PluginState)
 	}
 
-	if s.PluginStates[PluginIdNPS] == nil {
+	if s.PluginStates[PluginIDNPS] == nil {
 		// Enable the NPS plugin by default if diagnostics are enabled
-		s.PluginStates[PluginIdNPS] = &PluginState{Enable: ls.EnableDiagnostics == nil || *ls.EnableDiagnostics}
+		s.PluginStates[PluginIDNPS] = &PluginState{Enable: ls.EnableDiagnostics == nil || *ls.EnableDiagnostics}
 	}
 
-	if s.PluginStates[PluginIdCalls] == nil {
+	if s.PluginStates[PluginIDCalls] == nil {
 		// Enable the calls plugin by default
-		s.PluginStates[PluginIdCalls] = &PluginState{Enable: true}
+		s.PluginStates[PluginIDCalls] = &PluginState{Enable: true}
 	}
 
-	if s.PluginStates[PluginIdPlaybooks] == nil {
+	if s.PluginStates[PluginIDPlaybooks] == nil {
 		// Enable the playbooks plugin by default
-		s.PluginStates[PluginIdPlaybooks] = &PluginState{Enable: true}
+		s.PluginStates[PluginIDPlaybooks] = &PluginState{Enable: true}
 	}
 
-	if s.PluginStates[PluginIdAI] == nil {
+	if s.PluginStates[PluginIDAI] == nil {
 		// Enable the AI plugin by default
-		s.PluginStates[PluginIdAI] = &PluginState{Enable: true}
+		s.PluginStates[PluginIDAI] = &PluginState{Enable: true}
 	}
 
 	if s.EnableMarketplace == nil {
@@ -3432,7 +3432,7 @@ func (s *PluginSettings) Sanitize(pluginManifests []*Manifest) {
 	manifestMap := make(map[string]*Manifest, len(pluginManifests))
 
 	for _, manifest := range pluginManifests {
-		manifestMap[manifest.Id] = manifest
+		manifestMap[manifest.ID] = manifest
 	}
 
 	for id, settings := range s.Plugins {
@@ -3804,7 +3804,7 @@ const (
 const ConfigAccessTagAnySysConsoleRead = "*_read"
 
 // Config fields support the 'access' tag with the following values corresponding to the suffix of the associated
-// PermissionSysconsole* permission Id: 'about', 'reporting', 'user_management_users',
+// PermissionSysconsole* permission ID: 'about', 'reporting', 'user_management_users',
 // 'user_management_groups', 'user_management_teams', 'user_management_channels',
 // 'user_management_permissions', 'environment_web_server', 'environment_database', 'environment_elasticsearch',
 // 'environment_file_storage', 'environment_image_proxy', 'environment_smtp', 'environment_push_notification_server',
@@ -3857,7 +3857,7 @@ type Config struct {
 	GitLabSettings              SSOSettings
 	GoogleSettings              SSOSettings
 	Office365Settings           Office365Settings
-	OpenIdSettings              SSOSettings
+	OpenIDSettings              SSOSettings
 	LdapSettings                LdapSettings
 	ComplianceSettings          ComplianceSettings
 	LocalizationSettings        LocalizationSettings
@@ -3926,7 +3926,7 @@ func (o *Config) GetSSOService(service string) *SSOSettings {
 	case ServiceOffice365:
 		return o.Office365Settings.SSOSettings()
 	case ServiceOpenid:
-		return &o.OpenIdSettings
+		return &o.OpenIDSettings
 	}
 
 	return nil
@@ -3965,7 +3965,7 @@ func (o *Config) SetDefaults() {
 	o.Office365Settings.setDefaults()
 	o.GitLabSettings.setDefaults("", "", "", "", "")
 	o.GoogleSettings.setDefaults(GoogleSettingsDefaultScope, GoogleSettingsDefaultAuthEndpoint, GoogleSettingsDefaultTokenEndpoint, GoogleSettingsDefaultUserAPIEndpoint, "")
-	o.OpenIdSettings.setDefaults(OpenidSettingsDefaultScope, "", "", "", "#145DBF")
+	o.OpenIDSettings.setDefaults(OpenidSettingsDefaultScope, "", "", "", "#145DBF")
 	o.ServiceSettings.SetDefaults(isUpdate)
 	o.PasswordSettings.SetDefaults()
 	o.TeamSettings.SetDefaults()
@@ -4194,7 +4194,7 @@ func (s *SqlSettings) isValid() *AppError {
 		return NewAppError("Config.IsValid", "model.config.is_valid.sql_driver.app_error", nil, "", http.StatusBadRequest)
 	}
 
-	if *s.MaxIdleConns <= 0 {
+	if *s.MaxIDleConns <= 0 {
 		return NewAppError("Config.IsValid", "model.config.is_valid.sql_idle.app_error", nil, "", http.StatusBadRequest)
 	}
 
@@ -4202,7 +4202,7 @@ func (s *SqlSettings) isValid() *AppError {
 		return NewAppError("Config.IsValid", "model.config.is_valid.sql_conn_max_lifetime_milliseconds.app_error", nil, "", http.StatusBadRequest)
 	}
 
-	if *s.ConnMaxIdleTimeMilliseconds < 0 {
+	if *s.ConnMaxIDleTimeMilliseconds < 0 {
 		return NewAppError("Config.IsValid", "model.config.is_valid.sql_conn_max_idle_time_milliseconds.app_error", nil, "", http.StatusBadRequest)
 	}
 
@@ -4344,11 +4344,11 @@ func (s *LdapSettings) isValid() *AppError {
 			return NewAppError("Config.IsValid", "model.config.is_valid.ldap_username", nil, "", http.StatusBadRequest)
 		}
 
-		if *s.IdAttribute == "" {
+		if *s.IDAttribute == "" {
 			return NewAppError("Config.IsValid", "model.config.is_valid.ldap_id", nil, "", http.StatusBadRequest)
 		}
 
-		if *s.LoginIdAttribute == "" {
+		if *s.LoginIDAttribute == "" {
 			return NewAppError("Config.IsValid", "model.config.is_valid.ldap_login_id", nil, "", http.StatusBadRequest)
 		}
 
@@ -4376,15 +4376,15 @@ func (s *LdapSettings) isValid() *AppError {
 
 func (s *SamlSettings) isValid() *AppError {
 	if *s.Enable {
-		if *s.IdpURL == "" || !IsValidHTTPURL(*s.IdpURL) {
+		if *s.IDpURL == "" || !IsValidHTTPURL(*s.IDpURL) {
 			return NewAppError("Config.IsValid", "model.config.is_valid.saml_idp_url.app_error", nil, "", http.StatusBadRequest)
 		}
 
-		if *s.IdpDescriptorURL == "" {
+		if *s.IDpDescriptorURL == "" {
 			return NewAppError("Config.IsValid", "model.config.is_valid.saml_idp_descriptor_url.app_error", nil, "", http.StatusBadRequest)
 		}
 
-		if *s.IdpCertificateFile == "" {
+		if *s.IDpCertificateFile == "" {
 			return NewAppError("Config.IsValid", "model.config.is_valid.saml_idp_cert.app_error", nil, "", http.StatusBadRequest)
 		}
 
@@ -4396,7 +4396,7 @@ func (s *SamlSettings) isValid() *AppError {
 			return NewAppError("Config.IsValid", "model.config.is_valid.saml_username_attribute.app_error", nil, "", http.StatusBadRequest)
 		}
 
-		if *s.ServiceProviderIdentifier == "" {
+		if *s.ServiceProviderIDentifier == "" {
 			return NewAppError("Config.IsValid", "model.config.is_valid.saml_spidentifier_attribute.app_error", nil, "", http.StatusBadRequest)
 		}
 
@@ -4696,7 +4696,7 @@ func (s *AutoTranslationSettings) isValid() *AppError {
 		}
 	// TODO: Enable Agents provider in future release
 	// case "agents":
-	// 	if s.Agents == nil || s.Agents.BotUserId == nil || *s.Agents.BotUserId == "" {
+	// 	if s.Agents == nil || s.Agents.BotUserID == nil || *s.Agents.BotUserID == "" {
 	// 		return NewAppError("Config.IsValid", "model.config.is_valid.autotranslation.agents.bot_user_id.app_error", nil, "", http.StatusBadRequest)
 	// 	}
 	default:
@@ -4878,8 +4878,8 @@ func (o *Config) Sanitize(pluginManifests []*Manifest, opts *SanitizeOptions) {
 		*o.Office365Settings.Secret = FakeSetting
 	}
 
-	if o.OpenIdSettings.Secret != nil && *o.OpenIdSettings.Secret != "" {
-		*o.OpenIdSettings.Secret = FakeSetting
+	if o.OpenIDSettings.Secret != nil && *o.OpenIDSettings.Secret != "" {
+		*o.OpenIDSettings.Secret = FakeSetting
 	}
 
 	if o.SqlSettings.DataSource != nil {

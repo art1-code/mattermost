@@ -843,15 +843,15 @@ func (th *TestHelper) CreatePostInChannelWithFiles(tb testing.TB, channel *model
 }
 
 func (th *TestHelper) CreatePostWithFilesWithClient(tb testing.TB, client *model.Client4, channel *model.Channel, files ...*model.FileInfo) *model.Post {
-	var fileIds model.StringArray
+	var fileIDs model.StringArray
 	for i := range files {
-		fileIds = append(fileIds, files[i].Id)
+		fileIDs = append(fileIDs, files[i].Id)
 	}
 
 	post := &model.Post{
-		ChannelId: channel.Id,
+		ChannelID: channel.Id,
 		Message:   "message_" + model.NewId(),
-		FileIds:   fileIds,
+		FileIDs:   fileIDs,
 	}
 
 	rpost, _, err := client.CreatePost(context.Background(), post)
@@ -863,7 +863,7 @@ func (th *TestHelper) CreatePostWithClient(tb testing.TB, client *model.Client4,
 	id := model.NewId()
 
 	post := &model.Post{
-		ChannelId: channel.Id,
+		ChannelID: channel.Id,
 		Message:   "message_" + id,
 	}
 

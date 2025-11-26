@@ -15,7 +15,7 @@ func TestAutocompleteData(t *testing.T) {
 	assert.NoError(t, ad.IsValid())
 	ad.RoleID = "some_id"
 	assert.Error(t, ad.IsValid())
-	ad.RoleID = SystemAdminRoleId
+	ad.RoleID = SystemAdminRoleID
 	assert.NoError(t, ad.IsValid())
 	ad.AddDynamicListArgument("help", "/some/url", true)
 	assert.NoError(t, ad.IsValid())
@@ -67,9 +67,9 @@ func TestAutocompleteData(t *testing.T) {
 
 func getAutocompleteData() *AutocompleteData {
 	ad := NewAutocompleteData("jira", "", "Available commands:")
-	ad.RoleID = SystemUserRoleId
+	ad.RoleID = SystemUserRoleID
 	command := NewAutocompleteData("connect", "", "Connect to mattermost")
-	command.RoleID = SystemAdminRoleId
+	command.RoleID = SystemAdminRoleID
 	items := []AutocompleteListItem{
 		{
 			Hint:     "arg1",
